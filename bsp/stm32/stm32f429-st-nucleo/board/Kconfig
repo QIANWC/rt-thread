@@ -18,16 +18,24 @@ menu "On-chip Peripheral Drivers"
         select RT_USING_SERIAL
         default y
         if BSP_USING_UART
-            config BSP_USING_UART1
-                bool "Enable UART1"
+            config BSP_USING_UART3
+                bool "Enable UART3"
                 default y
 
-            config BSP_UART1_RX_USING_DMA
-                bool "Enable UART1 RX DMA"
-                depends on BSP_USING_UART1 && RT_SERIAL_USING_DMA
+            config BSP_UART3_RX_USING_DMA
+                bool "Enable UART3 RX DMA"
+                depends on BSP_USING_UART3 && RT_SERIAL_USING_DMA
                 default n
         endif
         
+    menuconfig BSP_USING_ETH
+        bool "Enable Ethernet (phy maybe not ready)"
+        select BSP_USING_I2C1
+        select PKG_USING_PCF8574
+        select RT_USING_LWIP
+        select PHY_USING_LAN8720A
+        default n
+
     menuconfig BSP_USING_I2C1
         bool "Enable I2C1 BUS (software simulation)"
         select RT_USING_I2C

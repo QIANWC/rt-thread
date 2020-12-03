@@ -115,6 +115,7 @@ SECTIONS
 		_ebss = .;
 
 		PROVIDE(__bss_end__ = _ebss);
+		PROVIDE(__bss_end = _ebss);
 	} > SRAM
 
 	PROVIDE(end = .);

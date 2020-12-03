@@ -1050,7 +1050,7 @@ void __attribute__((naked, noreturn)) Reset_Handler()
 		*pDest = 0;
 
 	SystemInit();
-	__libc_init_array();
+//	__libc_init_array();
 	(void)entry();
 	for (;;) ;
 }

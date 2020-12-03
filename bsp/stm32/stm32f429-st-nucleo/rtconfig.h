@@ -15,7 +15,7 @@
 #define RT_USING_HOOK
 #define RT_USING_IDLE_HOOK
 #define RT_IDLE_HOOK_LIST_SIZE 4
-#define IDLE_THREAD_STACK_SIZE 1024
+#define IDLE_THREAD_STACK_SIZE 2048
 #define RT_DEBUG
 #define RT_DEBUG_COLOR
 
@@ -58,6 +58,18 @@
 
 /* Command shell */
 
+#define RT_USING_FINSH
+#define FINSH_THREAD_NAME "tshell"
+#define FINSH_USING_HISTORY
+#define FINSH_HISTORY_LINES 5
+#define FINSH_USING_SYMTAB
+#define FINSH_USING_DESCRIPTION
+#define FINSH_THREAD_PRIORITY 20
+#define FINSH_THREAD_STACK_SIZE 4096
+#define FINSH_CMD_SIZE 80
+#define FINSH_USING_MSH
+#define FINSH_USING_MSH_DEFAULT
+#define FINSH_ARG_MAX 10
 
 /* Device virtual file system */
 
@@ -67,7 +79,6 @@
 #define RT_USING_DEVICE_IPC
 #define RT_PIPE_BUFSZ 512
 #define RT_USING_SERIAL
-#define RT_SERIAL_USING_DMA
 #define RT_SERIAL_RB_BUFSZ 64
 #define RT_USING_I2C
 #define RT_USING_I2C_BITOPS
@@ -188,7 +199,6 @@
 #define BSP_USING_GPIO
 #define BSP_USING_UART
 #define BSP_USING_UART3
-#define BSP_UART3_RX_USING_DMA
 #define BSP_USING_I2C1
 #define BSP_I2C1_SCL_PIN 24
 #define BSP_I2C1_SDA_PIN 25

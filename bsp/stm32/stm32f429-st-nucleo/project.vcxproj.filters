@@ -70,6 +70,9 @@
     <Filter Include="VisualGDB settings">
       <UniqueIdentifier>{a8f26317-0f36-40cb-b06f-4ede108bc8e6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source files\finsh">
+      <UniqueIdentifier>{8ae4b11e-4719-4dbe-aac9-e5cb00390050}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\clock.c">
@@ -261,9 +264,54 @@
     <ClCompile Include="startup_stm32f429xx.c">
       <Filter>Source files\Drivers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\components\finsh\finsh_compiler.c">
+      <Filter>Source files\finsh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\finsh\finsh_error.c">
+      <Filter>Source files\finsh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\finsh\finsh_heap.c">
+      <Filter>Source files\finsh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\finsh\finsh_init.c">
+      <Filter>Source files\finsh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\finsh\finsh_node.c">
+      <Filter>Source files\finsh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\finsh\finsh_ops.c">
+      <Filter>Source files\finsh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\finsh\finsh_parser.c">
+      <Filter>Source files\finsh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\finsh\finsh_token.c">
+      <Filter>Source files\finsh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\finsh\finsh_var.c">
+      <Filter>Source files\finsh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\finsh\finsh_vm.c">
+      <Filter>Source files\finsh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\finsh\msh.c">
+      <Filter>Source files\finsh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\finsh\msh_file.c">
+      <Filter>Source files\finsh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\finsh\shell.c">
+      <Filter>Source files\finsh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\finsh\symbol.c">
+      <Filter>Source files\finsh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\finsh\cmd.c">
+      <Filter>Source files\finsh</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <LinkerScript Include="STM32F429ZI_flash.lds">
+    <LinkerScript Include="stm32_rom.ld">
       <Filter>Source files</Filter>
     </LinkerScript>
   </ItemGroup>

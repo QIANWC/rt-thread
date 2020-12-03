@@ -32,6 +32,8 @@
     <ToolchainID>com.visualgdb.arm-eabi</ToolchainID>
     <ToolchainVersion>9.3.1/9.2.0/r2</ToolchainVersion>
     <MCUPropertyListFile>$(ProjectDir)stm32.props</MCUPropertyListFile>
+    <UserVariablePropertyListFile>$(ProjectDir)$(ProjectName)-user.props</UserVariablePropertyListFile>
+    <GenerateHexFile>true</GenerateHexFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|VisualGDB'">
     <ToolchainID>com.visualgdb.arm-eabi</ToolchainID>
@@ -40,7 +42,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|VisualGDB'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.;..\..\..\include;applications;board;board\CubeMX_Config\Inc;board\ports;..\libraries\HAL_Drivers;..\libraries\HAL_Drivers\config;..\..\..\libcpu\arm\common;..\..\..\libcpu\arm\cortex-m4;..\..\..\components\dfs\include;..\..\..\components\drivers\include;..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Inc;..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Include;..\libraries\STM32F4xx_HAL\CMSIS\Include;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;..\..\..\include;applications;board;board\CubeMX_Config\Inc;board\ports;..\libraries\HAL_Drivers;..\libraries\HAL_Drivers\config;..\..\..\libcpu\arm\common;..\..\..\libcpu\arm\cortex-m4;..\..\..\components\dfs\include;..\..\..\components\drivers\include;..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Inc;..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Include;..\libraries\STM32F4xx_HAL\CMSIS\Include;../../../components/finsh;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>flash_layout;USE_HAL_DRIVER;RT_USING_NEWLIB;STM32F429xx;HAVE_CCONFIG_H;HAVE_SIGVAL;HAVE_SIGEVENT;HAVE_SIGINFO;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions>-Wa,-mimplicit-it=thumb</AdditionalOptions>
       <CLanguageStandard />
@@ -51,7 +53,8 @@
       <AdditionalLibraryNames>;%(Link.AdditionalLibraryNames)</AdditionalLibraryNames>
       <AdditionalLinkerInputs>;%(Link.AdditionalLinkerInputs)</AdditionalLinkerInputs>
       <AdditionalOptions />
-      <LinkerScript>STM32F429ZI_flash.lds</LinkerScript>
+      <LinkerScript>stm32_rom.ld</LinkerScript>
+      <GenerateMapFile>true</GenerateMapFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|VisualGDB'">
@@ -70,12 +73,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <LinkerScript Include="STM32F429ZI_flash.lds" />
+    <LinkerScript Include="stm32_rom.ld" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\components\finsh\cmd.c" />
+    <ClCompile Include="..\..\..\components\finsh\finsh_compiler.c" />
+    <ClCompile Include="..\..\..\components\finsh\finsh_error.c" />
+    <ClCompile Include="..\..\..\components\finsh\finsh_heap.c" />
+    <ClCompile Include="..\..\..\components\finsh\finsh_init.c" />
+    <ClCompile Include="..\..\..\components\finsh\finsh_node.c" />
+    <ClCompile Include="..\..\..\components\finsh\finsh_ops.c" />
+    <ClCompile Include="..\..\..\components\finsh\finsh_parser.c" />
+    <ClCompile Include="..\..\..\components\finsh\finsh_token.c" />
+    <ClCompile Include="..\..\..\components\finsh\finsh_var.c" />
+    <ClCompile Include="..\..\..\components\finsh\finsh_vm.c" />
+    <ClCompile Include="..\..\..\components\finsh\msh.c" />
+    <ClCompile Include="..\..\..\components\finsh\msh_file.c" />
+    <ClCompile Include="..\..\..\components\finsh\shell.c" />
+    <ClCompile Include="..\..\..\components\finsh\symbol.c" />
     <ClCompile Include="..\..\..\libcpu\arm\cortex-m4\context_gcc.S" />
     <ClCompile Include="..\..\..\src\clock.c" />
     <ClCompile Include="..\..\..\src\components.c" />

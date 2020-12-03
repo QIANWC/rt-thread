@@ -14,7 +14,7 @@
 #include <board.h>
 
 /* defined the LED1 pin: PG13 */
-#define LED1_PIN    GET_PIN(G, 13)
+#define LED1_PIN    GET_PIN(B, 0)
 
 int main(void)
 {

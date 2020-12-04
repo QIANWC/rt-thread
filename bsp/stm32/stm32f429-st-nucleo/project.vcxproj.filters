@@ -73,6 +73,12 @@
     <Filter Include="Source files\finsh">
       <UniqueIdentifier>{8ae4b11e-4719-4dbe-aac9-e5cb00390050}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source files\Filesystem">
+      <UniqueIdentifier>{b678c442-22ec-44cd-a204-6d7e6a6c742d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Drivers\usb">
+      <UniqueIdentifier>{49f5d069-28e8-4bbe-86c6-03e74f06d80a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\clock.c">
@@ -258,9 +264,6 @@
     <None Include="stm32.xml">
       <Filter>VisualGDB settings</Filter>
     </None>
-    <ClCompile Include="..\..\..\libcpu\arm\cortex-m4\context_gcc.S">
-      <Filter>Source files</Filter>
-    </ClCompile>
     <ClCompile Include="startup_stm32f429xx.c">
       <Filter>Source files\Drivers</Filter>
     </ClCompile>
@@ -308,6 +311,63 @@
     </ClCompile>
     <ClCompile Include="..\..\..\components\finsh\cmd.c">
       <Filter>Source files\finsh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\dfs\filesystems\devfs\devfs.c">
+      <Filter>Source files\Filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\dfs\src\dfs.c">
+      <Filter>Source files\Filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\dfs\src\dfs_file.c">
+      <Filter>Source files\Filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\dfs\src\dfs_fs.c">
+      <Filter>Source files\Filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\dfs\src\dfs_posix.c">
+      <Filter>Source files\Filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\dfs\src\poll.c">
+      <Filter>Source files\Filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\dfs\src\select.c">
+      <Filter>Source files\Filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\drivers\usb\usbdevice\core\core.c">
+      <Filter>Source files\Drivers\usb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\drivers\usb\usbdevice\core\usbdevice.c">
+      <Filter>Source files\Drivers\usb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\drivers\usb\usbdevice\class\cdc_vcom.c">
+      <Filter>Source files\Drivers\usb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\drivers\usb\usbdevice\class\ecm.c">
+      <Filter>Source files\Drivers\usb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\drivers\usb\usbdevice\class\hid.c">
+      <Filter>Source files\Drivers\usb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\drivers\usb\usbdevice\class\mstorage.c">
+      <Filter>Source files\Drivers\usb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\drivers\usb\usbdevice\class\rndis.c">
+      <Filter>Source files\Drivers\usb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\libcpu\arm\cortex-m4\context_gcc.S">
+      <Filter>Source files\cpu</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libraries\HAL_Drivers\drv_usbd.c">
+      <Filter>Source files\Drivers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_pcd.c">
+      <Filter>Source files\STM32_HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_pcd_ex.c">
+      <Filter>Source files\STM32_HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_ll_usb.c">
+      <Filter>Source files\STM32_HAL</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -16,12 +16,29 @@
 /* defined the LED1 pin: PG13 */
 #define LED1_PIN    GET_PIN(B, 0)
 
+char rxbuf[128];
+rt_err_t Serial_RxCallback(rt_device_t vcp, rt_size_t len)
+{
+    rt_size_t rxsize = rt_device_read(vcp, 0, rxbuf, len);
+    rt_size_t txsize = rt_device_write(vcp, 0, rxbuf, len);
+    rt_kprintf("size rx=%d,tx=%d", rxsize, txsize);
+//    return rxsize != txsize;
+    return 0;
+}
+rt_device_t vcp;
 int main(void)
 {
     int count = 1;
     /* set LED1 pin mode to output */
     rt_pin_mode(LED1_PIN, PIN_MODE_OUTPUT);
-
+    
+    vcp = rt_device_find("vcom"); //find name by "list_device" in msh
+    if(vcp != NULL)
+    {
+        rt_err_t status = rt_device_open(vcp, RT_DEVICE_FLAG_RDWR | RT_DEVICE_FLAG_INT_RX);
+        if (status == RT_EOK)
+            rt_device_set_rx_indicate(vcp, Serial_RxCallback);
+    }
     while (count++)
     {
         rt_pin_write(LED1_PIN, PIN_HIGH);

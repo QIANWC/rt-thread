@@ -369,6 +369,9 @@
     <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_ll_usb.c">
       <Filter>Source files\STM32_HAL</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\components\dfs\filesystems\ramfs\dfs_ramfs.c">
+      <Filter>Source files\Filesystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <LinkerScript Include="stm32_rom.ld">

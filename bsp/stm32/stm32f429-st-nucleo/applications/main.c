@@ -12,10 +12,14 @@
 #include <rtthread.h>
 #include <rtdevice.h>
 #include <board.h>
+#include <dfs.h>
+#include <dfs_ramfs.h>
+#include <dfs_fs.h>
 
 /* defined the LED1 pin: PG13 */
 #define LED1_PIN    GET_PIN(B, 0)
 
+rt_device_t vcp;
 char rxbuf[128];
 rt_err_t Serial_RxCallback(rt_device_t vcp, rt_size_t len)
 {
@@ -25,7 +29,26 @@ rt_err_t Serial_RxCallback(rt_device_t vcp, rt_size_t len)
 //    return rxsize != txsize;
     return 0;
 }
-rt_device_t vcp;
+
+#define RAMFS_SIZE (2048)
+uint8_t RamFS_Buf[RAMFS_SIZE];
+int ramfs_init(void)
+{
+    struct dfs_ramfs *ramfs = dfs_ramfs_create(RamFS_Buf, RAMFS_SIZE);
+    const char fsroot_str[] = "/";
+    int res = dfs_mount(RT_NULL, fsroot_str, "ram", 0, ramfs);
+    if (!res)
+    {
+        rt_kprintf("ramfs mount succeed\n");
+    }
+    else
+    {
+        rt_kprintf("ramfs mount failed\n");
+    }
+    return 0;
+}
+INIT_ENV_EXPORT(ramfs_init);
+
 int main(void)
 {
     int count = 1;
@@ -39,6 +62,7 @@ int main(void)
         if (status == RT_EOK)
             rt_device_set_rx_indicate(vcp, Serial_RxCallback);
     }
+    
     while (count++)
     {
         rt_pin_write(LED1_PIN, PIN_HIGH);

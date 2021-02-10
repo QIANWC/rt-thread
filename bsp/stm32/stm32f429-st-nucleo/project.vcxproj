@@ -92,8 +92,8 @@
     <ClCompile Include="..\..\..\components\drivers\usb\usbdevice\class\hid.c" />
     <ClCompile Include="..\..\..\components\drivers\usb\usbdevice\class\mstorage.c" />
     <ClCompile Include="..\..\..\components\drivers\usb\usbdevice\class\rndis.c" />
-    <ClCompile Include="..\..\..\components\drivers\usb\usbdevice\core\core.c" />
     <ClCompile Include="..\..\..\components\drivers\usb\usbdevice\core\usbdevice.c" />
+    <ClCompile Include="..\..\..\components\drivers\usb\usbdevice\core\usbdevice_core.c" />
     <ClCompile Include="..\..\..\components\finsh\cmd.c" />
     <ClCompile Include="..\..\..\components\finsh\finsh_compiler.c" />
     <ClCompile Include="..\..\..\components\finsh\finsh_error.c" />

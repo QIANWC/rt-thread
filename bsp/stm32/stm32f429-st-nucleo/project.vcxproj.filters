@@ -333,9 +333,6 @@
     <ClCompile Include="..\..\..\components\dfs\src\select.c">
       <Filter>Source files\Filesystem</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\components\drivers\usb\usbdevice\core\core.c">
-      <Filter>Source files\Drivers\usb</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\components\drivers\usb\usbdevice\core\usbdevice.c">
       <Filter>Source files\Drivers\usb</Filter>
     </ClCompile>
@@ -371,6 +368,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\components\dfs\filesystems\ramfs\dfs_ramfs.c">
       <Filter>Source files\Filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\drivers\usb\usbdevice\core\usbdevice_core.c">
+      <Filter>Source files\Drivers\usb</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

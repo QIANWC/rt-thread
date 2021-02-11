@@ -48,7 +48,7 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>.\Objects\</OutputDirectory>
+          <OutputDirectory>.\build\</OutputDirectory>
           <OutputName>template</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
@@ -134,11 +134,11 @@
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
-            <DriverSelection>-1</DriverSelection>
+            <DriverSelection>4096</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3></Flash3>
+          <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER, __RTTHREAD__, STM32F429xx</Define>
               <Undefine></Undefine>
-              <IncludePath>applications;..\..\..\libcpu\arm\common;..\..\..\libcpu\arm\cortex-m4;..\..\..\components\drivers\include;..\..\..\components\drivers\include;..\..\..\components\drivers\include;..\..\..\components\drivers\include;board;board\CubeMX_Config\Inc;board\ports;..\libraries\HAL_Drivers;..\libraries\HAL_Drivers\config;..\..\..\components\dfs\include;..\..\..\components\dfs\filesystems\devfs;..\..\..\components\dfs\filesystems\ramfs;..\..\..\components\finsh;.;..\..\..\include;..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Inc;..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Include;..\libraries\STM32F4xx_HAL\CMSIS\Include;..\..\..\components\drivers\usb\usbdevice</IncludePath>
+              <IncludePath>applications;..\..\..\components\cplusplus;..\..\..\libcpu\arm\common;..\..\..\libcpu\arm\cortex-m4;..\..\..\components\drivers\include;..\..\..\components\drivers\include;..\..\..\components\drivers\include;..\..\..\components\drivers\include;board;board\CubeMX_Config\Inc;board\ports;..\libraries\HAL_Drivers;..\libraries\HAL_Drivers\config;..\..\..\components\dfs\include;..\..\..\components\dfs\filesystems\devfs;..\..\..\components\dfs\filesystems\ramfs;..\..\..\components\finsh;.;..\..\..\include;..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Inc;..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Include;..\libraries\STM32F4xx_HAL\CMSIS\Include;..\..\..\components\drivers\usb\usbdevice</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -384,14 +384,44 @@
           <GroupName>Applications</GroupName>
           <Files>
             <File>
-              <FileName>main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>applications\main.c</FilePath>
-            </File>
-            <File>
               <FileName>lcd_init.c</FileName>
               <FileType>1</FileType>
               <FilePath>applications\lcd_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>main.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\applications\main.cpp</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CPlusPlus</GroupName>
+          <Files>
+            <File>
+              <FileName>cxx_Mutex.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\..\components\cplusplus\cxx_Mutex.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>cxx_Semaphore.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\..\components\cplusplus\cxx_Semaphore.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>cxx_Thread.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\..\components\cplusplus\cxx_Thread.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>cxx_crt.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\..\components\cplusplus\cxx_crt.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>crt_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\cplusplus\crt_init.c</FilePath>
             </File>
           </Files>
         </Group>

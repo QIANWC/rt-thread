@@ -15,9 +15,26 @@
 #include <dfs.h>
 #include <dfs_ramfs.h>
 #include <dfs_fs.h>
+#include <Thread.h>
+using rtthread::Thread;
 
-/* defined the LED1 pin: PG13 */
-#define LED1_PIN    GET_PIN(B, 0)
+#include "DigitalInOut.h"
+using mbed::DigitalInOut;
+
+DigitalInOut green(GET_PIN(B, 0), PIN_MODE_OUTPUT, PIN_LOW);
+DigitalInOut blue(GET_PIN(B, 7), PIN_MODE_OUTPUT, PIN_LOW);
+DigitalInOut red(GET_PIN(B, 14), PIN_MODE_OUTPUT, PIN_LOW);
+
+void task1_func(void *)
+{
+	//init process
+	while (1)
+	{
+		blue = !blue;
+		Thread::sleep(400);
+	}
+}
+rtthread::Thread task1(task1_func, 0, 1024, '\025', 20, "task1");
 
 rt_device_t vcp;
 char rxbuf[128];
@@ -49,17 +66,10 @@ int ramfs_init(void)
 }
 INIT_ENV_EXPORT(ramfs_init);
 
-#if 0
-#include "cmain.h"
-int cmain(void)
-#else
 int main(void)
-#endif
 {
-    int count = 1;
-    /* set LED1 pin mode to output */
-    rt_pin_mode(LED1_PIN, PIN_MODE_OUTPUT);
-    
+	task1.start();
+
     vcp = rt_device_find("vcom"); //find name by "list_device" in msh
     if(vcp != NULL)
     {
@@ -67,14 +77,12 @@ int main(void)
         if (status == RT_EOK)
             rt_device_set_rx_indicate(vcp, Serial_RxCallback);
     }
-    
-    while (count++)
-    {
-        rt_pin_write(LED1_PIN, PIN_HIGH);
-        rt_thread_mdelay(500);
-        rt_pin_write(LED1_PIN, PIN_LOW);
-        rt_thread_mdelay(500);
-    }
 
-    return RT_EOK;
+    while (1)
+    {
+		green=1;
+        Thread::sleep(500);
+		green=0;
+        Thread::sleep(500);
+    }
 }

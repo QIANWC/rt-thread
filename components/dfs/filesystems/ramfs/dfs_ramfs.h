@@ -18,6 +18,11 @@
 #define RAMFS_NAME_MAX  32
 #define RAMFS_MAGIC     0x0A0A0A0A
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 struct ramfs_dirent
 {
     rt_list_t list;
@@ -42,6 +47,10 @@ struct dfs_ramfs
 
 int dfs_ramfs_init(void);
 struct dfs_ramfs *dfs_ramfs_create(rt_uint8_t *pool, rt_size_t size);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

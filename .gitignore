@@ -37,3 +37,7 @@ tags
 **/CubeMX_Config/MDK-ARM/*
 .vs/
 .visualgdb/
+*.vcxproj.user
+*.vgdbsettings.*.user
+*.uvgui.*
+*.uvguix.*

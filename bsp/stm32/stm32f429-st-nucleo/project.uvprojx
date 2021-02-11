@@ -55,7 +55,7 @@
           <CreateHexFile>0</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
-          <ListingPath>.\Listings\</ListingPath>
+          <ListingPath>.\build\Listings\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
@@ -908,7 +908,7 @@
   <LayerInfo>
     <Layers>
       <Layer>
-        <LayName>project</LayName>
+        <LayName>template</LayName>
         <LayPrjMark>1</LayPrjMark>
       </Layer>
     </Layers>

@@ -49,7 +49,12 @@ int ramfs_init(void)
 }
 INIT_ENV_EXPORT(ramfs_init);
 
+#if 0
+#include "cmain.h"
+int cmain(void)
+#else
 int main(void)
+#endif
 {
     int count = 1;
     /* set LED1 pin mode to output */

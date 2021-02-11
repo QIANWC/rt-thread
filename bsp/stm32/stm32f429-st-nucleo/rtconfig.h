@@ -40,7 +40,7 @@
 #define RT_USING_CONSOLE
 #define RT_CONSOLEBUF_SIZE 256
 #define RT_CONSOLE_DEVICE_NAME "uart3"
-#define RT_VER_NUM 0x40002
+#define RT_VER_NUM 0x40003
 #define ARCH_ARM
 #define RT_USING_CPU_FFS
 #define ARCH_ARM_CORTEX_M
@@ -100,6 +100,7 @@
 #define _RT_USB_DEVICE_CDC
 #define RT_USB_DEVICE_CDC
 #define RT_VCOM_TASK_STK_SIZE 512
+#define RT_CDC_RX_BUFSIZE 128
 #define RT_VCOM_SERNO "32021919830108"
 #define RT_VCOM_SER_LEN 14
 #define RT_VCOM_TX_TIMEOUT 1000
@@ -168,6 +169,9 @@
 
 
 /* samples: kernel and components samples */
+
+
+/* games: games run on RT-Thread console */
 
 #define SOC_FAMILY_STM32
 #define SOC_SERIES_STM32F4

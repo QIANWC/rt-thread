@@ -85,6 +85,9 @@
     <Filter Include="Header files\rt_usbd">
       <UniqueIdentifier>{0c4ccb8e-aa30-414a-8953-1b326e664d5c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header files\utility">
+      <UniqueIdentifier>{d839e0fc-fb06-454a-9da9-0ccb04305ede}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\clock.c">
@@ -459,10 +462,33 @@
     <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_i2c_ex.c">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_tim.c">
+      <Filter>Source files\Libraries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_tim_ex.c">
+      <Filter>Source files\Libraries</Filter>
+    </ClCompile>
+    <ClCompile Include="board\CubeMX_Config\Src\main.c">
+      <Filter>Source files\Drivers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <LinkerScript Include="stm32_rom.ld">
       <Filter>Source files</Filter>
     </LinkerScript>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="utility\argument_vector.hpp">
+      <Filter>Header files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="utility\basic_utility.h">
+      <Filter>Header files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="utility\NonCopyable.h">
+      <Filter>Header files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="utility\Microsecond.hpp">
+      <Filter>Header files\utility</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

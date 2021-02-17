@@ -20,6 +20,7 @@ using rtthread::Thread;
 
 #include "DigitalInOut.h"
 using mbed::DigitalInOut;
+#include "basic_utility.h"
 
 DigitalInOut green(GET_PIN(B, 0), PIN_MODE_OUTPUT, PIN_LOW);
 DigitalInOut blue(GET_PIN(B, 7), PIN_MODE_OUTPUT, PIN_LOW);
@@ -34,7 +35,7 @@ void task1_func(void *)
 		Thread::sleep(400);
 	}
 }
-rtthread::Thread task1(task1_func, 0, 1024, '\025', 20, "task1");
+Thread task1(task1_func, 0, 1024, '\025', 20, "task1");
 
 rt_device_t vcp;
 char rxbuf[128];
@@ -66,6 +67,7 @@ int ramfs_init(void)
 }
 INIT_ENV_EXPORT(ramfs_init);
 
+volatile timestamp_t stamp = 0;
 int main(void)
 {
 	task1.start();
@@ -84,5 +86,7 @@ int main(void)
         Thread::sleep(500);
 		green=0;
         Thread::sleep(500);
+        stamp = us_tick();
+        rt_kprintf("0x%08X", us_tick());
     }
 }

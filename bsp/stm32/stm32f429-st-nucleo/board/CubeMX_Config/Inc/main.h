@@ -32,11 +32,12 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <drv_common.h>
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
+TIM_HandleTypeDef htim5;
 
 /* USER CODE END ET */
 
@@ -47,6 +48,7 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
+#if 0
 
 /* USER CODE END EM */
 
@@ -54,10 +56,12 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
+#endif // 0
 
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define US_TICK_USE_TIM5 1
 #define USER_Btn_Pin GPIO_PIN_13
 #define USER_Btn_GPIO_Port GPIOC
 #define MCO_Pin GPIO_PIN_0
@@ -108,6 +112,7 @@ void Error_Handler(void);
 #define RMII_TXD0_GPIO_Port GPIOG
 #define LD2_Pin GPIO_PIN_7
 #define LD2_GPIO_Port GPIOB
+void   MX_TIM5_Init(void);
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

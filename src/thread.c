@@ -889,7 +889,7 @@ RTM_EXPORT(rt_thread_timeout);
  *
  * @note please don't invoke this function in interrupt status.
  */
-rt_thread_t rt_thread_find(char *name)
+rt_thread_t rt_thread_find(const char *name)
 {
     return (rt_thread_t)rt_object_find(name, RT_Object_Class_Thread);
 }

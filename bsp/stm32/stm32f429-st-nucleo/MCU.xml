@@ -1,43 +1,47 @@
 <?xml version="1.0"?>
 <EmbeddedProfile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <ToolchainID>com.visualgdb.arm-eabi</ToolchainID>
+  <ToolchainID>com.sysprogs.toolchains.nongnu.armclang</ToolchainID>
   <ToolchainVersion>
-    <GCC>9.3.1</GCC>
-    <GDB>9.2.0</GDB>
-    <Revision>2</Revision>
+    <GCC>6.x</GCC>
+    <Revision>1</Revision>
   </ToolchainVersion>
-  <BspID>com.sysprogs.arm.stm32</BspID>
-  <BspVersion>2020.10</BspVersion>
+  <BspID>KEIL:Keil/STM32F4xx_DFP</BspID>
+  <BspVersion>2.15.0</BspVersion>
   <McuID>STM32F429ZI</McuID>
-  <MCUDefinitionFile>STM32F4xxxx/DeviceDefinitions/stm32f429xx.xml</MCUDefinitionFile>
+  <MCUDefinitionFile>CMSIS/SVD/STM32F429x.svd</MCUDefinitionFile>
   <MCUProperties>
-    <Entries>
-      <KeyValue>
-        <Key>com.sysprogs.bspoptions.primary_memory</Key>
-        <Value>flash</Value>
-      </KeyValue>
-      <KeyValue>
-        <Key>com.sysprogs.bspoptions.arm.floatmode</Key>
-        <Value>-mfloat-abi=hard</Value>
-      </KeyValue>
-      <KeyValue>
-        <Key>com.sysprogs.mcuoptions.ignore_startup_file</Key>
-      </KeyValue>
-      <KeyValue>
-        <Key>com.sysprogs.toolchainoptions.arm.libctype</Key>
-        <Value />
-      </KeyValue>
-      <KeyValue>
-        <Key>com.sysprogs.toolchainoptions.arm.syscallspecs</Key>
-        <Value>--specs=nosys.specs</Value>
-      </KeyValue>
-    </Entries>
+    <Entries />
   </MCUProperties>
   <BSPSourceFolderName>Device-specific files</BSPSourceFolderName>
-  <MCUMakFile>stm32.mak</MCUMakFile>
+  <MCUMakFile>mcu.mak</MCUMakFile>
   <ReferencedFrameworks />
   <FrameworkProperties>
-    <Entries />
+    <Entries>
+      <KeyValue>
+        <Key>KEILCOMP:Board Support</Key>
+        <Value>STM32F429I-Discovery</Value>
+      </KeyValue>
+      <KeyValue>
+        <Key>KEILCOMP:Compiler</Key>
+        <Value>ARM Compiler</Value>
+      </KeyValue>
+      <KeyValue>
+        <Key>KEILCOMP:File System</Key>
+        <Value>MDK-Pro</Value>
+      </KeyValue>
+      <KeyValue>
+        <Key>KEILCOMP:Graphics</Key>
+        <Value>MDK-Pro</Value>
+      </KeyValue>
+      <KeyValue>
+        <Key>KEILCOMP:Network</Key>
+        <Value>MDK-Pro Net_v6</Value>
+      </KeyValue>
+      <KeyValue>
+        <Key>KEILCOMP:USB</Key>
+        <Value>MDK-Pro</Value>
+      </KeyValue>
+    </Entries>
   </FrameworkProperties>
   <TestFrameworkProperties>
     <Entries />
@@ -48,7 +52,7 @@
     <AllDependencies>
       <ProjectDependency>
         <RelativePath>project.uvprojx</RelativePath>
-        <Timestamp>132575057481702937</Timestamp>
+        <Timestamp>132582004055206609</Timestamp>
       </ProjectDependency>
     </AllDependencies>
     <RootDirectory>
@@ -98,6 +102,9 @@
             </VirtualFileSnapshot>
             <VirtualFileSnapshot>
               <RelativePath>..\..\..\libcpu\arm\cortex-m4\cpuport.c</RelativePath>
+            </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
+              <RelativePath>..\..\..\libcpu\arm\cortex-m4\context_rvds.S</RelativePath>
             </VirtualFileSnapshot>
           </Files>
         </VirtualDirectorySnapshot>
@@ -152,6 +159,9 @@
               <RelativePath>board\CubeMX_Config\Src\stm32f4xx_hal_msp.c</RelativePath>
             </VirtualFileSnapshot>
             <VirtualFileSnapshot>
+              <RelativePath>..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f429xx.s</RelativePath>
+            </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
               <RelativePath>..\libraries\HAL_Drivers\drv_gpio.c</RelativePath>
             </VirtualFileSnapshot>
             <VirtualFileSnapshot>
@@ -162,6 +172,9 @@
             </VirtualFileSnapshot>
             <VirtualFileSnapshot>
               <RelativePath>..\libraries\HAL_Drivers\drv_common.c</RelativePath>
+            </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
+              <RelativePath>board\CubeMX_Config\Src\main.c</RelativePath>
             </VirtualFileSnapshot>
           </Files>
         </VirtualDirectorySnapshot>
@@ -286,6 +299,26 @@
           </Files>
         </VirtualDirectorySnapshot>
         <VirtualDirectorySnapshot>
+          <Name>libc</Name>
+          <Files>
+            <VirtualFileSnapshot>
+              <RelativePath>..\..\..\components\libc\compilers\armlibc\libc.c</RelativePath>
+            </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
+              <RelativePath>..\..\..\components\libc\compilers\armlibc\mem_std.c</RelativePath>
+            </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
+              <RelativePath>..\..\..\components\libc\compilers\armlibc\stdio.c</RelativePath>
+            </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
+              <RelativePath>..\..\..\components\libc\compilers\armlibc\stubs.c</RelativePath>
+            </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
+              <RelativePath>..\..\..\components\libc\compilers\common\time.c</RelativePath>
+            </VirtualFileSnapshot>
+          </Files>
+        </VirtualDirectorySnapshot>
+        <VirtualDirectorySnapshot>
           <Name>Libraries</Name>
           <Files>
             <VirtualFileSnapshot>
@@ -360,6 +393,12 @@
             <VirtualFileSnapshot>
               <RelativePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_ll_usb.c</RelativePath>
             </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
+              <RelativePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_tim.c</RelativePath>
+            </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
+              <RelativePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_tim_ex.c</RelativePath>
+            </VirtualFileSnapshot>
           </Files>
         </VirtualDirectorySnapshot>
         <VirtualDirectorySnapshot>
@@ -403,14 +442,17 @@
             <string>..\..\..\components\finsh</string>
             <string>.</string>
             <string>..\..\..\include</string>
+            <string>..\..\..\components\libc\compilers\armlibc</string>
+            <string>..\..\..\components\libc\compilers\common</string>
             <string>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Inc</string>
             <string>..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Include</string>
             <string>..\libraries\STM32F4xx_HAL\CMSIS\Include</string>
             <string>..\..\..\components\drivers\usb\usbdevice</string>
+            <string>utility</string>
           </IncludeDirectories>
           <PreprocessorMacros>
-            <string>$$com.sysprogs.bspoptions.primary_memory$$_layout</string>
             <string>USE_HAL_DRIVER</string>
+            <string>RT_USING_ARM_LIBC</string>
             <string>__RTTHREAD__</string>
             <string>STM32F429xx</string>
           </PreprocessorMacros>
@@ -420,4 +462,8 @@
       </ImportedConfiguration>
     </Configurations>
   </ImportedProject>
+  <SyntheticFrameworkFolderNames>
+    <string>RTE</string>
+  </SyntheticFrameworkFolderNames>
+  <ARMClangProcessor>cortex-m4</ARMClangProcessor>
 </EmbeddedProfile>

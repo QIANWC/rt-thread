@@ -22,7 +22,7 @@ using rtthread::Thread;
 using mbed::DigitalInOut;
 #include "basic_utility.h"
 
-DigitalInOut green(GET_PIN(B, 0), PIN_MODE_OUTPUT, PIN_LOW);
+DigitalInOut green(GET_PIN(B, 0), PIN_MODE_OUTPUT, PIN_LOW), &yellow = green;
 DigitalInOut blue(GET_PIN(B, 7), PIN_MODE_OUTPUT, PIN_LOW);
 DigitalInOut red(GET_PIN(B, 14), PIN_MODE_OUTPUT, PIN_LOW);
 
@@ -32,7 +32,7 @@ void task1_func(void *)
 	while (1)
 	{
 		blue = !blue;
-		Thread::sleep(400);
+		delayms(600);
 	}
 }
 Thread task1(task1_func, 0, 1024, '\025', 20, "task1");
@@ -57,17 +57,18 @@ int ramfs_init(void)
     int res = dfs_mount(RT_NULL, fsroot_str, "ram", 0, ramfs);
     if (!res)
     {
-        rt_kprintf("ramfs mount succeed\n");
+        printf("ramfs mount succeed\n");
     }
     else
     {
-        rt_kprintf("ramfs mount failed\n");
+        printf("ramfs mount failed\n");
     }
     return 0;
 }
 INIT_ENV_EXPORT(ramfs_init);
 
 volatile timestamp_t stamp = 0;
+rt_thread_t thread_main;
 int main(void)
 {
 	task1.start();
@@ -80,13 +81,14 @@ int main(void)
             rt_device_set_rx_indicate(vcp, Serial_RxCallback);
     }
 
+    thread_main = rt_thread_find("main");
+    printf("main thread stack_addr=0x%08X\n", (int)thread_main->stack_addr);
+    delayms(500);
     while (1)
     {
-		green=1;
-        Thread::sleep(500);
-		green=0;
-        Thread::sleep(500);
+        green = !green;
+        delayms(1000);
         stamp = us_tick();
-        rt_kprintf("0x%08X", us_tick());
+        printf("[printf]:us_tick:0x%08X\n", stamp);
     }
 }

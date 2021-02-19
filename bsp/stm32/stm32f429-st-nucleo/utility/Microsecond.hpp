@@ -6,11 +6,14 @@
  *64位绝对时间（后期可能接入NTP同步），us();
  **/
 
+#ifndef MICROSECOND_H
+#define MICROSECOND_H
+
 #ifdef __MBED__
 #include <us_ticker_api.h>
 extern TIM_HandleTypeDef TimMasterHandle;
 TIM_HandleTypeDef* usTimer = &TimMasterHandle;
-#else //rt-thread
+#elif defined __RTTHREAD__
 #include <stdint.h>
 #include <rtthread.h>
 #include <board.h>
@@ -20,7 +23,7 @@ typedef uint64_t us_timestamp_t;
 
 #include "main.h"
 #if US_TICK_USE_TIM2
-    #ifdef RTTHREAD_VERSION
+    #ifdef __RTTHREAD__
     extern TIM_HandleTypeDef htim2;
     TIM_HandleTypeDef* usTimer = &htim2;
     #define usTimer_init MX_TIM2_Init
@@ -29,7 +32,7 @@ typedef uint64_t us_timestamp_t;
     #define usTimer_isr TIM2_IRQHandler
     #define usTimer_DBGMCU_FREEZE __HAL_DBGMCU_FREEZE_TIM2
 #elif US_TICK_USE_TIM5
-    #ifdef RTTHREAD_VERSION
+    #ifdef __RTTHREAD__
     extern TIM_HandleTypeDef htim5;
     TIM_HandleTypeDef* usTimer = &htim5;
     #define usTimer_Init MX_TIM5_Init
@@ -65,7 +68,6 @@ namespace Microsecond
             }
         }
     }
-
     void init()
     {
         //mbed会将中断向量表映射到内存并替换部分ISR
@@ -80,7 +82,15 @@ namespace Microsecond
     {
         return us_ticker_read();
     }
-#elif defined RTTHREAD_VERSION
+#elif defined __RTTHREAD__
+    extern "C" void usTimer_isr(void)
+    {
+        if (__HAL_TIM_GET_FLAG(usTimer, TIM_IT_UPDATE))
+        {
+            __HAL_TIM_CLEAR_IT(usTimer, TIM_IT_UPDATE);
+            us_ticker_overflow_isr();
+        }
+    }
     extern "C" int init(void)
     {
         usTimer_Init();//if hal_main not used
@@ -94,19 +104,38 @@ namespace Microsecond
     {
         return usTimer->Instance->CNT;
     }
-    extern "C" void usTimer_isr(void)
-    {
-        if (__HAL_TIM_GET_FLAG(usTimer, TIM_IT_UPDATE))
-        {
-            __HAL_TIM_CLEAR_IT(usTimer, TIM_IT_UPDATE);
-            us_ticker_overflow_isr();
-        }
-    }
 #endif
 
     us_timestamp_t us()
     {
         return ((us_timestamp_t)ticker_overflow_cnt << 32) + us_tick();
     }
+    
+    namespace Test
+    {
+        timestamp_t stamp = 0;
+        //32位时间戳获取测试，未测试溢出表现
+        int test()
+        {
+            stamp = us_tick();
+            for (int k = 0; k < 5; ++k)
+            {
+#ifdef __MBED__
+                Thread::wait(1000);
+#elif defined __RTTHREAD__
+                Thread::sleep(1000);
+#endif // OS Environment
+                timestamp_t t = us_tick();
+                timestamp_t dt = t - stamp;
+                stamp = t;
+                if (std::abs((int)(dt - 10001000U)) >= 2000)
+                {
+                    return -1;//时间戳误差过大
+                }
+            }
+            return 0;
+        }
+    }
 }
 
+#endif

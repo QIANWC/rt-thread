@@ -18,7 +18,7 @@
 #include <cassert>
 #include <array>
 using std::array;//推荐使用array代替C style array
-#include <memory.h>//实际引用string.h，历史遗留问题
+#include <string.h>//memory.h实际引用string.h，历史遗留问题
 #include <NonCopyable.h>
 using mbed::NonCopyable;
 #include "Microsecond.hpp"
@@ -27,3 +27,20 @@ using namespace Microsecond;
 
 //test utility
 #define test_assert(expr) ++test_cnt;if(expr){++pass_cnt;}else{if(fail_stop)goto stop;}
+
+#ifdef __MBED__
+inline void delayms(uint32_t ms)
+{
+    Thread::wait(ms);
+}
+#elif defined __RTTHREAD__
+//注意使用环境
+inline void delayus(uint32_t us)
+{
+    rt_hw_us_delay(us);
+}
+inline void delayms(uint32_t ms)
+{
+    Thread::sleep(ms);
+}
+#endif // 

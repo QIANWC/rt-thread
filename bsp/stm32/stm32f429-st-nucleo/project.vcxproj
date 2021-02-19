@@ -12,9 +12,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{7DF319D9-9643-490D-8727-90FE583502B3}</ProjectGuid>
-    <BSP_ID>com.sysprogs.arm.stm32</BSP_ID>
-    <BSP_VERSION>2020.10</BSP_VERSION>
+    <ProjectGuid>{543830AA-E062-4B38-83A0-330F602B1699}</ProjectGuid>
+    <BSP_ID>KEIL:Keil/STM32F4xx_DFP</BSP_ID>
+    <BSP_VERSION>2.15.0</BSP_VERSION>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|VisualGDB'">
@@ -29,71 +29,91 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|VisualGDB'">
     <GNUConfigurationType>Debug</GNUConfigurationType>
-    <ToolchainID>com.visualgdb.arm-eabi</ToolchainID>
-    <ToolchainVersion>9.3.1/9.2.0/r2</ToolchainVersion>
-    <MCUPropertyListFile>$(ProjectDir)stm32.props</MCUPropertyListFile>
-    <UserVariablePropertyListFile>$(ProjectDir)$(ProjectName)-user.props</UserVariablePropertyListFile>
-    <GenerateHexFile>true</GenerateHexFile>
+    <ToolchainID>com.sysprogs.toolchains.nongnu.armclang</ToolchainID>
+    <ToolchainVersion>6.x//r1</ToolchainVersion>
+    <MCUPropertyListFile>$(ProjectDir)mcu.props</MCUPropertyListFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|VisualGDB'">
-    <ToolchainID>com.visualgdb.arm-eabi</ToolchainID>
-    <ToolchainVersion>9.3.1/9.2.0/r2</ToolchainVersion>
-    <MCUPropertyListFile>$(ProjectDir)stm32.props</MCUPropertyListFile>
+    <ToolchainID>com.sysprogs.toolchains.nongnu.armclang</ToolchainID>
+    <ToolchainVersion>6.x//r1</ToolchainVersion>
+    <MCUPropertyListFile>$(ProjectDir)mcu.props</MCUPropertyListFile>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|VisualGDB'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../../../components/finsh;../../../components/drivers/usb/usbdevice/class;../../../components/dfs/filesystems/ramfs;applications;..\..\..\components\cplusplus;..\..\..\libcpu\arm\common;..\..\..\libcpu\arm\cortex-m4;..\..\..\components\drivers\include;board;board\CubeMX_Config\Inc;board\ports;..\libraries\HAL_Drivers;..\libraries\HAL_Drivers\config;..\..\..\components\dfs\include;..\..\..\components\dfs\filesystems\devfs;..\..\..\components\dfs\filesystems\ramfs;..\..\..\components\finsh;.;..\..\..\include;..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Inc;..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Include;..\libraries\STM32F4xx_HAL\CMSIS\Include;..\..\..\components\drivers\usb\usbdevice;utility;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>RT_USING_NEWLIB;HAVE_CCONFIG_H;HAVE_SIGVAL;HAVE_SIGEVENT;HAVE_SIGINFO;DEBUG=1;flash_layout;USE_HAL_DRIVER;__RTTHREAD__;STM32F429xx;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalOptions>-Wa,-mimplicit-it=thumb</AdditionalOptions>
+      <AdditionalIncludeDirectories>applications;..\..\..\components\cplusplus;..\..\..\libcpu\arm\common;..\..\..\libcpu\arm\cortex-m4;..\..\..\components\drivers\include;board;board\CubeMX_Config\Inc;board\ports;..\libraries\HAL_Drivers;..\libraries\HAL_Drivers\config;..\..\..\components\dfs\include;..\..\..\components\dfs\filesystems\devfs;..\..\..\components\dfs\filesystems\ramfs;..\..\..\components\finsh;.;..\..\..\include;..\..\..\components\libc\compilers\armlibc;..\..\..\components\libc\compilers\common;..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Inc;..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Include;..\libraries\STM32F4xx_HAL\CMSIS\Include;..\..\..\components\drivers\usb\usbdevice;utility;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>USE_HAL_DRIVER;RT_USING_ARM_LIBC;__RTTHREAD__;STM32F429xx;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions />
       <CLanguageStandard />
       <CPPLanguageStandard />
       <Optimization>Og</Optimization>
     </ClCompile>
     <Link>
-      <LibrarySearchDirectories>%(Link.LibrarySearchDirectories)</LibrarySearchDirectories>
-      <AdditionalLibraryNames>%(Link.AdditionalLibraryNames)</AdditionalLibraryNames>
-      <AdditionalLinkerInputs>%(Link.AdditionalLinkerInputs)</AdditionalLinkerInputs>
+      <AdditionalLinkerInputs>;%(Link.AdditionalLinkerInputs)</AdditionalLinkerInputs>
       <AdditionalOptions />
-      <LinkerScript>stm32_rom.ld</LinkerScript>
-      <GenerateMapFile>true</GenerateMapFile>
+      <LinkerScript>stm32_rom.sct</LinkerScript>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|VisualGDB'">
     <ClCompile>
-      <AdditionalIncludeDirectories>applications;..\..\..\components\cplusplus;..\..\..\libcpu\arm\common;..\..\..\libcpu\arm\cortex-m4;..\..\..\components\drivers\include;board;board\CubeMX_Config\Inc;board\ports;..\libraries\HAL_Drivers;..\libraries\HAL_Drivers\config;..\..\..\components\dfs\include;..\..\..\components\dfs\filesystems\devfs;..\..\..\components\dfs\filesystems\ramfs;..\..\..\components\finsh;.;..\..\..\include;..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Inc;..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Include;..\libraries\STM32F4xx_HAL\CMSIS\Include;..\..\..\components\drivers\usb\usbdevice;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NDEBUG=1;RELEASE=1;flash_layout;USE_HAL_DRIVER;__RTTHREAD__;STM32F429xx;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>applications;..\..\..\components\cplusplus;..\..\..\libcpu\arm\common;..\..\..\libcpu\arm\cortex-m4;..\..\..\components\drivers\include;board;board\CubeMX_Config\Inc;board\ports;..\libraries\HAL_Drivers;..\libraries\HAL_Drivers\config;..\..\..\components\dfs\include;..\..\..\components\dfs\filesystems\devfs;..\..\..\components\dfs\filesystems\ramfs;..\..\..\components\finsh;.;..\..\..\include;..\..\..\components\libc\compilers\armlibc;..\..\..\components\libc\compilers\common;..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Inc;..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Include;..\libraries\STM32F4xx_HAL\CMSIS\Include;..\..\..\components\drivers\usb\usbdevice;utility;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>USE_HAL_DRIVER;RT_USING_ARM_LIBC;__RTTHREAD__;STM32F429xx;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions />
       <CLanguageStandard />
       <CPPLanguageStandard />
     </ClCompile>
     <Link>
-      <LibrarySearchDirectories>%(Link.LibrarySearchDirectories)</LibrarySearchDirectories>
-      <AdditionalLibraryNames>%(Link.AdditionalLibraryNames)</AdditionalLibraryNames>
       <AdditionalLinkerInputs>%(Link.AdditionalLinkerInputs)</AdditionalLinkerInputs>
       <AdditionalOptions />
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <LinkerScript Include="stm32_rom.ld" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\components\dfs\filesystems\devfs\devfs.c" />
-    <ClCompile Include="..\..\..\components\dfs\filesystems\ramfs\dfs_ramfs.c" />
+    <ClCompile Include="applications\lcd_init.c" />
+    <ClCompile Include="applications\main.cpp" />
+    <ClCompile Include="..\..\..\components\cplusplus\cxx_Mutex.cpp" />
+    <ClCompile Include="..\..\..\components\cplusplus\cxx_Semaphore.cpp" />
+    <ClCompile Include="..\..\..\components\cplusplus\cxx_Thread.cpp" />
+    <ClCompile Include="..\..\..\components\cplusplus\cxx_crt.cpp" />
+    <ClCompile Include="..\..\..\components\cplusplus\crt_init.c" />
+    <ClCompile Include="..\..\..\libcpu\arm\common\backtrace.c" />
+    <ClCompile Include="..\..\..\libcpu\arm\common\div0.c" />
+    <ClCompile Include="..\..\..\libcpu\arm\common\showmem.c" />
+    <ClCompile Include="..\..\..\libcpu\arm\cortex-m4\cpuport.c" />
+    <ClCompile Include="..\..\..\libcpu\arm\cortex-m4\context_rvds.S" />
+    <ClCompile Include="..\..\..\components\drivers\i2c\i2c_core.c" />
+    <ClCompile Include="..\..\..\components\drivers\i2c\i2c_dev.c" />
+    <ClCompile Include="..\..\..\components\drivers\i2c\i2c-bit-ops.c" />
+    <ClCompile Include="..\..\..\components\drivers\misc\pin.c" />
+    <ClCompile Include="..\..\..\components\drivers\serial\serial.c" />
+    <ClCompile Include="..\..\..\components\drivers\src\completion.c" />
+    <ClCompile Include="..\..\..\components\drivers\src\dataqueue.c" />
+    <ClCompile Include="..\..\..\components\drivers\src\pipe.c" />
+    <ClCompile Include="..\..\..\components\drivers\src\ringblk_buf.c" />
+    <ClCompile Include="..\..\..\components\drivers\src\ringbuffer.c" />
+    <ClCompile Include="..\..\..\components\drivers\src\waitqueue.c" />
+    <ClCompile Include="..\..\..\components\drivers\src\workqueue.c" />
+    <ClCompile Include="board\board.c" />
+    <ClCompile Include="board\CubeMX_Config\Src\stm32f4xx_hal_msp.c" />
+    <ClCompile Include="..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f429xx.s" />
+    <ClCompile Include="..\libraries\HAL_Drivers\drv_gpio.c" />
+    <ClCompile Include="..\libraries\HAL_Drivers\drv_usart.c" />
+    <ClCompile Include="..\libraries\HAL_Drivers\drv_usbd.c" />
+    <ClCompile Include="..\libraries\HAL_Drivers\drv_common.c" />
+    <ClCompile Include="board\CubeMX_Config\Src\main.c" />
     <ClCompile Include="..\..\..\components\dfs\src\dfs.c" />
     <ClCompile Include="..\..\..\components\dfs\src\dfs_file.c" />
     <ClCompile Include="..\..\..\components\dfs\src\dfs_fs.c" />
     <ClCompile Include="..\..\..\components\dfs\src\dfs_posix.c" />
-    <ClCompile Include="..\..\..\components\drivers\usb\usbdevice\class\cdc_vcom.c" />
-    <ClCompile Include="..\..\..\components\drivers\usb\usbdevice\class\ecm.c" />
-    <ClCompile Include="..\..\..\components\drivers\usb\usbdevice\class\hid.c" />
-    <ClCompile Include="..\..\..\components\drivers\usb\usbdevice\class\mstorage.c" />
-    <ClCompile Include="..\..\..\components\drivers\usb\usbdevice\class\rndis.c" />
-    <ClCompile Include="..\..\..\components\drivers\usb\usbdevice\core\usbdevice.c" />
-    <ClCompile Include="..\..\..\components\drivers\usb\usbdevice\core\usbdevice_core.c" />
+    <ClCompile Include="..\..\..\components\dfs\filesystems\devfs\devfs.c" />
+    <ClCompile Include="..\..\..\components\dfs\filesystems\ramfs\dfs_ramfs.c" />
+    <ClCompile Include="..\..\..\components\finsh\shell.c" />
     <ClCompile Include="..\..\..\components\finsh\cmd.c" />
+    <ClCompile Include="..\..\..\components\finsh\msh.c" />
+    <ClCompile Include="..\..\..\components\finsh\msh_file.c" />
     <ClCompile Include="..\..\..\components\finsh\finsh_compiler.c" />
     <ClCompile Include="..\..\..\components\finsh\finsh_error.c" />
     <ClCompile Include="..\..\..\components\finsh\finsh_heap.c" />
@@ -101,14 +121,9 @@
     <ClCompile Include="..\..\..\components\finsh\finsh_node.c" />
     <ClCompile Include="..\..\..\components\finsh\finsh_ops.c" />
     <ClCompile Include="..\..\..\components\finsh\finsh_parser.c" />
-    <ClCompile Include="..\..\..\components\finsh\finsh_token.c" />
     <ClCompile Include="..\..\..\components\finsh\finsh_var.c" />
     <ClCompile Include="..\..\..\components\finsh\finsh_vm.c" />
-    <ClCompile Include="..\..\..\components\finsh\msh.c" />
-    <ClCompile Include="..\..\..\components\finsh\msh_file.c" />
-    <ClCompile Include="..\..\..\components\finsh\shell.c" />
-    <ClCompile Include="..\..\..\components\finsh\symbol.c" />
-    <ClCompile Include="..\..\..\libcpu\arm\cortex-m4\context_gcc.S" />
+    <ClCompile Include="..\..\..\components\finsh\finsh_token.c" />
     <ClCompile Include="..\..\..\src\clock.c" />
     <ClCompile Include="..\..\..\src\components.c" />
     <ClCompile Include="..\..\..\src\device.c" />
@@ -124,35 +139,11 @@
     <ClCompile Include="..\..\..\src\signal.c" />
     <ClCompile Include="..\..\..\src\thread.c" />
     <ClCompile Include="..\..\..\src\timer.c" />
-    <ClCompile Include="..\libraries\HAL_Drivers\drv_usbd.c" />
-    <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_pcd.c" />
-    <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_pcd_ex.c" />
-    <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_tim.c" />
-    <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_tim_ex.c" />
-    <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_ll_usb.c" />
-    <ClCompile Include="applications\lcd_init.c" />
-    <ClCompile Include="board\board.c" />
-    <ClCompile Include="board\CubeMX_Config\Src\main.c" />
-    <ClCompile Include="board\CubeMX_Config\Src\stm32f4xx_hal_msp.c" />
-    <ClCompile Include="..\libraries\HAL_Drivers\drv_gpio.c" />
-    <ClCompile Include="..\libraries\HAL_Drivers\drv_usart.c" />
-    <ClCompile Include="..\libraries\HAL_Drivers\drv_common.c" />
-    <ClCompile Include="..\..\..\libcpu\arm\common\backtrace.c" />
-    <ClCompile Include="..\..\..\libcpu\arm\common\div0.c" />
-    <ClCompile Include="..\..\..\libcpu\arm\common\showmem.c" />
-    <ClCompile Include="..\..\..\libcpu\arm\cortex-m4\cpuport.c" />
-    <ClCompile Include="..\..\..\components\drivers\i2c\i2c_core.c" />
-    <ClCompile Include="..\..\..\components\drivers\i2c\i2c_dev.c" />
-    <ClCompile Include="..\..\..\components\drivers\i2c\i2c-bit-ops.c" />
-    <ClCompile Include="..\..\..\components\drivers\misc\pin.c" />
-    <ClCompile Include="..\..\..\components\drivers\serial\serial.c" />
-    <ClCompile Include="..\..\..\components\drivers\src\completion.c" />
-    <ClCompile Include="..\..\..\components\drivers\src\dataqueue.c" />
-    <ClCompile Include="..\..\..\components\drivers\src\pipe.c" />
-    <ClCompile Include="..\..\..\components\drivers\src\ringblk_buf.c" />
-    <ClCompile Include="..\..\..\components\drivers\src\ringbuffer.c" />
-    <ClCompile Include="..\..\..\components\drivers\src\waitqueue.c" />
-    <ClCompile Include="..\..\..\components\drivers\src\workqueue.c" />
+    <ClCompile Include="..\..\..\components\libc\compilers\armlibc\libc.c" />
+    <ClCompile Include="..\..\..\components\libc\compilers\armlibc\mem_std.c" />
+    <ClCompile Include="..\..\..\components\libc\compilers\armlibc\stdio.c" />
+    <ClCompile Include="..\..\..\components\libc\compilers\armlibc\stubs.c" />
+    <ClCompile Include="..\..\..\components\libc\compilers\common\time.c" />
     <ClCompile Include="..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Source\Templates\system_stm32f4xx.c" />
     <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal.c" />
     <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_cec.c" />
@@ -172,24 +163,21 @@
     <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_usart.c" />
     <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_i2c.c" />
     <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_i2c_ex.c" />
-    <ClCompile Include="startup_stm32f429xx.c" />
-    <None Include="stm32.props" />
+    <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_pccard.c" />
+    <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_pcd.c" />
+    <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_pcd_ex.c" />
+    <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_hcd.c" />
+    <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_ll_usb.c" />
+    <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_tim.c" />
+    <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_tim_ex.c" />
+    <ClCompile Include="..\..\..\components\drivers\usb\usbdevice\core\usbdevice_core.c" />
+    <ClCompile Include="..\..\..\components\drivers\usb\usbdevice\core\usbdevice.c" />
+    <ClCompile Include="..\..\..\components\drivers\usb\usbdevice\class\cdc_vcom.c" />
+    <ClInclude Include="RTE\RTE_Components.h" />
+    <None Include="mcu.props" />
+    <ClInclude Include="$(BSP_ROOT)\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h" />
     <None Include="project-Debug.vgdbsettings" />
     <None Include="project-Release.vgdbsettings" />
-    <None Include="stm32.xml" />
-    <ClCompile Include="applications\main.cpp" />
-    <ClCompile Include="..\..\..\components\cplusplus\cxx_Mutex.cpp" />
-    <ClCompile Include="..\..\..\components\cplusplus\cxx_Semaphore.cpp" />
-    <ClCompile Include="..\..\..\components\cplusplus\cxx_Thread.cpp" />
-    <ClCompile Include="..\..\..\components\cplusplus\cxx_crt.cpp" />
-    <ClCompile Include="..\..\..\components\cplusplus\crt_init.c" />
-    <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_pccard.c" />
-    <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_hcd.c" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="utility\argument_vector.hpp" />
-    <ClInclude Include="utility\basic_utility.h" />
-    <ClInclude Include="utility\Microsecond.hpp" />
-    <ClInclude Include="utility\NonCopyable.h" />
+    <None Include="MCU.xml" />
   </ItemGroup>
 </Project>

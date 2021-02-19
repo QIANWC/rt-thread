@@ -88,6 +88,12 @@
     <Filter Include="Header files\utility">
       <UniqueIdentifier>{d839e0fc-fb06-454a-9da9-0ccb04305ede}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source files\libc">
+      <UniqueIdentifier>{9ff7e37c-2cb7-4b09-a59f-d79447fe21e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\libc">
+      <UniqueIdentifier>{4cac3e4f-b58e-4e39-962a-4dfdbe90fa47}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\clock.c">
@@ -470,6 +476,15 @@
     </ClCompile>
     <ClCompile Include="board\CubeMX_Config\Src\main.c">
       <Filter>Source files\Drivers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\libc\compilers\armlibc\mem_std.c">
+      <Filter>Source files\libc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\libc\compilers\armlibc\libc.c">
+      <Filter>Source files\libc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\libc\compilers\armlibc\stdio.c">
+      <Filter>Source files\libc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

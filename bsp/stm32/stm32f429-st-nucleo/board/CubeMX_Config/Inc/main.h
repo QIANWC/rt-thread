@@ -37,7 +37,7 @@ extern "C" {
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
-TIM_HandleTypeDef htim5;
+extern TIM_HandleTypeDef htim5;
 
 /* USER CODE END ET */
 

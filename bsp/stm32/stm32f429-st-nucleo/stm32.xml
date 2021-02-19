@@ -22,6 +22,7 @@
       </KeyValue>
       <KeyValue>
         <Key>com.sysprogs.mcuoptions.ignore_startup_file</Key>
+        <Value>1</Value>
       </KeyValue>
       <KeyValue>
         <Key>com.sysprogs.toolchainoptions.arm.libctype</Key>
@@ -48,7 +49,7 @@
     <AllDependencies>
       <ProjectDependency>
         <RelativePath>project.uvprojx</RelativePath>
-        <Timestamp>132575057481702937</Timestamp>
+        <Timestamp>132580460546859688</Timestamp>
       </ProjectDependency>
     </AllDependencies>
     <RootDirectory>
@@ -162,6 +163,9 @@
             </VirtualFileSnapshot>
             <VirtualFileSnapshot>
               <RelativePath>..\libraries\HAL_Drivers\drv_common.c</RelativePath>
+            </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
+              <RelativePath>board\CubeMX_Config\Src\main.c</RelativePath>
             </VirtualFileSnapshot>
           </Files>
         </VirtualDirectorySnapshot>
@@ -286,6 +290,26 @@
           </Files>
         </VirtualDirectorySnapshot>
         <VirtualDirectorySnapshot>
+          <Name>libc</Name>
+          <Files>
+            <VirtualFileSnapshot>
+              <RelativePath>..\..\..\components\libc\compilers\armlibc\libc.c</RelativePath>
+            </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
+              <RelativePath>..\..\..\components\libc\compilers\armlibc\mem_std.c</RelativePath>
+            </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
+              <RelativePath>..\..\..\components\libc\compilers\armlibc\stdio.c</RelativePath>
+            </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
+              <RelativePath>..\..\..\components\libc\compilers\armlibc\stubs.c</RelativePath>
+            </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
+              <RelativePath>..\..\..\components\libc\compilers\common\time.c</RelativePath>
+            </VirtualFileSnapshot>
+          </Files>
+        </VirtualDirectorySnapshot>
+        <VirtualDirectorySnapshot>
           <Name>Libraries</Name>
           <Files>
             <VirtualFileSnapshot>
@@ -360,6 +384,12 @@
             <VirtualFileSnapshot>
               <RelativePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_ll_usb.c</RelativePath>
             </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
+              <RelativePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_tim.c</RelativePath>
+            </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
+              <RelativePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_tim_ex.c</RelativePath>
+            </VirtualFileSnapshot>
           </Files>
         </VirtualDirectorySnapshot>
         <VirtualDirectorySnapshot>
@@ -403,14 +433,18 @@
             <string>..\..\..\components\finsh</string>
             <string>.</string>
             <string>..\..\..\include</string>
+            <string>..\..\..\components\libc\compilers\armlibc</string>
+            <string>..\..\..\components\libc\compilers\common</string>
             <string>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Inc</string>
             <string>..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Include</string>
             <string>..\libraries\STM32F4xx_HAL\CMSIS\Include</string>
             <string>..\..\..\components\drivers\usb\usbdevice</string>
+            <string>utility</string>
           </IncludeDirectories>
           <PreprocessorMacros>
             <string>$$com.sysprogs.bspoptions.primary_memory$$_layout</string>
             <string>USE_HAL_DRIVER</string>
+            <string>RT_USING_ARM_LIBC</string>
             <string>__RTTHREAD__</string>
             <string>STM32F429xx</string>
           </PreprocessorMacros>

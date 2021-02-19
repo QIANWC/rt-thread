@@ -117,7 +117,7 @@ SECTIONS
     __bss_end = .;
 
     _end = .;
-
+    end = _end;
     /* Stabs debugging sections.  */
     .stab          0 : { *(.stab) }
     .stabstr       0 : { *(.stabstr) }

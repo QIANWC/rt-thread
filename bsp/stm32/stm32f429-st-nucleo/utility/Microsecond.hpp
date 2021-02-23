@@ -26,7 +26,7 @@ typedef uint64_t us_timestamp_t;
     #ifdef __RTTHREAD__
     extern TIM_HandleTypeDef htim2;
     TIM_HandleTypeDef* usTimer = &htim2;
-    #define usTimer_init MX_TIM2_Init
+    #define usTimer_Init MX_TIM2_Init
     #endif
     #define usTimer_irq TIM2_IRQn
     #define usTimer_isr TIM2_IRQHandler

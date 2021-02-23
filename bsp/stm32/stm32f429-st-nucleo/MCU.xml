@@ -52,7 +52,7 @@
     <AllDependencies>
       <ProjectDependency>
         <RelativePath>project.uvprojx</RelativePath>
-        <Timestamp>132582004055206609</Timestamp>
+        <Timestamp>132582065143707221</Timestamp>
       </ProjectDependency>
     </AllDependencies>
     <RootDirectory>
@@ -102,9 +102,6 @@
             </VirtualFileSnapshot>
             <VirtualFileSnapshot>
               <RelativePath>..\..\..\libcpu\arm\cortex-m4\cpuport.c</RelativePath>
-            </VirtualFileSnapshot>
-            <VirtualFileSnapshot>
-              <RelativePath>..\..\..\libcpu\arm\cortex-m4\context_rvds.S</RelativePath>
             </VirtualFileSnapshot>
           </Files>
         </VirtualDirectorySnapshot>
@@ -157,9 +154,6 @@
             </VirtualFileSnapshot>
             <VirtualFileSnapshot>
               <RelativePath>board\CubeMX_Config\Src\stm32f4xx_hal_msp.c</RelativePath>
-            </VirtualFileSnapshot>
-            <VirtualFileSnapshot>
-              <RelativePath>..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f429xx.s</RelativePath>
             </VirtualFileSnapshot>
             <VirtualFileSnapshot>
               <RelativePath>..\libraries\HAL_Drivers\drv_gpio.c</RelativePath>

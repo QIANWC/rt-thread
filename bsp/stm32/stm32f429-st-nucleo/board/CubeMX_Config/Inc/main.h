@@ -37,6 +37,9 @@ extern "C" {
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
+extern ADC_HandleTypeDef hadc1;
+extern TIM_HandleTypeDef htim1;
+extern TIM_HandleTypeDef htim4;
 extern TIM_HandleTypeDef htim5;
 
 /* USER CODE END ET */
@@ -52,6 +55,8 @@ extern TIM_HandleTypeDef htim5;
 
 /* USER CODE END EM */
 
+void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
+
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
 
@@ -62,6 +67,8 @@ void Error_Handler(void);
 
 /* Private defines -----------------------------------------------------------*/
 #define US_TICK_USE_TIM5 1
+#define SYSCLK_HZ 168000000
+#define MCPWM_HZ 20000
 #define USER_Btn_Pin GPIO_PIN_13
 #define USER_Btn_GPIO_Port GPIOC
 #define MCO_Pin GPIO_PIN_0

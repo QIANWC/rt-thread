@@ -15,32 +15,50 @@
 #include <numeric>
 #endif
 
+#include "PlatformInfo.hpp"
 #include <cassert>
 #include <array>
 using std::array;//推荐使用array代替C style array
 #include <string.h>//memory.h实际引用string.h，历史遗留问题
-#include <NonCopyable.h>
-using mbed::NonCopyable;
 #include "Microsecond.hpp"
 using namespace Microsecond;
 #include "argument_vector.hpp"
 
 //test utility
-#define test_assert(expr) ++test_cnt;if(expr){++pass_cnt;}else{if(fail_stop)goto stop;}
+#define test_assert(expr) \
+    ++test_cnt;\
+    if(expr){\
+        ++pass_cnt;}\
+    else{\
+        if(failstop){\
+            printf("test abort@case:%d", test_cnt);\
+            goto failexit;}\
+        else{\
+            /*continue even encounter failure*/\
+        }\
+    }
+
+enum class ConsoleColor
+{
+    Black,
+    Red,
+    Green,
+    Yellow,
+    Blue,
+    Magenta,
+    Cyan,
+    White
+};
+ 
+void SetConsoleForegroundColor(ConsoleColor color)
+{
+    printf("\x1b[%dm", 30 + (int)color);
+}
 
 #ifdef __MBED__
-inline void delayms(uint32_t ms)
-{
-    Thread::wait(ms);
-}
+#include "mbed_portout.hpp"
 #elif defined __RTTHREAD__
-//注意使用环境
-inline void delayus(uint32_t us)
-{
-    rt_hw_us_delay(us);
-}
-inline void delayms(uint32_t ms)
-{
-    Thread::sleep(ms);
-}
+#include "rtt_portout.hpp"
+using ASIO::Ticker;
+using ASIO::NonCopyable;
 #endif // 

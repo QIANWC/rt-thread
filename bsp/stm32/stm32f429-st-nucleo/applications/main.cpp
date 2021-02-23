@@ -21,10 +21,13 @@ using rtthread::Thread;
 #include "DigitalInOut.h"
 using mbed::DigitalInOut;
 #include "basic_utility.h"
+#include "BrushedDCM_Ctrl.hpp"
+#include "QNum.hpp"
 
-DigitalInOut green(GET_PIN(B, 0), PIN_MODE_OUTPUT, PIN_LOW), &yellow = green;
+DigitalInOut green(GET_PIN(B, 0), PIN_MODE_OUTPUT, PIN_LOW);
 DigitalInOut blue(GET_PIN(B, 7), PIN_MODE_OUTPUT, PIN_LOW);
 DigitalInOut red(GET_PIN(B, 14), PIN_MODE_OUTPUT, PIN_LOW);
+DigitalInOut &yellow = green;
 
 void task1_func(void *)
 {
@@ -81,9 +84,21 @@ int main(void)
             rt_device_set_rx_indicate(vcp, Serial_RxCallback);
     }
 
+    delayms(200);
     thread_main = rt_thread_find("main");
     printf("main thread stack_addr=0x%08X\n", (int)thread_main->stack_addr);
-    delayms(500);
+    
+    std::string ans;
+    //check platform type define
+    
+    bool failstop = 0;
+    SetConsoleForegroundColor(ConsoleColor::Cyan);
+    PlatformInfo::Test::test();
+    qmath::Test::test();
+    filter::Test::test(failstop);
+    BrushedDCM::Test::test();
+    SetConsoleForegroundColor(ConsoleColor::White);
+    
     while (1)
     {
         green = !green;

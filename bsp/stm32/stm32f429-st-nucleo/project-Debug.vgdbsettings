@@ -170,7 +170,7 @@
         <LoadProgressGUIThreshold>131072</LoadProgressGUIThreshold>
         <ProgramMode>Enabled</ProgramMode>
         <StartupCommands>
-          <string>set remotetimeout 60</string>
+          <string>set remotetimeout 1000</string>
           <string>target remote :$$SYS:GDB_PORT$$</string>
           <string>mon halt</string>
           <string>mon reset init</string>

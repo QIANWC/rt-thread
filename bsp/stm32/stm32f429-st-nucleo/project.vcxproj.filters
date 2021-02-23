@@ -88,6 +88,12 @@
     <Filter Include="VisualGDB settings">
       <UniqueIdentifier>{15bea36a-acd0-45b5-8c2d-b77d3e69f938}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header files\utility">
+      <UniqueIdentifier>{fa6d3ea9-dc2a-4364-963a-6e975402fcc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Controller">
+      <UniqueIdentifier>{2c5ef8e2-4ab4-4010-88cd-4fc7109fd84e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="applications\lcd_init.c">
@@ -121,9 +127,6 @@
       <Filter>Source files\CPU</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\libcpu\arm\cortex-m4\cpuport.c">
-      <Filter>Source files\CPU</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\libcpu\arm\cortex-m4\context_rvds.S">
       <Filter>Source files\CPU</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\components\drivers\i2c\i2c_core.c">
@@ -166,9 +169,6 @@
       <Filter>Source files\Drivers</Filter>
     </ClCompile>
     <ClCompile Include="board\CubeMX_Config\Src\stm32f4xx_hal_msp.c">
-      <Filter>Source files\Drivers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f429xx.s">
       <Filter>Source files\Drivers</Filter>
     </ClCompile>
     <ClCompile Include="..\libraries\HAL_Drivers\drv_gpio.c">
@@ -408,10 +408,57 @@
     <None Include="MCU.xml">
       <Filter>VisualGDB settings</Filter>
     </None>
+    <ClCompile Include="..\..\..\libcpu\arm\cortex-m4\context_rvds.S" />
+    <ClCompile Include="..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f429xx.s" />
+    <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_adc.c">
+      <Filter>Source files\Libraries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_adc_ex.c">
+      <Filter>Source files\Libraries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_dac.c">
+      <Filter>Source files\Libraries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_dac_ex.c">
+      <Filter>Source files\Libraries</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RTE\RTE_Components.h">
       <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="utility\argument_vector.hpp">
+      <Filter>Header files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="utility\basic_utility.h">
+      <Filter>Header files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="utility\Microsecond.hpp">
+      <Filter>Header files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller\basic_filter.hpp">
+      <Filter>Header files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller\BrushedDCM_Ctrl.hpp">
+      <Filter>Header files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller\controller.hpp">
+      <Filter>Header files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller\Encoder.hpp">
+      <Filter>Header files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller\MotorParam.hpp">
+      <Filter>Header files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller\QNum.hpp">
+      <Filter>Header files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="utility\PlatformInfo.hpp">
+      <Filter>Header files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="utility\rtt_portout.hpp">
+      <Filter>Header files\utility</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

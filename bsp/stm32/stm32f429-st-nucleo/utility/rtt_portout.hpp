@@ -18,10 +18,10 @@ namespace ASIO
             rt_timer_detach(&timer);
         }
             
-        void attach(callback cb, float t, const std::string name = "")
+        void attach(callback cb, float t, const char* name ="")
         {
             int tick = t;
-            rt_timer_init(&timer, name.c_str(), cb, nullptr, tick, RT_TIMER_FLAG_PERIODIC);
+            rt_timer_init(&timer, name, cb, nullptr, tick, RT_TIMER_FLAG_PERIODIC);
             rt_timer_start(&timer);
         }
     private:

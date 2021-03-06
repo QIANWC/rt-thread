@@ -39,10 +39,17 @@ namespace PlatformInfo
         //ByteOrder Identify method need review
     }
     
-    void GetChipInfo(void)
+    //TODO:处理器架构、版本，芯片ID等信息
+    uint32_t GetChipInfo(void)
     {
+        //TODO:目前只核对了F4的地址
+#if defined STM32F0|defined STM32F1|defined STM32F3|defined STM32F4|defined STM32G4|defined STM32H7
         const uint32_t Addr_CortexM_CPUID = 0xE000ED00;
         uint32_t cpuid = *(uint32_t*)Addr_CortexM_CPUID;
+        return cpuid;
+#else
+        return 0;
+#endif
     }
     
     namespace Test

@@ -17,11 +17,16 @@ TIM_HandleTypeDef* usTimer = &TimMasterHandle;
 #include <stdint.h>
 #include <rtthread.h>
 #include <board.h>
+#include "main.h"
 typedef uint32_t timestamp_t;
 typedef uint64_t us_timestamp_t;
+#elif defined _WIN32
+#include <chrono>
+typedef uint32_t timestamp_t;
+typedef uint64_t us_timestamp_t;
+//TODO:
 #endif // __MBED__
 
-#include "main.h"
 #if US_TICK_USE_TIM2
     #ifdef __RTTHREAD__
     extern TIM_HandleTypeDef htim2;
@@ -40,7 +45,8 @@ typedef uint64_t us_timestamp_t;
     #define usTimer_irq TIM5_IRQn
     #define usTimer_isr TIM5_IRQHandler
     #define usTimer_DBGMCU_FREEZE __HAL_DBGMCU_FREEZE_TIM5
-#else 
+#elif defined _WIN32
+#else
     #error "us timer not set"
 #endif
 
@@ -104,13 +110,26 @@ namespace Microsecond
     {
         return usTimer->Instance->CNT;
     }
+#elif defined _WIN32
+    timestamp_t us_tick(void)
+    {
+        //TODO:std::chrono测试验证，API统一
+        return std::chrono::microseconds().count();
+    }
 #endif
 
+#ifndef _CHRONO_
     us_timestamp_t us()
     {
         return ((us_timestamp_t)ticker_overflow_cnt << 32) + us_tick();
     }
-    
+#else
+    us_timestamp_t us()
+    {
+        return std::chrono::microseconds().count();
+    }
+#endif
+
     namespace Test
     {
         timestamp_t stamp = 0;

@@ -427,9 +427,6 @@
     <ClInclude Include="RTE\RTE_Components.h">
       <Filter>Header files</Filter>
     </ClInclude>
-    <ClInclude Include="utility\argument_vector.hpp">
-      <Filter>Header files\utility</Filter>
-    </ClInclude>
     <ClInclude Include="utility\basic_utility.h">
       <Filter>Header files\utility</Filter>
     </ClInclude>
@@ -458,6 +455,12 @@
       <Filter>Header files\utility</Filter>
     </ClInclude>
     <ClInclude Include="utility\rtt_portout.hpp">
+      <Filter>Header files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="utility\NamedVariant.hpp">
+      <Filter>Header files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="utility\cstring.hpp">
       <Filter>Header files\utility</Filter>
     </ClInclude>
   </ItemGroup>

@@ -23,6 +23,7 @@ using mbed::DigitalInOut;
 #include "basic_utility.h"
 #include "BrushedDCM_Ctrl.hpp"
 #include "QNum.hpp"
+#include "NamedVariant.hpp"
 
 DigitalInOut green(GET_PIN(B, 0), PIN_MODE_OUTPUT, PIN_LOW);
 DigitalInOut blue(GET_PIN(B, 7), PIN_MODE_OUTPUT, PIN_LOW);
@@ -72,6 +73,7 @@ INIT_ENV_EXPORT(ramfs_init);
 
 volatile timestamp_t stamp = 0;
 rt_thread_t thread_main;
+#include "utility_test.hpp"
 int main(void)
 {
 	task1.start();
@@ -88,14 +90,16 @@ int main(void)
     thread_main = rt_thread_find("main");
     printf("main thread stack_addr=0x%08X\n", (int)thread_main->stack_addr);
     
-    std::string ans;
+    string ans;
     //check platform type define
     
-    bool failstop = 0;
+    int failstop = 2;
     SetConsoleForegroundColor(ConsoleColor::Cyan);
     PlatformInfo::Test::test();
     qmath::Test::test();
+    utility::utility_test(TESTFAIL_BREAKPOINT);
     filter::Test::test(failstop);
+    MConfGenerate_RM35();
     BrushedDCM::Test::test();
     SetConsoleForegroundColor(ConsoleColor::White);
     

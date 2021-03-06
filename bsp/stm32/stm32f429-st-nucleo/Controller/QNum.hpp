@@ -174,7 +174,7 @@ private:
             return fabs(a - b) <= 0.001f;
         }
             
-        int test(bool failstop = true)
+        int test(int failbehavior = TESTFAIL_CONTINUE)
         {
             using q15 = QNum<int32_t, 15>;//q15_int32 or say q15_precision32
             printf("QNum Test:\n");

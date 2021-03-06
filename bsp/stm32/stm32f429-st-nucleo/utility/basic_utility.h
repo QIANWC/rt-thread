@@ -22,21 +22,67 @@ using std::array;//推荐使用array代替C style array
 #include <string.h>//memory.h实际引用string.h，历史遗留问题
 #include "Microsecond.hpp"
 using namespace Microsecond;
-#include "argument_vector.hpp"
+//#include "argument_vector.hpp"
+#include "NamedVariant.hpp"
 
+#define TESTFAIL_CONTINUE 0
+#define TESTFAIL_STOP 1
+#define TESTFAIL_BREAKPOINT 2
+
+#ifdef ARCH_ARM_CORTEX_M
+#define TRIG_BREAKPOINT __BKPT()
+#else
+#define TRIG_BREAKPOINT
+#endif
+
+//common actions
+bool testfail_action(bool expr, int failbehavior, int& test_cnt, int& pass_cnt)
+{
+    ++test_cnt;
+    if (expr)
+    {
+        ++pass_cnt;
+        return false;
+    }
+        
+    printf("one test case failed,");
+    switch (failbehavior)
+    {
+    case TESTFAIL_CONTINUE:printf("continuing...\n"); break;
+    case TESTFAIL_STOP:printf("abort\n"); break;
+    case TESTFAIL_BREAKPOINT:printf("trigger breakpoint\n"); break;
+    default:printf("unknown failbehavior:%d", failbehavior);break;
+    }
+    return true;
+}
+    
+#if 1
+#define test_assert(expr) \
+    if (testfail_action((expr),failbehavior,test_cnt,pass_cnt)){\
+        switch(failbehavior){\
+        default:\
+        case TESTFAIL_CONTINUE : break;\
+        case TESTFAIL_STOP : goto failexit;break;\
+        case TESTFAIL_BREAKPOINT : TRIG_BREAKPOINT;break;\
+        }\
+    }
+#else
 //test utility
 #define test_assert(expr) \
     ++test_cnt;\
     if(expr){\
         ++pass_cnt;}\
     else{\
-        if(failstop){\
-            printf("test abort@case:%d", test_cnt);\
-            goto failexit;}\
-        else{\
-            /*continue even encounter failure*/\
+        printf("one test case failed,");\
+        switch(failbehavior){\
+        case TESTFAIL_CONTINUE:printf("continuing...\n");break;\
+        case TESTFAIL_STOP:printf("abort\n");goto failexit;break;\
+        case TESTFAIL_BREAKPOINT:printf("trigger breakpoint\n");TRIG_BREAKPOINT;break;\
+        default : printf("unknown failbehavior:%d", failbehavior); break;\
         }\
     }
+#endif
+
 
 enum class ConsoleColor
 {

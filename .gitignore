@@ -35,9 +35,12 @@ ncscope.*
 tags
 
 **/CubeMX_Config/MDK-ARM/*
+.mxproject
 .vs/
 .visualgdb/
 *.vcxproj.user
 *.vgdbsettings.*.user
 *.uvgui.*
 *.uvguix.*
+EventRecorderStub.scvd
+keil-assistant.log

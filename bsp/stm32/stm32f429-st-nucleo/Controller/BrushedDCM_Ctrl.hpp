@@ -8,6 +8,7 @@
 
 #include "Encoder.hpp"
 #include "MotorParam.hpp"
+#include "basic_utility.hpp"
 
 /*TODO:位置和速度控制细化
  *TODO:刹车和缓停控制逻辑
@@ -16,13 +17,12 @@
 namespace BrushedDCM
 {
 
-    float midoffset = { 1.641f };
-    float i, gi = 6.0f / 0.625f;
-    float kadc = 3.3f / 4096.0f;
-    int16_t ccr = 0, adc_sample_offset = 10;  //采样偏移
-    float lpf_a = 0.90f;
+    static float midoffset = { 1.641f };
+    static float i, gi = 6.0f / 0.625f;
+    static float kadc = 3.3f / 4096.0f;
+    static int16_t ccr = 0, adc_sample_offset = 10;  //采样偏移
+    static float lpf_a = 0.90f;
 
-    using namespace controller;
     class BDCM
     {
     public:
@@ -138,7 +138,7 @@ namespace BrushedDCM
             state.pcnt = penc->getposcnt();
             state.P = penc->getpos();
             state.S = penc->getvel_rps();
-            state.stamp_us = us();
+            state.stamp_us = Microsecond::us();
         }
         void VISensor()
         {
@@ -147,7 +147,7 @@ namespace BrushedDCM
             i = i*lpf_a + (1.0f - lpf_a)*i_temp;
             state.V = 0;
             state.A = i;
-            state.stamp_us = us();
+            state.stamp_us = Microsecond::us();
         }
         void MiscSensor()
         {
@@ -226,7 +226,7 @@ namespace BrushedDCM
         }
             
         MotorConfStruct mconf;
-        pidclass iloop, vloop, ploop;
+        controller::pidclass iloop, vloop, ploop;
         VASP state;
     private:
         //current,velocity,position
@@ -345,8 +345,8 @@ namespace BrushedDCM
 
     namespace Test
     {
-        int32_t ticks[6];
-        MotorConfStruct mconf =  { 
+        static int32_t ticks[6];
+        static MotorConfStruct mconf =  { 
             .MechanicalParam={.GearRatio=1.0f},
             .VoltageParam={.MaxVolt=12.0f},
             .CurrentParam={.MaxAmp=1.0f},
@@ -358,10 +358,10 @@ namespace BrushedDCM
             //TODO:BDCM测试参数
             //...
             };
-        QuadratureEncoder encoder(2000);
-        BDCM motor(mconf);
+        static QuadratureEncoder encoder(2000);
+        static BDCM motor(mconf);
 
-        void currentsample_callback()
+        static void currentsample_callback()
         {
             ticks[0] = htim1.Instance->CNT;
             //假设位置测量和电流测量同时更新
@@ -370,18 +370,18 @@ namespace BrushedDCM
             motor.PosSensor();
             ticks[2] = htim1.Instance->CNT;
             
-            encoder.update(QuadEncInfo(htim4.Instance->CNT, us()));
+            encoder.update(QuadEncInfo(htim4.Instance->CNT, Microsecond::us()));
             ticks[3] = htim1.Instance->CNT;
             motor.current_ctrl(motor.state);
             ticks[4] = htim1.Instance->CNT;
         }
         
-        void supervisor_callback()
+        static void supervisor_callback()
         {
             motor.MiscSensor();
         }
             
-        void motionctrl_callback(void*)
+        static void motionctrl_callback(void*)
         {
             static uint32_t cnt = 0;
             encoder.update_speed();
@@ -395,7 +395,8 @@ namespace BrushedDCM
             cnt = (cnt + 1) % 10;
         }
         
-        extern "C" void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
+        //extern "C"
+        static void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
         {
             if (hadc == &hadc1)
             {
@@ -403,7 +404,7 @@ namespace BrushedDCM
             }
         }
         
-        int test()
+        inline int test()
         {
             HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_ALL);
             

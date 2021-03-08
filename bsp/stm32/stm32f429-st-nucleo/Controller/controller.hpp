@@ -16,11 +16,11 @@ namespace controller
             {
                 reset();
             }
-        
+
             ~PIDBase()
             {
             }
-    
+
             enum AntiWindupMethod
             {
                 None             = 0,
@@ -44,9 +44,9 @@ namespace controller
             void set_max(const T& _p, const T& _i, const T& _d)
             {
                 lock();
-                ASIO_ASSERT(_p >= 0);// "pmax invalid"
-                ASIO_ASSERT(_i >= 0);// "imax invalid"
-                ASIO_ASSERT(_d >= 0);// "dmax invalid"
+                // ASIO_ASSERT(_p >= 0);// "pmax invalid"
+                // ASIO_ASSERT(_i >= 0);// "imax invalid"
+                // ASIO_ASSERT(_d >= 0);// "dmax invalid"
                 pmax = _p;
                 imax = _i;
                 dmax = _d;
@@ -66,12 +66,12 @@ namespace controller
             {
                 Ts = _sec;
             }
-                
+
             void set_target(const T& x)
             {
                 tar = x;
             }
-        
+
             T compute(const T& state)
             {
                 val = state;
@@ -81,7 +81,7 @@ namespace controller
                 {
                 default:
                 case None:
-                case Clamp: 
+                case Clamp:
                     {
                         //p,i,d,u都使用独立的限幅
                         p = clamp(kp*err, -pmax, pmax);
@@ -112,12 +112,12 @@ namespace controller
             {
                 return compute(state);
             }
-    
+
             void operator>>(T& _u)
             {
                 _u = u;
             }
-    
+
             //获得一次PID类全部状态采样，状态采集和分析使用
             size_t state_sample(void *dst)
             {
@@ -126,7 +126,7 @@ namespace controller
                 unlock();
                 return sizeof(this);
             }
-    
+
         private:
             T kp = 0, ki = 0, kd = 0;
             T p = 0, i = 0, d = 0, u = 0;
@@ -137,7 +137,7 @@ namespace controller
             uint8_t antiwindup_method = Clamp;
             uint8_t use_radix = false;
             filter::FIR<T, 2> fir = { 0.5f, 0.5f };
-    
+
             void lock()
             {
                 //disable isr
@@ -150,17 +150,17 @@ namespace controller
 
     using pidclass = PIDBase<float>;
 
-    namespace Test
-    {
-        void test()
-        {
-            pidclass pid;
-            pid.set_gain(1, 1, 1);
-            printf("Controller test not ready yet\n");
-//            for (;;)
-//            {
-//                //需要虚拟系统才能有效仿真
-//            }
-        }
-    }
+//    namespace Test
+//    {
+//        void test()
+//        {
+//            pidclass pid;
+//            pid.set_gain(1, 1, 1);
+//            printf("Controller test not ready yet\n");
+////            for (;;)
+////            {
+////                //需要虚拟系统才能有效仿真
+////            }
+//        }
+//    }
 }

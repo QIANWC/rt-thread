@@ -17,7 +17,12 @@
 #ifndef MBED_NONCOPYABLE_H_
 #define MBED_NONCOPYABLE_H_
 
-namespace mbed {
+#ifdef __MBED__
+//引用好像重名
+#include <NonCopyable.h>
+using mbed::NonCopyable;
+#elif defined __RTTHREAD__
+//namespace ASIO {
 
 /** \addtogroup platform-public-api */
 /** @{*/
@@ -190,6 +195,8 @@ public:
 
 /**@}*/
 
-} // namespace mbed
+//} // namespace mbed
+//using ASIO::NonCopyable;
+#endif
 
 #endif /* MBED_NONCOPYABLE_H_ */

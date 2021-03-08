@@ -39,7 +39,7 @@ typedef uint64_t us_timestamp_t;
 #elif US_TICK_USE_TIM5
     #ifdef __RTTHREAD__
     extern TIM_HandleTypeDef htim5;
-    TIM_HandleTypeDef* usTimer = &htim5;
+    static TIM_HandleTypeDef* usTimer = &htim5;
     #define usTimer_Init MX_TIM5_Init
     #endif
     #define usTimer_irq TIM5_IRQn
@@ -49,10 +49,10 @@ typedef uint64_t us_timestamp_t;
 #else
     #error "us timer not set"
 #endif
-
 namespace Microsecond
 {
-    uint32_t ticker_overflow_cnt = 0;
+
+    static uint32_t ticker_overflow_cnt = 0;
     static void us_ticker_overflow_isr()
     {
         ++ticker_overflow_cnt;
@@ -94,7 +94,7 @@ namespace Microsecond
         if (__HAL_TIM_GET_FLAG(usTimer, TIM_IT_UPDATE))
         {
             __HAL_TIM_CLEAR_IT(usTimer, TIM_IT_UPDATE);
-            us_ticker_overflow_isr();
+            Microsecond::us_ticker_overflow_isr();
         }
     }
     extern "C" int init(void)
@@ -130,31 +130,6 @@ namespace Microsecond
     }
 #endif
 
-    namespace Test
-    {
-        timestamp_t stamp = 0;
-        //32位时间戳获取测试，未测试溢出表现
-        int test()
-        {
-            stamp = us_tick();
-            for (int k = 0; k < 5; ++k)
-            {
-#ifdef __MBED__
-                Thread::wait(1000);
-#elif defined __RTTHREAD__
-                Thread::sleep(1000);
-#endif // OS Environment
-                timestamp_t t = us_tick();
-                timestamp_t dt = t - stamp;
-                stamp = t;
-                if (std::abs((int)(dt - 10001000U)) >= 2000)
-                {
-                    return -1;//时间戳误差过大
-                }
-            }
-            return 0;
-        }
-    }
 }
 
 #endif

@@ -52,7 +52,7 @@
     <AllDependencies>
       <ProjectDependency>
         <RelativePath>project.uvprojx</RelativePath>
-        <Timestamp>132582065143707221</Timestamp>
+        <Timestamp>132596700252559790</Timestamp>
       </ProjectDependency>
     </AllDependencies>
     <RootDirectory>
@@ -61,10 +61,7 @@
           <Name>Applications</Name>
           <Files>
             <VirtualFileSnapshot>
-              <RelativePath>applications\lcd_init.c</RelativePath>
-            </VirtualFileSnapshot>
-            <VirtualFileSnapshot>
-              <RelativePath>applications\main.cpp</RelativePath>
+              <RelativePath>applications\realmain.cpp</RelativePath>
             </VirtualFileSnapshot>
           </Files>
         </VirtualDirectorySnapshot>
@@ -109,6 +106,9 @@
           <Name>DeviceDrivers</Name>
           <Files>
             <VirtualFileSnapshot>
+              <RelativePath>..\..\..\components\drivers\hwtimer\hwtimer.c</RelativePath>
+            </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
               <RelativePath>..\..\..\components\drivers\i2c\i2c_core.c</RelativePath>
             </VirtualFileSnapshot>
             <VirtualFileSnapshot>
@@ -119,6 +119,12 @@
             </VirtualFileSnapshot>
             <VirtualFileSnapshot>
               <RelativePath>..\..\..\components\drivers\misc\pin.c</RelativePath>
+            </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
+              <RelativePath>..\..\..\components\drivers\misc\adc.c</RelativePath>
+            </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
+              <RelativePath>..\..\..\components\drivers\misc\dac.c</RelativePath>
             </VirtualFileSnapshot>
             <VirtualFileSnapshot>
               <RelativePath>..\..\..\components\drivers\serial\serial.c</RelativePath>
@@ -156,19 +162,28 @@
               <RelativePath>board\CubeMX_Config\Src\stm32f4xx_hal_msp.c</RelativePath>
             </VirtualFileSnapshot>
             <VirtualFileSnapshot>
+              <RelativePath>board\CubeMX_Config\Src\main.c</RelativePath>
+            </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
               <RelativePath>..\libraries\HAL_Drivers\drv_gpio.c</RelativePath>
             </VirtualFileSnapshot>
             <VirtualFileSnapshot>
               <RelativePath>..\libraries\HAL_Drivers\drv_usart.c</RelativePath>
             </VirtualFileSnapshot>
             <VirtualFileSnapshot>
+              <RelativePath>..\libraries\HAL_Drivers\drv_hwtimer.c</RelativePath>
+            </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
+              <RelativePath>..\libraries\HAL_Drivers\drv_adc.c</RelativePath>
+            </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
+              <RelativePath>..\libraries\HAL_Drivers\drv_dac.c</RelativePath>
+            </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
               <RelativePath>..\libraries\HAL_Drivers\drv_usbd.c</RelativePath>
             </VirtualFileSnapshot>
             <VirtualFileSnapshot>
               <RelativePath>..\libraries\HAL_Drivers\drv_common.c</RelativePath>
-            </VirtualFileSnapshot>
-            <VirtualFileSnapshot>
-              <RelativePath>board\CubeMX_Config\Src\main.c</RelativePath>
             </VirtualFileSnapshot>
           </Files>
         </VirtualDirectorySnapshot>
@@ -393,6 +408,21 @@
             <VirtualFileSnapshot>
               <RelativePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_tim_ex.c</RelativePath>
             </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
+              <RelativePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_lptim.c</RelativePath>
+            </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
+              <RelativePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_adc.c</RelativePath>
+            </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
+              <RelativePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_adc_ex.c</RelativePath>
+            </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
+              <RelativePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_dac.c</RelativePath>
+            </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
+              <RelativePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_dac_ex.c</RelativePath>
+            </VirtualFileSnapshot>
           </Files>
         </VirtualDirectorySnapshot>
         <VirtualDirectorySnapshot>
@@ -409,6 +439,28 @@
             </VirtualFileSnapshot>
           </Files>
         </VirtualDirectorySnapshot>
+        <VirtualDirectorySnapshot>
+          <Name>UTest</Name>
+          <Files>
+            <VirtualFileSnapshot>
+              <RelativePath>..\..\..\components\utilities\utest\utest.c</RelativePath>
+            </VirtualFileSnapshot>
+          </Files>
+        </VirtualDirectorySnapshot>
+        <VirtualDirectorySnapshot>
+          <Name>Utilities</Name>
+          <Files>
+            <VirtualFileSnapshot>
+              <RelativePath>..\..\..\components\utilities\ulog\ulog.c</RelativePath>
+            </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
+              <RelativePath>..\..\..\components\utilities\ulog\backend\console_be.c</RelativePath>
+            </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
+              <RelativePath>..\..\..\components\utilities\ulog\syslog\syslog.c</RelativePath>
+            </VirtualFileSnapshot>
+          </Files>
+        </VirtualDirectorySnapshot>
       </Subdirectories>
       <Files />
     </RootDirectory>
@@ -418,9 +470,11 @@
         <Settings>
           <IncludeDirectories>
             <string>applications</string>
+            <string>Controller</string>
             <string>..\..\..\components\cplusplus</string>
             <string>..\..\..\libcpu\arm\common</string>
             <string>..\..\..\libcpu\arm\cortex-m4</string>
+            <string>..\..\..\components\drivers\include</string>
             <string>..\..\..\components\drivers\include</string>
             <string>..\..\..\components\drivers\include</string>
             <string>..\..\..\components\drivers\include</string>
@@ -442,6 +496,9 @@
             <string>..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Include</string>
             <string>..\libraries\STM32F4xx_HAL\CMSIS\Include</string>
             <string>..\..\..\components\drivers\usb\usbdevice</string>
+            <string>..\..\..\components\utilities\utest</string>
+            <string>..\..\..\components\utilities\ulog</string>
+            <string>..\..\..\components\utilities\ulog\syslog</string>
             <string>utility</string>
           </IncludeDirectories>
           <PreprocessorMacros>

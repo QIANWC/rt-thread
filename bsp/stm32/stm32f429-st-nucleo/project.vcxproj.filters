@@ -88,20 +88,20 @@
     <Filter Include="VisualGDB settings">
       <UniqueIdentifier>{15bea36a-acd0-45b5-8c2d-b77d3e69f938}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header files\utility">
-      <UniqueIdentifier>{fa6d3ea9-dc2a-4364-963a-6e975402fcc2}</UniqueIdentifier>
+    <Filter Include="Source files\UTest">
+      <UniqueIdentifier>{26920ce1-60a0-4dfa-b5e8-7a40cfc9d72f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header files\Controller">
-      <UniqueIdentifier>{2c5ef8e2-4ab4-4010-88cd-4fc7109fd84e}</UniqueIdentifier>
+    <Filter Include="Source files\Utilities">
+      <UniqueIdentifier>{98078eb1-c5f2-4ceb-9c40-8480f23d3b7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\UTest">
+      <UniqueIdentifier>{b7da61ad-9cda-4d29-bf5e-3f0ba8e58b49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Utilities">
+      <UniqueIdentifier>{e19359e4-30c9-4013-9e27-ab7df0959fec}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="applications\lcd_init.c">
-      <Filter>Source files\Applications</Filter>
-    </ClCompile>
-    <ClCompile Include="applications\main.cpp">
-      <Filter>Source files\Applications</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\components\cplusplus\cxx_Mutex.cpp">
       <Filter>Source files\CPlusPlus</Filter>
     </ClCompile>
@@ -408,8 +408,6 @@
     <None Include="MCU.xml">
       <Filter>VisualGDB settings</Filter>
     </None>
-    <ClCompile Include="..\..\..\libcpu\arm\cortex-m4\context_rvds.S" />
-    <ClCompile Include="..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f429xx.s" />
     <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_adc.c">
       <Filter>Source files\Libraries</Filter>
     </ClCompile>
@@ -422,46 +420,52 @@
     <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_dac_ex.c">
       <Filter>Source files\Libraries</Filter>
     </ClCompile>
+    <ClCompile Include="applications\realmain.cpp">
+      <Filter>Source files\Applications</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\libcpu\arm\cortex-m4\context_rvds.S">
+      <Filter>Source files\CPU</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f429xx.s">
+      <Filter>Source files\Drivers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\drivers\hwtimer\hwtimer.c">
+      <Filter>Source files\DeviceDrivers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\drivers\misc\adc.c">
+      <Filter>Source files\DeviceDrivers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\drivers\misc\dac.c">
+      <Filter>Source files\DeviceDrivers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libraries\HAL_Drivers\drv_hwtimer.c">
+      <Filter>Source files\Drivers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libraries\HAL_Drivers\drv_adc.c">
+      <Filter>Source files\Drivers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libraries\HAL_Drivers\drv_dac.c">
+      <Filter>Source files\Drivers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_lptim.c">
+      <Filter>Source files\Libraries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\utilities\utest\utest.c">
+      <Filter>Source files\UTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\utilities\ulog\ulog.c">
+      <Filter>Source files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\utilities\ulog\backend\console_be.c">
+      <Filter>Source files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\utilities\ulog\syslog\syslog.c">
+      <Filter>Source files\Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RTE\RTE_Components.h">
       <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="utility\basic_utility.h">
-      <Filter>Header files\utility</Filter>
-    </ClInclude>
-    <ClInclude Include="utility\Microsecond.hpp">
-      <Filter>Header files\utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Controller\basic_filter.hpp">
-      <Filter>Header files\Controller</Filter>
-    </ClInclude>
-    <ClInclude Include="Controller\BrushedDCM_Ctrl.hpp">
-      <Filter>Header files\Controller</Filter>
-    </ClInclude>
-    <ClInclude Include="Controller\controller.hpp">
-      <Filter>Header files\Controller</Filter>
-    </ClInclude>
-    <ClInclude Include="Controller\Encoder.hpp">
-      <Filter>Header files\Controller</Filter>
-    </ClInclude>
-    <ClInclude Include="Controller\MotorParam.hpp">
-      <Filter>Header files\Controller</Filter>
-    </ClInclude>
-    <ClInclude Include="Controller\QNum.hpp">
-      <Filter>Header files\Controller</Filter>
-    </ClInclude>
-    <ClInclude Include="utility\PlatformInfo.hpp">
-      <Filter>Header files\utility</Filter>
-    </ClInclude>
-    <ClInclude Include="utility\rtt_portout.hpp">
-      <Filter>Header files\utility</Filter>
-    </ClInclude>
-    <ClInclude Include="utility\NamedVariant.hpp">
-      <Filter>Header files\utility</Filter>
-    </ClInclude>
-    <ClInclude Include="utility\cstring.hpp">
-      <Filter>Header files\utility</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

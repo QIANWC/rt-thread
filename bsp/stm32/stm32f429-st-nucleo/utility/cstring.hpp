@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <cstddef>
 #include <cstring>
+#include <cstdio>
 #include <memory>
 #include <vector>
 using std::vector;
@@ -563,36 +564,33 @@ private :
 public:
     //npos安排在最后避免调试时遮挡重要成员显示
 //    static constexpr size_t npos = SIZE_MAX;
-};
-
-    
-    cstring operator+(const char* psrc, const cstring& s)
+    cstring friend operator+(const char* psrc, const cstring& s)
     {
         cstring result(psrc);
         return result += s;
     }
-    cstring operator+(const cstring& s,const char* psrc)
+    cstring friend operator+(const cstring& s,const char* psrc)
 	{
 		cstring result(s);
 		return result += psrc;
 	}
-    template<typename T> cstring to_string(const T& v)
-    {
-    }
-    template<> cstring to_string<float>(const float& v)
-    {
-        return cstring().number(v);
-    }
-    template<> cstring to_string<int>(const int& v)
+    template<typename T> static cstring to_string(const T& v);
+};
+
+    //no template specialization in class scope
+    template<> cstring cstring::to_string<float>(const float& v)
     {
         return cstring().number(v);
     }
-    
+    template<> cstring cstring::to_string<int>(const int& v)
+    {
+        return cstring().number(v);
+    }
     using argvec = vector<cstring>;
     argvec& operator<<(argvec& v, const cstring& s)
     {
         v.push_back(s);
         return v;
     }
-
 }
+

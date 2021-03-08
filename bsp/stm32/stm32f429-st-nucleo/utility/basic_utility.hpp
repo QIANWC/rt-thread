@@ -1,7 +1,9 @@
 #pragma once
 
-#define NAME(x) #x
+#ifndef __BASIC_UTILITY_H__
+#define __BASIC_UTILITY_H__
 
+#define NAME(x) #x
 
 //#define EASY_INCLUDE
 
@@ -21,9 +23,10 @@
 using std::array;//推荐使用array代替C style array
 #include <string.h>//memory.h实际引用string.h，历史遗留问题
 #include "Microsecond.hpp"
-using namespace Microsecond;
-//#include "argument_vector.hpp"
-#include "NamedVariant.hpp"
+using Microsecond::us;
+using Microsecond::us_tick;
+//using namespace Microsecond;
+//#include "NamedVariant.hpp"
 
 #define TESTFAIL_CONTINUE 0
 #define TESTFAIL_STOP 1
@@ -35,6 +38,7 @@ using namespace Microsecond;
 #define TRIG_BREAKPOINT
 #endif
 
+#include <rtdbg.h>
 //common actions
 bool testfail_action(bool expr, int failbehavior, int& test_cnt, int& pass_cnt)
 {
@@ -44,27 +48,23 @@ bool testfail_action(bool expr, int failbehavior, int& test_cnt, int& pass_cnt)
         ++pass_cnt;
         return false;
     }
-        
-    printf("one test case failed,");
+
+    const char* op = "";
     switch (failbehavior)
     {
-    case TESTFAIL_CONTINUE:printf("continuing...\n"); break;
-    case TESTFAIL_STOP:printf("abort\n"); break;
-    case TESTFAIL_BREAKPOINT:printf("trigger breakpoint\n"); break;
-    default:printf("unknown failbehavior:%d", failbehavior);break;
+    case TESTFAIL_CONTINUE:op = "continuing..."; break;
+    case TESTFAIL_STOP:op = "abort"; break;
+    case TESTFAIL_BREAKPOINT:op = "trigger breakpoint"; TRIG_BREAKPOINT; break;
+    default:op = "unknown failbehavior"; break;
     }
+    LOG_W("one test case failed,%s", op);
     return true;
 }
-    
+
 #if 1
 #define test_assert(expr) \
     if (testfail_action((expr),failbehavior,test_cnt,pass_cnt)){\
-        switch(failbehavior){\
-        default:\
-        case TESTFAIL_CONTINUE : break;\
-        case TESTFAIL_STOP : goto failexit;break;\
-        case TESTFAIL_BREAKPOINT : TRIG_BREAKPOINT;break;\
-        }\
+        if(failbehavior == TESTFAIL_STOP) goto failexit;\
     }
 #else
 //test utility
@@ -95,7 +95,7 @@ enum class ConsoleColor
     Cyan,
     White
 };
- 
+
 void SetConsoleForegroundColor(ConsoleColor color)
 {
     printf("\x1b[%dm", 30 + (int)color);
@@ -106,5 +106,7 @@ void SetConsoleForegroundColor(ConsoleColor color)
 #elif defined __RTTHREAD__
 #include "rtt_portout.hpp"
 using ASIO::Ticker;
-using ASIO::NonCopyable;
-#endif // 
+//using ASIO::NonCopyable;
+#endif //
+
+#endif

@@ -1,14 +1,93 @@
 
-#include "basic_utility.h"
+#include "basic_utility.hpp"
 
 
-/******cstring test*****/
+/*测试主要划分为三类：
+ *纯软件测试（包括可以独立运行或者使用虚拟设备的算法）
+ *硬件功能测试，主要测试硬件完好性和驱动库基本功能。测试完成后应该尽力恢复测试前状态
+ *  比如系统定时器时基，时间戳获取，adc/pwm/crc/rng/硬件加密单元等
+ *  [问题，那么编码器应该属于哪一类？
+ *      如果手动转动就是硬件基本功能，但是需要人
+ *      如果代码控制转动甚至还需要电子换向驱动电机就比较复杂了，
+ *      我觉得编码器测试应该设计为开环测试，只需要简单的PWM就可以完成]
+ *混合测试，比如实物的闭环控制，更加复杂的和上位机交互
+ *      
+ *本文件只负责代码库测试，不涉及硬件控制
+ *需要修改硬件配置的测试可能对系统运行有影响，必须小心谨慎。
+ **/
+//software
+#include "PlatformInfo.hpp"
+#include "QNum.hpp"
 #include "cstring.hpp"
 #include "NamedVariant.hpp"
-using namespace variant;
+#include "basic_filter.hpp"
+
+//hardware
+#include "Microsecond.hpp"
+#include "Encoder.hpp"
 
 namespace utility
 {
+    static int platforminfo_test(int failbehavior = TESTFAIL_BREAKPOINT)
+    {
+        LOG_I("Platform test:");
+        
+        int retval = 0;
+        if (PlatformInfo::IsCTypeStandard())
+        {
+            LOG_I("platform has standard type");
+            retval = 0;
+        }
+        else
+        {
+            LOG_E("platform type is not standard");
+            retval = -1;
+        }
+        return retval;
+    }
+
+
+    using qmath::QNum;
+    //helper function
+    static bool near(float a, float b)
+    {
+        return fabs(a - b) <= 0.001f;
+    }
+    static int qnum_test(int failbehavior = TESTFAIL_BREAKPOINT)
+    {
+        LOG_I("QNum test:");
+        int pass_cnt = 0, test_cnt = 0;
+        
+        //q15_int32 or say q15_precision32
+        using q15 = QNum<int32_t, 15>;
+        q15 v1 = 1.0f, v2 = 2.0f, v3 = 3.0f, v0_1 = 0.1f, v0_5 = 0.5f;
+        LOG_D("test values:%f,%f,%f,%f,%f", (float)v1, (float)v2, (float)v3, (float)v0_1, (float)v0_5);
+            
+        //目前的测试方法不一定对，精度方面还欠考虑，覆盖面还不够
+        test_assert(near(q15(1) + q15(2), 3));
+        test_assert(near(q15(1.0f - 2.0f), -1.0f));
+        test_assert(near(v1 + v2, 3.0f));
+        test_assert(near(v1 - 2, -1));
+        test_assert(near(v1 - v2, -1.0f));
+        test_assert(near(v1 * v0_5, v0_5));
+        test_assert(near(v1 / v2, 0.5f));
+        //...
+            
+failexit :
+        if(pass_cnt == test_cnt)
+        {
+            LOG_I("QNum test passed %d/%d", pass_cnt, test_cnt);
+            return 0;
+        }
+        else
+        {
+            LOG_E("QNum test failed %d/%d", pass_cnt, test_cnt);
+            return -1;
+        }
+    }
+
+
+    static vector<string> vstr(4);
     static void print_vstr(vector<string> vs)
     {
         printf("vector<string>:\n");
@@ -17,13 +96,10 @@ namespace utility
             printf("%s\n", s.c_str());
         }
     }
-
-    vector<string> vstr(4);
-    int cstring_test(int failbehavior = TESTFAIL_BREAKPOINT)
+    static int cstring_test(int failbehavior = TESTFAIL_BREAKPOINT)
     {
+        LOG_I("String test:");
         int test_cnt = 0, pass_cnt = 0;
-
-        printf("String Test:\n");
 
         string svoid;
         string snull = (char*)nullptr;
@@ -90,23 +166,26 @@ namespace utility
         test_assert(s.substr(0).erase(10) == "aaabbb");
 
         //TODO:replace
-failexit:
-        if (pass_cnt == test_cnt)
+failexit :
+        if(pass_cnt == test_cnt)
         {
-            printf("string test passed %d/%d\n", pass_cnt, test_cnt);
+            LOG_I("string test passed %d/%d", pass_cnt, test_cnt);
             return 0;
         }
         else
         {
-            printf("string test failed %d/%d\n", pass_cnt, test_cnt);
+            LOG_E("string test failed %d/%d", pass_cnt, test_cnt);
             return -1;
         }
     }
 
 
-    int namedvariant_test(int failbehavior = TESTFAIL_BREAKPOINT)
+    using variant::NamedVariant;
+    static int namedvariant_test(int failbehavior = TESTFAIL_BREAKPOINT)
     {
+        LOG_I("NamedVariant test:");
         int test_cnt = 0, pass_cnt = 0;
+        
         NamedVariant var;
         string s = "A,int=32;BB,float=0.1;CCC,double=0.2;\
             D:int=1;E,char=1.2;F,float=1.0";
@@ -135,22 +214,73 @@ failexit:
 failexit :
         if (pass_cnt == test_cnt)
         {
-            printf("namedvariant test passed %d/%d\n", pass_cnt, test_cnt);
+            LOG_I("namedvariant test passed %d/%d", pass_cnt, test_cnt);
             return 0;
         }
         else
         {
-            printf("namedvariant test failed %d/%d\n", pass_cnt, test_cnt);
+            LOG_E("namedvariant test failed %d/%d", pass_cnt, test_cnt);
             return -1;
         }
     }
 
-    int utility_test(int failbehavior = TESTFAIL_BREAKPOINT)
+
+    static int filter_test(bool failstop)
     {
+        LOG_I("Filter test:developing...");
+        //TODO:filter test developing...
+        filter::FIR<float, 3> fir2 = { 1.0f, 1.0f, 1.0f };
+        filter::FIR<float, 3> fir3({ 1.0f, 1.0f, 1.0f });
+        filter::FIR<float, 3> fir4(std::initializer_list<const float>{ 0.3f, 0.3f, 0.3f });
+
+        return 0;
+    }
+
+
+    inline int software_test(int failbehavior = TESTFAIL_BREAKPOINT)
+    {
+        LOG_I("[Software test]");
+        
+        platforminfo_test(failbehavior);
+        qnum_test(failbehavior);
         cstring_test(failbehavior);
         namedvariant_test(failbehavior);
         return 0;
     }
+    
+    
+    static timestamp_t stamp = 0;
+    //32位时间戳获取测试，未测试溢出表现
+    inline int microsecond_test(int failbehavior = TESTFAIL_BREAKPOINT)
+    {
+        LOG_I("Microsecond API test:");
+        int pass_cnt = 0, test_cnt = 0;
+        
+        stamp = us_tick();
+        for (int k = 0; k < 5; ++k)
+        {
+#ifdef __MBED__
+            Thread::wait(1000);
+#elif defined __RTTHREAD__
+            rtthread::Thread::sleep(1000);
+#endif // OS Environment
+            timestamp_t t = us_tick();
+            timestamp_t dt = t - stamp;
+            stamp = t;
+            if (std::abs((int)(dt - 1000'000U)) >= 2000)
+            {
+                return -1;//时间戳误差过大
+            }
+        }
+        return 0;
+    }
+
+    
+    inline int hardware_test(int failbehavior = TESTFAIL_BREAKPOINT)
+    {
+        LOG_I("[Hardware test]");
+        
+        microsecond_test();
+        return 0;
+    }
 }
-
-

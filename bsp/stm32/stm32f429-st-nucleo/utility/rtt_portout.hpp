@@ -1,6 +1,9 @@
 #pragma once
 
 #include <rtthread.h>
+#include <rthw.h>
+#include <Thread.h>
+#include "NonCopyable.h"
 #define ASIO_ASSERT(x) RT_ASSERT(x)
 
 namespace ASIO
@@ -12,12 +15,12 @@ namespace ASIO
         Ticker()
         {
         }
-            
+
         ~Ticker()
         {
             rt_timer_detach(&timer);
         }
-            
+
         void attach(callback cb, float t, const char* name ="")
         {
             int tick = t;
@@ -27,41 +30,41 @@ namespace ASIO
     private:
         struct rt_timer timer;
     };
-    
-    template<typename T>
-        class NonCopyable {
-        protected:
-            /**
-             * Disallow construction of NonCopyable objects from outside of its hierarchy.
-             */
-            NonCopyable() = default;
-            /**
-             * Disallow destruction of NonCopyable objects from outside of its hierarchy.
-             */
-            ~NonCopyable() = default;
-
-        public:
-            /**
-             * Define copy constructor as deleted. Any attempt to copy construct
-             * a NonCopyable will fail at compile time.
-             */
-            NonCopyable(const NonCopyable &) = delete;
-
-            /**
-             * Define copy assignment operator as deleted. Any attempt to copy assign
-             * a NonCopyable will fail at compile time.
-             */
-            NonCopyable &operator=(const NonCopyable &) = delete;
-        };
-
 }
+    // template<typename T>
+    //     class NonCopyable {
+    //     protected:
+    //         /**
+    //          * Disallow construction of NonCopyable objects from outside of its hierarchy.
+    //          */
+    //         NonCopyable() = default;
+    //         /**
+    //          * Disallow destruction of NonCopyable objects from outside of its hierarchy.
+    //          */
+    //         ~NonCopyable() = default;
+
+    //     public:
+    //         /**
+    //          * Define copy constructor as deleted. Any attempt to copy construct
+    //          * a NonCopyable will fail at compile time.
+    //          */
+    //         NonCopyable(const NonCopyable &) = delete;
+
+    //         /**
+    //          * Define copy assignment operator as deleted. Any attempt to copy assign
+    //          * a NonCopyable will fail at compile time.
+    //          */
+    //         NonCopyable &operator=(const NonCopyable &) = delete;
+    //     };
+
+//}
 
 //注意使用环境
-inline void delayus(uint32_t us)
+void delayus(uint32_t us)
 {
     rt_hw_us_delay(us);
 }
-inline void delayms(uint32_t ms)
+void delayms(uint32_t ms)
 {
-    Thread::sleep(ms);
+    rtthread::Thread::sleep(ms);
 }

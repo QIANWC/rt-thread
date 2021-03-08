@@ -87,10 +87,14 @@
 #define RT_USING_DEVICE_IPC
 #define RT_PIPE_BUFSZ 512
 #define RT_USING_SERIAL
+#define RT_SERIAL_USING_DMA
 #define RT_SERIAL_RB_BUFSZ 128
+#define RT_USING_HWTIMER
 #define RT_USING_I2C
 #define RT_USING_I2C_BITOPS
 #define RT_USING_PIN
+#define RT_USING_ADC
+#define RT_USING_DAC
 
 /* Using USB */
 
@@ -129,6 +133,31 @@
 
 /* Utilities */
 
+#define RT_USING_ULOG
+#define ULOG_OUTPUT_LVL_DEBUG
+#define ULOG_OUTPUT_LVL 7
+#define ULOG_ASSERT_ENABLE
+#define ULOG_LINE_BUF_SIZE 128
+#define ULOG_USING_ASYNC_OUTPUT
+#define ULOG_ASYNC_OUTPUT_BUF_SIZE 2048
+#define ULOG_ASYNC_OUTPUT_BY_THREAD
+#define ULOG_ASYNC_OUTPUT_THREAD_STACK 1024
+#define ULOG_ASYNC_OUTPUT_THREAD_PRIORITY 30
+
+/* log format */
+
+#define ULOG_OUTPUT_FLOAT
+#define ULOG_OUTPUT_TIME
+#define ULOG_TIME_USING_TIMESTAMP
+#define ULOG_OUTPUT_LEVEL
+#define ULOG_OUTPUT_TAG
+#define ULOG_OUTPUT_THREAD_NAME
+#define ULOG_BACKEND_USING_CONSOLE
+#define ULOG_USING_FILTER
+#define ULOG_USING_SYSLOG
+#define RT_USING_UTEST
+#define UTEST_THR_STACK_SIZE 4096
+#define UTEST_THR_PRIORITY 20
 
 /* RT-Thread online packages */
 
@@ -165,6 +194,9 @@
 
 
 /* peripheral libraries and drivers */
+
+
+/* AI packages */
 
 
 /* miscellaneous packages */

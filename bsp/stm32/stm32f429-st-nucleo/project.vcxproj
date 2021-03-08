@@ -195,6 +195,5 @@
     <None Include="project-Debug.vgdbsettings" />
     <None Include="project-Release.vgdbsettings" />
     <None Include="MCU.xml" />
-    <ClCompile Include="utility\Microsecond.cpp" />
   </ItemGroup>
 </Project>

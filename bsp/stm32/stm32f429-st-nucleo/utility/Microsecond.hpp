@@ -89,7 +89,15 @@ namespace Microsecond
         return us_ticker_read();
     }
 #elif defined __RTTHREAD__
-    extern "C" inline int init(void)
+    extern "C" void usTimer_isr(void)
+    {
+        if (__HAL_TIM_GET_FLAG(usTimer, TIM_IT_UPDATE))
+        {
+            __HAL_TIM_CLEAR_IT(usTimer, TIM_IT_UPDATE);
+            Microsecond::us_ticker_overflow_isr();
+        }
+    }
+    extern "C" int init(void)
     {
         usTimer_Init();//if hal_main not used
         //usTimer_DBGMCU_FREEZE();//optional
@@ -98,7 +106,7 @@ namespace Microsecond
         return 0;
     }
     INIT_BOARD_EXPORT(init);
-    inline timestamp_t us_tick(void)
+    timestamp_t us_tick(void)
     {
         return usTimer->Instance->CNT;
     }
@@ -111,7 +119,7 @@ namespace Microsecond
 #endif
 
 #ifndef _CHRONO_
-    inline us_timestamp_t us()
+    us_timestamp_t us()
     {
         return ((us_timestamp_t)ticker_overflow_cnt << 32) + us_tick();
     }

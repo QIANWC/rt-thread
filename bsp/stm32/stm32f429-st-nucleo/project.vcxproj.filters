@@ -423,9 +423,6 @@
     <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_dac_ex.c">
       <Filter>Source files\Libraries</Filter>
     </ClCompile>
-    <ClCompile Include="utility\Microsecond.cpp">
-      <Filter>Source files\utility</Filter>
-    </ClCompile>
     <ClCompile Include="applications\realmain.cpp">
       <Filter>Source files\Applications</Filter>
     </ClCompile>

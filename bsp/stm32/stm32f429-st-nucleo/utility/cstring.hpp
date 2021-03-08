@@ -564,37 +564,33 @@ private :
 public:
     //npos安排在最后避免调试时遮挡重要成员显示
 //    static constexpr size_t npos = SIZE_MAX;
-    template<typename T> static cstring to_string(const T& v)
-    {
-    }
-};
-
-    
-    cstring inline operator+(const char* psrc, const cstring& s)
+    cstring friend operator+(const char* psrc, const cstring& s)
     {
         cstring result(psrc);
         return result += s;
     }
-    cstring inline operator+(const cstring& s,const char* psrc)
+    cstring friend operator+(const cstring& s,const char* psrc)
 	{
 		cstring result(s);
 		return result += psrc;
 	}
-    
-    template<> inline cstring cstring::to_string<float>(const float& v)
+    template<typename T> static cstring to_string(const T& v);
+};
+
+    //no template specialization in class scope
+    template<> cstring cstring::to_string<float>(const float& v)
     {
         return cstring().number(v);
     }
-    template<> inline cstring cstring::to_string<int>(const int& v)
+    template<> cstring cstring::to_string<int>(const int& v)
     {
         return cstring().number(v);
     }
     using argvec = vector<cstring>;
-    inline argvec& operator<<(argvec& v, const cstring& s)
+    argvec& operator<<(argvec& v, const cstring& s)
     {
         v.push_back(s);
         return v;
     }
-
 }
 

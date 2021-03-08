@@ -40,7 +40,7 @@ using Microsecond::us_tick;
 
 #include <rtdbg.h>
 //common actions
-inline bool testfail_action(bool expr, int failbehavior, int& test_cnt, int& pass_cnt)
+bool testfail_action(bool expr, int failbehavior, int& test_cnt, int& pass_cnt)
 {
     ++test_cnt;
     if (expr)
@@ -60,7 +60,7 @@ inline bool testfail_action(bool expr, int failbehavior, int& test_cnt, int& pas
     LOG_W("one test case failed,%s", op);
     return true;
 }
-    
+
 #if 1
 #define test_assert(expr) \
     if (testfail_action((expr),failbehavior,test_cnt,pass_cnt)){\
@@ -95,8 +95,8 @@ enum class ConsoleColor
     Cyan,
     White
 };
- 
-inline void SetConsoleForegroundColor(ConsoleColor color)
+
+void SetConsoleForegroundColor(ConsoleColor color)
 {
     printf("\x1b[%dm", 30 + (int)color);
 }
@@ -107,6 +107,6 @@ inline void SetConsoleForegroundColor(ConsoleColor color)
 #include "rtt_portout.hpp"
 using ASIO::Ticker;
 //using ASIO::NonCopyable;
-#endif // 
+#endif //
 
 #endif

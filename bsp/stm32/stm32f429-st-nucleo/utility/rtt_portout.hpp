@@ -60,11 +60,11 @@ namespace ASIO
 //}
 
 //注意使用环境
-inline void delayus(uint32_t us)
+void delayus(uint32_t us)
 {
     rt_hw_us_delay(us);
 }
-inline void delayms(uint32_t ms)
+void delayms(uint32_t ms)
 {
     rtthread::Thread::sleep(ms);
 }

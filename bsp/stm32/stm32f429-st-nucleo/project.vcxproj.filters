@@ -94,12 +94,15 @@
     <Filter Include="Header files\Controller">
       <UniqueIdentifier>{2c5ef8e2-4ab4-4010-88cd-4fc7109fd84e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source files\utility">
+      <UniqueIdentifier>{778176c5-ab58-4869-83e1-42ce6b9ec48e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Controller">
+      <UniqueIdentifier>{b4e13484-1311-4af1-8f9e-3a08c9712aa4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="applications\lcd_init.c">
-      <Filter>Source files\Applications</Filter>
-    </ClCompile>
-    <ClCompile Include="applications\main.cpp">
       <Filter>Source files\Applications</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\components\cplusplus\cxx_Mutex.cpp">
@@ -408,8 +411,6 @@
     <None Include="MCU.xml">
       <Filter>VisualGDB settings</Filter>
     </None>
-    <ClCompile Include="..\..\..\libcpu\arm\cortex-m4\context_rvds.S" />
-    <ClCompile Include="..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f429xx.s" />
     <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_adc.c">
       <Filter>Source files\Libraries</Filter>
     </ClCompile>
@@ -422,16 +423,22 @@
     <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_dac_ex.c">
       <Filter>Source files\Libraries</Filter>
     </ClCompile>
+    <ClCompile Include="utility\Microsecond.cpp">
+      <Filter>Source files\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="applications\realmain.cpp">
+      <Filter>Source files\Applications</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\libcpu\arm\cortex-m4\context_rvds.S">
+      <Filter>Source files\CPU</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f429xx.s">
+      <Filter>Source files\Drivers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RTE\RTE_Components.h">
       <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="utility\basic_utility.h">
-      <Filter>Header files\utility</Filter>
-    </ClInclude>
-    <ClInclude Include="utility\Microsecond.hpp">
-      <Filter>Header files\utility</Filter>
     </ClInclude>
     <ClInclude Include="Controller\basic_filter.hpp">
       <Filter>Header files\Controller</Filter>
@@ -461,6 +468,12 @@
       <Filter>Header files\utility</Filter>
     </ClInclude>
     <ClInclude Include="utility\cstring.hpp">
+      <Filter>Header files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="utility\basic_utility.hpp">
+      <Filter>Header files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="utility\Microsecond.hpp">
       <Filter>Header files\utility</Filter>
     </ClInclude>
   </ItemGroup>

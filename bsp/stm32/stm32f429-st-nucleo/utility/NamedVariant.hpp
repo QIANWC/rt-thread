@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef __NAMEDVARIANT_H__
+#define __NAMEDVARIANT_H__
+
 #include <vector>
 using std::vector;
 //#if 0
@@ -11,7 +14,7 @@ using std::vector;
 #include "cstring.hpp"
 using string = ASIO::cstring;
 using ASIO::npos;
-using ASIO::to_string;
+using ASIO::cstring;
 //#endif // 0
 
 #ifndef NAMEDVARIANT_MAXNAMELEN
@@ -34,9 +37,7 @@ namespace variant
         double d64;
 #endif
     };
-    int typename_to_index(const char*);
-    int string_to_variant(const char*, int, Variant*);
-    
+
     class NamedVariant
     {
     public:
@@ -44,7 +45,7 @@ namespace variant
         {
             //    type_char = 0,
             //    type_uint8_t = type_char,
-            
+
             type_int,
             type_float,
             type_double,
@@ -54,7 +55,7 @@ namespace variant
             memset(this, 0, sizeof(*this));
         }
         ~NamedVariant() {}
-        
+
         //TODO:无论输入是否有';'都应该正常运行
         NamedVariant from_line(const string& src,bool* ok=nullptr)
         {
@@ -88,8 +89,8 @@ exit:
             string result = name;
             switch (typeinfo)
             {
-            case type_int:result += ",int=" + ASIO::to_string(v.i32); break;
-            case type_float:result += ",float=" + ASIO::to_string(v.f32); break;
+            case type_int:result += ",int=" + string::to_string(v.i32); break;
+            case type_float:result += ",float=" + string::to_string(v.f32); break;
             #if NAMEDVARIANT_SUPPORT_DOUBLE
             case type_double:result += ",double=" + std::to_string(v.d64); break;
             #else
@@ -108,74 +109,73 @@ exit:
         int32_t typeinfo; //only lowest byte used,high byte reserved
         Variant v;
     private:
-    
-    };
 
-    int typename_to_index(const char* s)
-    {
-        if (strcmp(s, "int") == 0)
-            return NamedVariant::type_int;
-        else if (strcmp(s, "float") == 0)
-            return NamedVariant::type_float;
-        else if (strcmp(s, "double") == 0)
-            return NamedVariant::type_double;
-        else
-            return NamedVariant::type_unknown;
-    }
-        
-    int string_to_variant(const char* s, int type, Variant* v)
-    {
-        switch (type)
+    public:
+        static int typename_to_index(const char* s)
         {
-        case NamedVariant::type_int:v->i32 = atoi(s); break;
-        case NamedVariant::type_float:v->f32 = atof(s); break;//atof只支持double，strtof支持float，但是需要stdlib
-#if NAMEDVARIANT_SUPPORT_DOUBLE
-        case NamedVariant::type_double:v->d64 = atof(s); break;
-#else
-        case NamedVariant::type_double:v->f32 = NAN;
-            printf("%s", doublesupport_hint);
-            return -1;
-            break;
-#endif
-        default:
-            v->i32 = 0;
-            return -1;
-            break;
+            if (strcmp(s, "int") == 0)
+                return NamedVariant::type_int;
+            else if (strcmp(s, "float") == 0)
+                return NamedVariant::type_float;
+            else if (strcmp(s, "double") == 0)
+                return NamedVariant::type_double;
+            else
+                return NamedVariant::type_unknown;
         }
-        return 0;
-    }
-
-    vector<NamedVariant> string_split_to_variant(const string& s, bool *ok = nullptr)
-    {
-        vector<NamedVariant> vars;
-        NamedVariant var;
-        bool retval = true;
-        string spliter = ";";
-        vector<string> lines;
-        if (s.find(";\r\n") != npos)
-            spliter = ";\r\n";
-        else if (s.find(";\n") != npos)
-            spliter = ";\n";
-        else if (s.find(";") != npos)
-            spliter = ";";
-        else {
-            printf("no variant spliter find\n");
-            goto exit;
-        }
-
-        lines = s.split(spliter.c_str());
-        for (auto l : lines)
+        static int string_to_variant(const char* s, int type, Variant* v)
         {
-            var.from_line(l, &retval);
-            if (!retval)
+            switch (type)
+            {
+            case NamedVariant::type_int:v->i32 = atoi(s); break;
+            case NamedVariant::type_float:v->f32 = atof(s); break;//atof只支持double，strtof支持float，但是需要stdlib
+    #if NAMEDVARIANT_SUPPORT_DOUBLE
+            case NamedVariant::type_double:v->d64 = atof(s); break;
+    #else
+            case NamedVariant::type_double:v->f32 = NAN;
+                printf("%s", doublesupport_hint);
+                return -1;
+                break;
+    #endif
+            default:
+                v->i32 = 0;
+                return -1;
+                break;
+            }
+            return 0;
+        }
+        static inline vector<NamedVariant> string_split_to_variant(const string& s, bool *ok = nullptr)
+        {
+            vector<NamedVariant> vars;
+            NamedVariant var;
+            bool retval = true;
+            string spliter = ";";
+            vector<string> lines;
+            if (s.find(";\r\n") != npos)
+                spliter = ";\r\n";
+            else if (s.find(";\n") != npos)
+                spliter = ";\n";
+            else if (s.find(";") != npos)
+                spliter = ";";
+            else {
+                printf("no variant spliter find\n");
                 goto exit;
-            vars.push_back(var);
+            }
+
+            lines = s.split(spliter.c_str());
+            for (auto l : lines)
+            {
+                var.from_line(l, &retval);
+                if (!retval)
+                    goto exit;
+                vars.push_back(var);
+            }
+
+    exit:
+            if (ok != nullptr)
+                *ok = retval;
+            return vars;
         }
-        
-exit:
-        if (ok != nullptr)
-            *ok = retval;
-        return vars;
-    }
-    
+    };
 }
+
+#endif

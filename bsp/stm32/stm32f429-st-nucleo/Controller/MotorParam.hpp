@@ -1,8 +1,7 @@
 #pragma once
 
-#include "basic_utility.h"
 #include "NamedVariant.hpp"
-using namespace variant;
+using variant::NamedVariant;
 
 //motor state,voltage,torque(current),speed,position
 typedef struct
@@ -23,15 +22,15 @@ enum MotorCtrlMode
     ConstSpeed = 3,
     ConstPosition = 4,
     //...
-    
+
     ILOOP_EN = 0x10,
     VLOOP_EN = 0x20,
     PLOOP_EN = 0x40,
 };
-#define PARAM_F32(name) NAME(name)",float=0;\n" 
-#define PARAM_I32(name) NAME(name)",int=0;\n" 
-//#define PARAM_U32(name) NAME(name)"=%u\n" 
-//#define PARAM_STR(name) NAME(name)"=%s\n" 
+#define PARAM_F32(name) #name",float=0;\n"
+#define PARAM_I32(name) #name",int=0;\n"
+//#define PARAM_U32(name) #name",uint=0;\n"
+//#define PARAM_STR(name) #name",string=0;\n"
 
 //参数尽量使用FP32表示，方便数据交互和处理
 typedef struct MechanicalParam_t
@@ -48,7 +47,7 @@ typedef struct MechanicalParam_t
         PARAM_F32(ShaftSideInertial)PARAM_F32(RotorSideInertial)PARAM_F32(RotorTMax)\
         PARAM_F32(RotorAradMax)PARAM_F32(RotorDrmax)PARAM_F32(RotorDr_Kexpan);
 }MechanicalParam_t;
-    
+
 typedef struct VoltageParam_t
 {
     float MaxVolt;
@@ -57,7 +56,7 @@ typedef struct VoltageParam_t
     static constexpr char fmt[] = \
         PARAM_F32(MaxVolt)PARAM_F32(MaxVoltOutBits)PARAM_F32(VoltPerBit);
 }VoltageParam_t;
-    
+
 typedef struct CurrentParam_t
 {
     float MaxAmp;
@@ -67,7 +66,7 @@ typedef struct CurrentParam_t
     static constexpr char fmt[] = \
         PARAM_F32(MaxAmp)PARAM_I32(MaxAmpOutBits)PARAM_F32(AmpPerBit)PARAM_F32(TorquePerAmp);
 }CurrentParam_t;
-            
+
 typedef struct VelocityParam_t
 {
     float MaxSpeed;
@@ -76,7 +75,7 @@ typedef struct VelocityParam_t
     static constexpr char fmt[] = \
         PARAM_F32(MaxSpeed)PARAM_F32(MaxSpeedBits)PARAM_F32(RPSPerBit);
 }VelocityParam_t;
-            
+
 typedef struct PositionParam_t
 {
     float RevPerBit;
@@ -94,17 +93,17 @@ static int show_errorline(const char* errormsg, int line, const char *linedata)
     printf("line %d:%s\n%s\n", line, errormsg, linedata);
     return -1;
 }
-    
+
 //也许应该返回解析之后的vector<NamedVariant>
 static int param_fromstring(const string& src,const string& fmt,void* pdst)
 {
     bool varok = true,fmtok=true;
     uint8_t* pdata = (uint8_t*)pdst;
-    vector<NamedVariant> vars = string_split_to_variant(src, &varok);
-    vector<NamedVariant> fmts = string_split_to_variant(fmt, &fmtok);
+    vector<NamedVariant> vars = NamedVariant::string_split_to_variant(src, &varok);
+    vector<NamedVariant> fmts = NamedVariant::string_split_to_variant(fmt, &fmtok);
     if (!varok||!fmtok)
         return -1;//error
-    
+
     size_t wpos = 0;
     //根据fmt查找并填写参数，fmt应当是src的子集
     for (auto f : fmts)
@@ -134,7 +133,7 @@ static string param_tostring(const string fmt, void* pv)
 {
     bool fmtok = false;
     string result;
-    vector<NamedVariant> vars = string_split_to_variant(fmt, &fmtok);
+    vector<NamedVariant> vars = NamedVariant::string_split_to_variant(fmt, &fmtok);
     uint8_t* pdata = (uint8_t*)pv;
     size_t rpos = 0;
     if (!fmtok)
@@ -144,8 +143,8 @@ static string param_tostring(const string fmt, void* pv)
         string s = v.name;
         switch (v.typeinfo)
         {
-        case NamedVariant::type_int:s += ",int=" + to_string(*(int*)(pdata + rpos)); rpos += sizeof(int); break;
-        case NamedVariant::type_float:s += ",float=" + to_string(*(float*)(pdata + rpos)); rpos += sizeof(float); break;
+        case NamedVariant::type_int:s += ",int=" + string::to_string(*(int*)(pdata + rpos)); rpos += sizeof(int); break;
+        case NamedVariant::type_float:s += ",float=" + string::to_string(*(float*)(pdata + rpos)); rpos += sizeof(float); break;
 #if NAMEDVARIANT_SUPPORT_DOUBLE
         case NamedVariant::type_double:s += ",double=" + to_string(*(double*)(pdata + rpos)); rpos += sizeof(double); break;
 #else
@@ -166,24 +165,24 @@ typedef struct MotorConfStruct
 public:
 //    MotorConfStruct();   // = delete;
 //    ~MotorConfStruct() {}
-//    
+//
 //    MotorConfStruct(const MotorConfStruct &src)
 //    {
 //        (*this) = src;
 //    }
-//    
+//
 //    void operator=(const MotorConfStruct &src)
 //    {
 //        memcpy(this, &src, sizeof(MotorConfStruct));
 //    }
-        
+
     //与存档交互参数，后续可能改用json
     string tostring()
     {
         string s;
         s += param_tostring(MechanicalParam_t::fmt, &MechanicalParam);
         //...
-        
+
         return string();
     }
     //使用stream接口应该更好一些
@@ -206,14 +205,14 @@ public:
         //        MechanicalParam.fromstring(nullptr);
                 return 0;
     }
-            
+
     int crc_check();
 public:
     //电机类型，只取决于转子（本质属性）,M3508
     string MotorType = "DefaultType";
     //电机配置，比如减速器，M3508_P19，云台yaw/pitch
     string MotorConf = "DefaultConf";
-	
+
     MechanicalParam_t MechanicalParam;
     VoltageParam_t VoltageParam;
     CurrentParam_t CurrentParam;
@@ -222,18 +221,18 @@ public:
     uint32_t crc;
 }MotorConfStruct;
 
-MotorConfStruct mconf;
-string src = "MaxVolt,float=30.0;MaxVoltOutBits,int=3000;VoltPerBit,float=0.01,"\
+static MotorConfStruct mconf;
+static string src = "MaxVolt,float=30.0;MaxVoltOutBits,int=3000;VoltPerBit,float=0.01,"\
     "MaxAmp,float=1.0\nMaxAmpOutBits,int=1000,AmpPerBit,float=0.001,TorquePerAmp,int=0.2";
-int MConfGenerate_RM35()
+inline int MConfGenerate_RM35()
 {
     //    mconf.VoltageParam =  VoltageParam_t { .MaxVolt = 25.0f, .MaxVoltOutBits = 3000, .VoltPerBit = 1 };
     //    mconf.CurrentParam = CurrentParam_t{ .MaxAmp = 3.0f, .MaxAmpOutBits = 500, .AmpPerBit = 1, .TorquePerAmp = 1 };
-    
+
     //    mconf.MechanicalParam = MechanicalParam_t { .GearRatio = 0.1f, .num = 11, .den = 37, .ShaftSideInertial = 1, .RotorSideInertial = 1, .RotorTMax = 1, .RotorAradMax = 1, .RotorDrMax = 1, .RotorDr_Kexpan = 1 };
     //    mconf.CurrentParam.tostring(buf);
-    
-    
+
+
     memset(&mconf.CurrentParam, 0, sizeof(mconf.CurrentParam));
     //    mconf.CurrentParam = CurrentParam_t{ .MaxAmp = 3.0f, .MaxAmpOutBits = 1000, .AmpPerBit = 100, .TorquePerAmp = 0.1f };
     //    param_fromstring(src, CurrentParam_t::fmt, &mconf.CurrentParam);

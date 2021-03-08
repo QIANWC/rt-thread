@@ -40,7 +40,7 @@ namespace PlatformInfo
     }
     
     //TODO:处理器架构、版本，芯片ID等信息
-    uint32_t GetChipInfo(void)
+    inline uint32_t GetChipInfo(void)
     {
         //TODO:目前只核对了F4的地址
 #if defined STM32F0|defined STM32F1|defined STM32F3|defined STM32F4|defined STM32G4|defined STM32H7
@@ -50,25 +50,5 @@ namespace PlatformInfo
 #else
         return 0;
 #endif
-    }
-    
-    namespace Test
-    {
-        int test(bool failstop = true)
-        {
-            printf("Platform Test:\n");
-            int retval = 0;
-            if (PlatformInfo::IsCTypeStandard())
-            {
-                printf("platform use standard type\n");
-                retval = 0;
-            }
-            else
-            {
-                printf("[warning]platform type is not standard\n");
-                retval = -1;
-            }
-            return retval;
-        }
     }
 }

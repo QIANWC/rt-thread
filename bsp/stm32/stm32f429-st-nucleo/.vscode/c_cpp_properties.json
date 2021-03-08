@@ -26,6 +26,7 @@
                 "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\bsp\\stm32\\libraries\\STM32F4xx_HAL\\CMSIS\\Include",
                 "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\components\\drivers\\usb\\usbdevice",
                 "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\bsp\\stm32\\stm32f429-st-nucleo\\utility",
+                "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\bsp\\stm32\\stm32f429-st-nucleo\\Controller",
                 "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\components\\drivers\\i2c",
                 "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\components\\drivers\\misc",
                 "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\components\\drivers\\serial",

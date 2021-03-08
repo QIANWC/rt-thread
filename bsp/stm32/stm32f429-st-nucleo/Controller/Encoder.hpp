@@ -1,7 +1,8 @@
 #pragma once
 
-#include "../utility/basic_utility.h"
-#include "../utility/SeriesData.hpp"
+#include "NonCopyable.h"
+#include "SeriesData.hpp"
+#include "Microsecond.hpp"
 
 class QuadEncInfo
 {
@@ -14,7 +15,7 @@ public:
     int32_t count;
     us_timestamp_t stamp;
 };
-    
+
 //int,uint还需要仔细考虑
 class QuadratureEncoder : public NonCopyable<QuadratureEncoder>
 {
@@ -64,7 +65,7 @@ public:
 
         return cnt;
     }
-            
+
     //消耗时间随数据点数增长较快，注意执行优先级
     int64_t update_speed()
     {
@@ -73,7 +74,7 @@ public:
         rps = cps / cpr;
         return cps;
     }
-        
+
     int64_t getposcnt()
     {
         return cnt;
@@ -82,7 +83,7 @@ public:
     {
         return (float)cnt / cpr;
     }
-        
+
     float getvel_cps()
     {
         return cps;
@@ -91,7 +92,7 @@ public:
     {
         return rps;
     }
-    
+
 private:
     TIM_HandleTypeDef* htim;
     int32_t cpr; //count per revolution

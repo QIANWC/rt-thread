@@ -55,7 +55,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|VisualGDB'">
     <ClCompile>
-      <AdditionalIncludeDirectories>applications;..\..\..\components\cplusplus;..\..\..\libcpu\arm\common;..\..\..\libcpu\arm\cortex-m4;..\..\..\components\drivers\include;board;board\CubeMX_Config\Inc;board\ports;..\libraries\HAL_Drivers;..\libraries\HAL_Drivers\config;..\..\..\components\dfs\include;..\..\..\components\dfs\filesystems\devfs;..\..\..\components\dfs\filesystems\ramfs;..\..\..\components\finsh;.;..\..\..\include;..\..\..\components\libc\compilers\armlibc;..\..\..\components\libc\compilers\common;..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Inc;..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Include;..\libraries\STM32F4xx_HAL\CMSIS\Include;..\..\..\components\drivers\usb\usbdevice;utility;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>applications;..\..\..\components\cplusplus;..\..\..\libcpu\arm\common;..\..\..\libcpu\arm\cortex-m4;..\..\..\components\drivers\include;board;board\CubeMX_Config\Inc;board\ports;..\libraries\HAL_Drivers;..\libraries\HAL_Drivers\config;..\..\..\components\dfs\include;..\..\..\components\dfs\filesystems\devfs;..\..\..\components\dfs\filesystems\ramfs;..\..\..\components\finsh;.;..\..\..\include;..\..\..\components\libc\compilers\armlibc;..\..\..\components\libc\compilers\common;..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Inc;..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Include;..\libraries\STM32F4xx_HAL\CMSIS\Include;..\..\..\components\drivers\usb\usbdevice;utility;Controller;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NDEBUG=1;RELEASE=1;USE_HAL_DRIVER;RT_USING_ARM_LIBC;__RTTHREAD__;STM32F429xx;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions />
       <CLanguageStandard />
@@ -77,7 +77,7 @@
     <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_dac.c" />
     <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_dac_ex.c" />
     <ClCompile Include="applications\lcd_init.c" />
-    <ClCompile Include="applications\main.cpp" />
+    <ClCompile Include="applications\realmain.cpp" />
     <ClCompile Include="..\..\..\components\cplusplus\cxx_Mutex.cpp" />
     <ClCompile Include="..\..\..\components\cplusplus\cxx_Semaphore.cpp" />
     <ClCompile Include="..\..\..\components\cplusplus\cxx_Thread.cpp" />
@@ -184,7 +184,7 @@
     <ClInclude Include="Controller\MotorParam.hpp" />
     <ClInclude Include="Controller\QNum.hpp" />
     <ClInclude Include="RTE\RTE_Components.h" />
-    <ClInclude Include="utility\basic_utility.h" />
+    <ClInclude Include="utility\basic_utility.hpp" />
     <ClInclude Include="utility\cstring.hpp" />
     <ClInclude Include="utility\Microsecond.hpp" />
     <ClInclude Include="utility\NamedVariant.hpp" />
@@ -195,5 +195,6 @@
     <None Include="project-Debug.vgdbsettings" />
     <None Include="project-Release.vgdbsettings" />
     <None Include="MCU.xml" />
+    <ClCompile Include="utility\Microsecond.cpp" />
   </ItemGroup>
 </Project>

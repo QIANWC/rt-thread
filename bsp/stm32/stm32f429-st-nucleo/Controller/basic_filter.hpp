@@ -2,11 +2,10 @@
 
 #include <cstddef>
 #include <array>
-#include "../utility/basic_utility.h"
+#include "NonCopyable.h"
 
 namespace filter
 {
-    
     template<typename T, size_t N>
         std::array<T, N> operator<<(std::array<T, N>& a, const T& new_state)
         {
@@ -18,7 +17,7 @@ namespace filter
             a[n] = new_state;
             return a;
         }
-        
+
     template<typename T>
         std::vector<T> operator<<(std::vector<T>& a, const T& new_state)
         {
@@ -31,7 +30,7 @@ namespace filter
             a[n] = new_state;
             return a;
         }
-        
+
     template<typename T, size_t N>
         class FIR :public NonCopyable<FIR<T, N>>
         {
@@ -52,15 +51,17 @@ namespace filter
             ~FIR()
             {
             }
-            
+
             void reset()
             {
                 x.fill(0);
             }
-                
+
             void set_coef(const T* const pcoef)
             {
-                assert(pcoef);
+                // ASIO_ASSERT(pcoef);
+                if(!pcoef)
+                    return;
                 reset();
                 for (size_t n = 0; n < N; ++n)
                 {
@@ -71,7 +72,7 @@ namespace filter
             {
                 set_coef(l.begin());
             }
-        
+
             T compute(const T& new_state)
             {
                 x << new_state;
@@ -86,11 +87,11 @@ namespace filter
             {
                 return compute(new_state);
             }
-        
+
         private:
             arr x, coef;
         };
-    
+
     template<typename T, size_t N, size_t D>
         class IIR :public NonCopyable<IIR<T, N, D>>
         {
@@ -100,7 +101,7 @@ namespace filter
             {
                 reset();
             }
-                
+
             IIR(const T* num, const T* den)
             {
                 set_coef(num, den);
@@ -113,13 +114,13 @@ namespace filter
             ~IIR()
             {
             }
-                
+
             void reset()
             {
                 x.fill(0);
                 y.fill(0);
             }
-                
+
             void set_coef(const T* _num, const T* _den)
             {
                 assert(_num);
@@ -138,7 +139,7 @@ namespace filter
             {
                 set_coef(_num.begin(), _den.begin());
             }
-                
+
             T compute(const T& new_state)
             {
                 x << new_state;
@@ -179,12 +180,12 @@ namespace filter
 //                x.fill(0);
 //                y.fill(0);
 //            }
-//                
+//
 //            void set_coef(std::initializer_list<T> num, std::initializer_list<T> den)
 //            {
-//                
+//
 //            }
-//            
+//
 //            T compute(const T& new_state)
 //            {
 //                x << new_state;
@@ -205,22 +206,5 @@ namespace filter
 //        private:
 //            arr x, y, num, den;
 //        };
-    
-    namespace Test
-    {
 
-        int test(bool failstop)
-        {
-            //developing...
-            FIR<float, 3> fir2 = { 1.0f, 1.0f, 1.0f };
-            FIR<float, 3> fir3({ 1.0f, 1.0f, 1.0f });
-            FIR<float, 3> fir4(std::initializer_list<const float>{ 0.3f, 0.3f, 0.3f });
-
-            
-            
-            return 0;
-        }
-        
-    }
-    
 }

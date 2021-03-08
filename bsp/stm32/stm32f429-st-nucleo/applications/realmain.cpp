@@ -20,10 +20,11 @@ using rtthread::Thread;
 
 #include "DigitalInOut.h"
 using mbed::DigitalInOut;
-#include "basic_utility.h"
+//#include "basic_utility.h"
+#include "utility_test.hpp"
 #include "BrushedDCM_Ctrl.hpp"
-#include "QNum.hpp"
-#include "NamedVariant.hpp"
+//#include "QNum.hpp"
+//#include "NamedVariant.hpp"
 
 DigitalInOut green(GET_PIN(B, 0), PIN_MODE_OUTPUT, PIN_LOW);
 DigitalInOut blue(GET_PIN(B, 7), PIN_MODE_OUTPUT, PIN_LOW);
@@ -61,11 +62,11 @@ int ramfs_init(void)
     int res = dfs_mount(RT_NULL, fsroot_str, "ram", 0, ramfs);
     if (!res)
     {
-        printf("ramfs mount succeed\n");
+        LOG_I("ramfs mount succeed\n");
     }
     else
     {
-        printf("ramfs mount failed\n");
+        LOG_I("ramfs mount failed\n");
     }
     return 0;
 }
@@ -73,13 +74,13 @@ INIT_ENV_EXPORT(ramfs_init);
 
 volatile timestamp_t stamp = 0;
 rt_thread_t thread_main;
-#include "utility_test.hpp"
 int main(void)
 {
-	task1.start();
-
-    vcp = rt_device_find("vcom"); //find name by "list_device" in msh
-    if(vcp != NULL)
+    task1.start();
+    
+    //find name by "list_device" in msh
+    vcp = rt_device_find("vcom");
+    if (vcp != NULL)
     {
         rt_err_t status = rt_device_open(vcp, RT_DEVICE_FLAG_RDWR | RT_DEVICE_FLAG_INT_RX);
         if (status == RT_EOK)
@@ -91,23 +92,24 @@ int main(void)
     printf("main thread stack_addr=0x%08X\n", (int)thread_main->stack_addr);
     
     string ans;
-    //check platform type define
     
-    int failstop = 2;
-    SetConsoleForegroundColor(ConsoleColor::Cyan);
-    PlatformInfo::Test::test();
-    qmath::Test::test();
-    utility::utility_test(TESTFAIL_BREAKPOINT);
-    filter::Test::test(failstop);
+    int failbehavior = TESTFAIL_BREAKPOINT;
+    utility::software_test(failbehavior);
+    utility::hardware_test(failbehavior);
     MConfGenerate_RM35();
-    BrushedDCM::Test::test();
-    SetConsoleForegroundColor(ConsoleColor::White);
+    //    BrushedDCM::Test::test();
     
-    while (1)
+    for(size_t n = 0 ; n < 5 ; ++n)
     {
         green = !green;
         delayms(1000);
         stamp = us_tick();
-        printf("[printf]:us_tick:0x%08X\n", stamp);
+        printf("[printf]:us_tick:%d,0x%08X\n", stamp, stamp);
+    }
+        
+    while (1)
+    {
+        green = !green;
+        delayms(1000);
     }
 }

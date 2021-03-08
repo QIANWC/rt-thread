@@ -249,26 +249,25 @@ failexit :
     }
     
     
-    static timestamp_t stamp = 0;
     //32位时间戳获取测试，未测试溢出表现
     inline int microsecond_test(int failbehavior = TESTFAIL_BREAKPOINT)
     {
         LOG_I("Microsecond API test:");
         int pass_cnt = 0, test_cnt = 0;
         
-        stamp = us_tick();
+        static timestamp_t stamp = 0, last_stamp = 0;
+        last_stamp = us_tick();
         for (int k = 0; k < 5; ++k)
         {
-#ifdef __MBED__
-            Thread::wait(1000);
-#elif defined __RTTHREAD__
-            rtthread::Thread::sleep(1000);
-#endif // OS Environment
-            timestamp_t t = us_tick();
-            timestamp_t dt = t - stamp;
-            stamp = t;
-            if (std::abs((int)(dt - 1000'000U)) >= 2000)
+            delayms(1000);
+            stamp = us_tick();
+            timestamp_t dt = stamp - last_stamp;
+            last_stamp = stamp;
+            LOG_I("us_tick:%d,0x%08X,dt=%d", stamp, stamp, dt);
+            int error = dt - 1000'000U;
+            if (std::abs(error) >= 3000)
             {
+                LOG_E("us tick offset too large,dt=%d,error=%f%%", dt, error / 1000'000.0f * 100.0f);
                 return -1;//时间戳误差过大
             }
         }

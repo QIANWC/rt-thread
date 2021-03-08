@@ -99,14 +99,6 @@ int main(void)
     MConfGenerate_RM35();
     //    BrushedDCM::Test::test();
     
-    for(size_t n = 0 ; n < 5 ; ++n)
-    {
-        green = !green;
-        delayms(1000);
-        stamp = us_tick();
-        printf("[printf]:us_tick:%d,0x%08X\n", stamp, stamp);
-    }
-        
     while (1)
     {
         green = !green;

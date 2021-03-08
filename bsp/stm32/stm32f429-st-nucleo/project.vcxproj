@@ -193,5 +193,7 @@
     <ClCompile Include="..\..\..\components\utilities\ulog\ulog.c" />
     <ClCompile Include="..\..\..\components\utilities\ulog\backend\console_be.c" />
     <ClCompile Include="..\..\..\components\utilities\ulog\syslog\syslog.c" />
+    <ClCompile Include="..\..\..\components\drivers\cputime\cputime.c" />
+    <ClCompile Include="..\..\..\components\drivers\cputime\cputime_cortexm.c" />
   </ItemGroup>
 </Project>

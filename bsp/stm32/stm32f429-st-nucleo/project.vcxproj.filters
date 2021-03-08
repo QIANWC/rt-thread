@@ -462,6 +462,12 @@
     <ClCompile Include="..\..\..\components\utilities\ulog\syslog\syslog.c">
       <Filter>Source files\Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\components\drivers\cputime\cputime.c">
+      <Filter>Source files\DeviceDrivers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\components\drivers\cputime\cputime_cortexm.c">
+      <Filter>Source files\DeviceDrivers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RTE\RTE_Components.h">

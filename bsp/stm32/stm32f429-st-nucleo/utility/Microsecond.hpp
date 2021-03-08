@@ -4,6 +4,7 @@
  *us时间提供两种API：
  *32位周期性溢出的相对时间：us_tick();
  *64位绝对时间（后期可能接入NTP同步），us();
+ *TODO:考虑使用cortex-m DWT
  **/
 
 #ifndef MICROSECOND_H
@@ -45,13 +46,16 @@ typedef uint64_t us_timestamp_t;
     #define usTimer_irq TIM5_IRQn
     #define usTimer_isr TIM5_IRQHandler
     #define usTimer_DBGMCU_FREEZE __HAL_DBGMCU_FREEZE_TIM5
+#elif US_TICK_USE_DWT
+    #ifdef __RTTHREAD__
+    extern uint32_t cortexm_cputime_gettime();
+    #endif
 #elif defined _WIN32
 #else
     #error "us timer not set"
 #endif
 namespace Microsecond
 {
-
     static uint32_t ticker_overflow_cnt = 0;
     static void us_ticker_overflow_isr()
     {
@@ -89,6 +93,7 @@ namespace Microsecond
         return us_ticker_read();
     }
 #elif defined __RTTHREAD__
+#ifndef US_TICK_USE_DWT
     extern "C" void usTimer_isr(void)
     {
         if (__HAL_TIM_GET_FLAG(usTimer, TIM_IT_UPDATE))
@@ -110,6 +115,12 @@ namespace Microsecond
     {
         return usTimer->Instance->CNT;
     }
+#else
+    timestamp_t us_tick(void)
+    {
+        return clock_cpu_microsecond(clock_cpu_gettime());
+    }
+#endif
 #elif defined _WIN32
     timestamp_t us_tick(void)
     {
@@ -121,7 +132,14 @@ namespace Microsecond
 #ifndef _CHRONO_
     us_timestamp_t us()
     {
-        return ((us_timestamp_t)ticker_overflow_cnt << 32) + us_tick();
+        timestamp_t newcnt = us_tick();
+#ifdef US_TICK_USE_DWT
+        static timestamp_t lastcnt = 0;
+        if (lastcnt > newcnt)
+            us_ticker_overflow_isr();
+        lastcnt = newcnt;
+#endif
+        return ((us_timestamp_t)ticker_overflow_cnt << 32) + newcnt;
     }
 #else
     us_timestamp_t us()

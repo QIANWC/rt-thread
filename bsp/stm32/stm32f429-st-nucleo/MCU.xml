@@ -52,7 +52,7 @@
     <AllDependencies>
       <ProjectDependency>
         <RelativePath>project.uvprojx</RelativePath>
-        <Timestamp>132596700252559790</Timestamp>
+        <Timestamp>132596773535972772</Timestamp>
       </ProjectDependency>
     </AllDependencies>
     <RootDirectory>
@@ -105,6 +105,12 @@
         <VirtualDirectorySnapshot>
           <Name>DeviceDrivers</Name>
           <Files>
+            <VirtualFileSnapshot>
+              <RelativePath>..\..\..\components\drivers\cputime\cputime.c</RelativePath>
+            </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
+              <RelativePath>..\..\..\components\drivers\cputime\cputime_cortexm.c</RelativePath>
+            </VirtualFileSnapshot>
             <VirtualFileSnapshot>
               <RelativePath>..\..\..\components\drivers\hwtimer\hwtimer.c</RelativePath>
             </VirtualFileSnapshot>
@@ -474,6 +480,7 @@
             <string>..\..\..\components\cplusplus</string>
             <string>..\..\..\libcpu\arm\common</string>
             <string>..\..\..\libcpu\arm\cortex-m4</string>
+            <string>..\..\..\components\drivers\include</string>
             <string>..\..\..\components\drivers\include</string>
             <string>..\..\..\components\drivers\include</string>
             <string>..\..\..\components\drivers\include</string>

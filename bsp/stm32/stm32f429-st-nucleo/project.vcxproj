@@ -40,7 +40,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|VisualGDB'">
     <ClCompile>
-      <AdditionalIncludeDirectories>applications;..\..\..\components\cplusplus;..\..\..\libcpu\arm\common;..\..\..\libcpu\arm\cortex-m4;..\..\..\components\drivers\include;board;board\CubeMX_Config\Inc;board\ports;..\libraries\HAL_Drivers;..\libraries\HAL_Drivers\config;..\..\..\components\dfs\include;..\..\..\components\dfs\filesystems\devfs;..\..\..\components\dfs\filesystems\ramfs;..\..\..\components\finsh;.;..\..\..\include;..\..\..\components\libc\compilers\armlibc;..\..\..\components\libc\compilers\common;..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Inc;..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Include;..\libraries\STM32F4xx_HAL\CMSIS\Include;..\..\..\components\drivers\usb\usbdevice;utility;Controller;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>applications;Controller;..\..\..\components\cplusplus;..\..\..\libcpu\arm\common;..\..\..\libcpu\arm\cortex-m4;..\..\..\components\drivers\include;board;board\CubeMX_Config\Inc;board\ports;..\libraries\HAL_Drivers;..\libraries\HAL_Drivers\config;..\..\..\components\dfs\include;..\..\..\components\dfs\filesystems\devfs;..\..\..\components\dfs\filesystems\ramfs;..\..\..\components\finsh;.;..\..\..\include;..\..\..\components\libc\compilers\armlibc;..\..\..\components\libc\compilers\common;..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Inc;..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Include;..\libraries\STM32F4xx_HAL\CMSIS\Include;..\..\..\components\drivers\usb\usbdevice;..\..\..\components\utilities\utest;..\..\..\components\utilities\ulog;..\..\..\components\utilities\ulog\syslog;utility;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>DEBUG=1;USE_HAL_DRIVER;RT_USING_ARM_LIBC;__RTTHREAD__;STM32F429xx;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions />
       <CLanguageStandard>C17</CLanguageStandard>
@@ -55,7 +55,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|VisualGDB'">
     <ClCompile>
-      <AdditionalIncludeDirectories>applications;..\..\..\components\cplusplus;..\..\..\libcpu\arm\common;..\..\..\libcpu\arm\cortex-m4;..\..\..\components\drivers\include;board;board\CubeMX_Config\Inc;board\ports;..\libraries\HAL_Drivers;..\libraries\HAL_Drivers\config;..\..\..\components\dfs\include;..\..\..\components\dfs\filesystems\devfs;..\..\..\components\dfs\filesystems\ramfs;..\..\..\components\finsh;.;..\..\..\include;..\..\..\components\libc\compilers\armlibc;..\..\..\components\libc\compilers\common;..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Inc;..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Include;..\libraries\STM32F4xx_HAL\CMSIS\Include;..\..\..\components\drivers\usb\usbdevice;utility;Controller;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>applications;Controller;..\..\..\components\cplusplus;..\..\..\libcpu\arm\common;..\..\..\libcpu\arm\cortex-m4;..\..\..\components\drivers\include;board;board\CubeMX_Config\Inc;board\ports;..\libraries\HAL_Drivers;..\libraries\HAL_Drivers\config;..\..\..\components\dfs\include;..\..\..\components\dfs\filesystems\devfs;..\..\..\components\dfs\filesystems\ramfs;..\..\..\components\finsh;.;..\..\..\include;..\..\..\components\libc\compilers\armlibc;..\..\..\components\libc\compilers\common;..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Inc;..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Include;..\libraries\STM32F4xx_HAL\CMSIS\Include;..\..\..\components\drivers\usb\usbdevice;..\..\..\components\utilities\utest;..\..\..\components\utilities\ulog;..\..\..\components\utilities\ulog\syslog;utility;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NDEBUG=1;RELEASE=1;USE_HAL_DRIVER;RT_USING_ARM_LIBC;__RTTHREAD__;STM32F429xx;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions />
       <CLanguageStandard />
@@ -76,7 +76,6 @@
     <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_adc_ex.c" />
     <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_dac.c" />
     <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_dac_ex.c" />
-    <ClCompile Include="applications\lcd_init.c" />
     <ClCompile Include="applications\realmain.cpp" />
     <ClCompile Include="..\..\..\components\cplusplus\cxx_Mutex.cpp" />
     <ClCompile Include="..\..\..\components\cplusplus\cxx_Semaphore.cpp" />
@@ -177,23 +176,22 @@
     <ClCompile Include="..\..\..\components\drivers\usb\usbdevice\core\usbdevice_core.c" />
     <ClCompile Include="..\..\..\components\drivers\usb\usbdevice\core\usbdevice.c" />
     <ClCompile Include="..\..\..\components\drivers\usb\usbdevice\class\cdc_vcom.c" />
-    <ClInclude Include="Controller\basic_filter.hpp" />
-    <ClInclude Include="Controller\BrushedDCM_Ctrl.hpp" />
-    <ClInclude Include="Controller\controller.hpp" />
-    <ClInclude Include="Controller\Encoder.hpp" />
-    <ClInclude Include="Controller\MotorParam.hpp" />
-    <ClInclude Include="Controller\QNum.hpp" />
     <ClInclude Include="RTE\RTE_Components.h" />
-    <ClInclude Include="utility\basic_utility.hpp" />
-    <ClInclude Include="utility\cstring.hpp" />
-    <ClInclude Include="utility\Microsecond.hpp" />
-    <ClInclude Include="utility\NamedVariant.hpp" />
-    <ClInclude Include="utility\PlatformInfo.hpp" />
-    <ClInclude Include="utility\rtt_portout.hpp" />
     <None Include="mcu.props" />
     <ClInclude Include="$(BSP_ROOT)\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h" />
     <None Include="project-Debug.vgdbsettings" />
     <None Include="project-Release.vgdbsettings" />
     <None Include="MCU.xml" />
+    <ClCompile Include="..\..\..\components\drivers\hwtimer\hwtimer.c" />
+    <ClCompile Include="..\..\..\components\drivers\misc\adc.c" />
+    <ClCompile Include="..\..\..\components\drivers\misc\dac.c" />
+    <ClCompile Include="..\libraries\HAL_Drivers\drv_hwtimer.c" />
+    <ClCompile Include="..\libraries\HAL_Drivers\drv_adc.c" />
+    <ClCompile Include="..\libraries\HAL_Drivers\drv_dac.c" />
+    <ClCompile Include="..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_lptim.c" />
+    <ClCompile Include="..\..\..\components\utilities\utest\utest.c" />
+    <ClCompile Include="..\..\..\components\utilities\ulog\ulog.c" />
+    <ClCompile Include="..\..\..\components\utilities\ulog\backend\console_be.c" />
+    <ClCompile Include="..\..\..\components\utilities\ulog\syslog\syslog.c" />
   </ItemGroup>
 </Project>

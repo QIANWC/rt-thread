@@ -4,6 +4,7 @@
             "name": "rt_thread_stm32f429",
             "includePath": [
                 "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\bsp\\stm32\\stm32f429-st-nucleo\\applications",
+                "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\bsp\\stm32\\stm32f429-st-nucleo\\Controller",
                 "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\components\\cplusplus",
                 "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\libcpu\\arm\\common",
                 "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\libcpu\\arm\\cortex-m4",
@@ -25,8 +26,11 @@
                 "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\bsp\\stm32\\libraries\\STM32F4xx_HAL\\CMSIS\\Device\\ST\\STM32F4xx\\Include",
                 "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\bsp\\stm32\\libraries\\STM32F4xx_HAL\\CMSIS\\Include",
                 "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\components\\drivers\\usb\\usbdevice",
+                "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\components\\utilities\\utest",
+                "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\components\\utilities\\ulog",
+                "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\components\\utilities\\ulog\\syslog",
                 "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\bsp\\stm32\\stm32f429-st-nucleo\\utility",
-                "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\bsp\\stm32\\stm32f429-st-nucleo\\Controller",
+                "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\components\\drivers\\hwtimer",
                 "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\components\\drivers\\i2c",
                 "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\components\\drivers\\misc",
                 "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\components\\drivers\\serial",
@@ -38,7 +42,8 @@
                 "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\bsp\\stm32\\libraries\\STM32F4xx_HAL\\CMSIS\\Device\\ST\\STM32F4xx\\Source\\Templates",
                 "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\bsp\\stm32\\libraries\\STM32F4xx_HAL\\STM32F4xx_HAL_Driver\\Src",
                 "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\components\\drivers\\usb\\usbdevice\\core",
-                "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\components\\drivers\\usb\\usbdevice\\class"
+                "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\components\\drivers\\usb\\usbdevice\\class",
+                "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\components\\utilities\\ulog\\backend"
             ],
             "defines": [
                 "USE_HAL_DRIVER",

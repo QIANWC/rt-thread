@@ -93,6 +93,7 @@ int main(void)
     
     string ans;
     
+    delayms(100);
     int failbehavior = TESTFAIL_BREAKPOINT;
     utility::software_test(failbehavior);
     utility::hardware_test(failbehavior);

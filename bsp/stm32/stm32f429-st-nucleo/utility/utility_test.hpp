@@ -28,7 +28,7 @@
 
 namespace utility
 {
-    static int platforminfo_test(int failbehavior = TESTFAIL_BREAKPOINT)
+    int platforminfo_test(int failbehavior = TESTFAIL_BREAKPOINT)
     {
         LOG_I("Platform test:");
         
@@ -47,19 +47,18 @@ namespace utility
     }
 
 
-    using qmath::QNum;
     //helper function
     static bool near(float a, float b)
     {
         return fabs(a - b) <= 0.001f;
     }
-    static int qnum_test(int failbehavior = TESTFAIL_BREAKPOINT)
+    int qnum_test(int failbehavior = TESTFAIL_BREAKPOINT)
     {
         LOG_I("QNum test:");
         int pass_cnt = 0, test_cnt = 0;
         
         //q15_int32 or say q15_precision32
-        using q15 = QNum<int32_t, 15>;
+        using q15 = qmath::QNum<int32_t, 15>;
         q15 v1 = 1.0f, v2 = 2.0f, v3 = 3.0f, v0_1 = 0.1f, v0_5 = 0.5f;
         LOG_D("test values:%f,%f,%f,%f,%f", (float)v1, (float)v2, (float)v3, (float)v0_1, (float)v0_5);
             
@@ -87,16 +86,17 @@ failexit :
     }
 
 
-    static vector<string> vstr(4);
     static void print_vstr(vector<string> vs)
     {
-        printf("vector<string>:\n");
+        string output = "vector<string>:";
         for (auto s : vs)
         {
-            printf("%s\n", s.c_str());
+            output += s + "|";
         }
+        output.erase(output.size() - 1);
+        LOG_D("%s\n", output.c_str());
     }
-    static int cstring_test(int failbehavior = TESTFAIL_BREAKPOINT)
+    int cstring_test(int failbehavior = TESTFAIL_BREAKPOINT)
     {
         LOG_I("String test:");
         int test_cnt = 0, pass_cnt = 0;
@@ -105,6 +105,7 @@ failexit :
         string snull = (char*)nullptr;
         string sa("stringA"), sb = "stringB", sc("stringC", 6, 1), sd(4, 'D');
         string s = "lite string";
+        vector<string> vstr(4);
         string &s1 = vstr[0], &s2 = vstr[1], &s3 = vstr[2], &s4 = vstr[3];
 
         test_assert(svoid.size() == 0&&svoid.capacity() == ASIO::base_size&&svoid.data() != nullptr);
@@ -180,13 +181,12 @@ failexit :
     }
 
 
-    using variant::NamedVariant;
-    static int namedvariant_test(int failbehavior = TESTFAIL_BREAKPOINT)
+    int namedvariant_test(int failbehavior = TESTFAIL_BREAKPOINT)
     {
         LOG_I("NamedVariant test:");
         int test_cnt = 0, pass_cnt = 0;
         
-        NamedVariant var;
+        variant::NamedVariant var;
         string s = "A,int=32;BB,float=0.1;CCC,double=0.2;\
             D:int=1;E,char=1.2;F,float=1.0";
         vector<string> lines = s.split(';');
@@ -225,7 +225,7 @@ failexit :
     }
 
 
-    static int filter_test(bool failstop)
+    int filter_test(bool failstop)
     {
         LOG_I("Filter test:developing...");
         //TODO:filter test developing...
@@ -237,20 +237,23 @@ failexit :
     }
 
 
-    inline int software_test(int failbehavior = TESTFAIL_BREAKPOINT)
+    int software_test(int failbehavior = TESTFAIL_BREAKPOINT)
     {
         LOG_I("[Software test]");
         
+        int buffer_flush_tick = 100;//给日志输出预留足够时间间隔
         platforminfo_test(failbehavior);
         qnum_test(failbehavior);
         cstring_test(failbehavior);
+        delayms(buffer_flush_tick);
         namedvariant_test(failbehavior);
+        delayms(buffer_flush_tick);
         return 0;
     }
     
     
     //32位时间戳获取测试，未测试溢出表现
-    inline int microsecond_test(int failbehavior = TESTFAIL_BREAKPOINT)
+    int microsecond_test(int failbehavior = TESTFAIL_BREAKPOINT)
     {
         LOG_I("Microsecond API test:");
         int pass_cnt = 0, test_cnt = 0;
@@ -275,7 +278,7 @@ failexit :
     }
 
     
-    inline int hardware_test(int failbehavior = TESTFAIL_BREAKPOINT)
+    int hardware_test(int failbehavior = TESTFAIL_BREAKPOINT)
     {
         LOG_I("[Hardware test]");
         

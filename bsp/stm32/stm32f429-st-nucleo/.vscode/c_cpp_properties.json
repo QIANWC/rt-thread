@@ -30,6 +30,7 @@
                 "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\components\\utilities\\ulog",
                 "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\components\\utilities\\ulog\\syslog",
                 "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\bsp\\stm32\\stm32f429-st-nucleo\\utility",
+                "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\components\\drivers\\cputime",
                 "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\components\\drivers\\hwtimer",
                 "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\components\\drivers\\i2c",
                 "c:\\Users\\QIAN\\Documents\\GitHub\\rt-thread\\components\\drivers\\misc",

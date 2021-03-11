@@ -21,7 +21,7 @@
 //引用好像重名
 #include <NonCopyable.h>
 using mbed::NonCopyable;
-#elif defined __RTTHREAD__
+#elif defined __RTTHREAD__||defined _WIN32
 //namespace ASIO {
 
 /** \addtogroup platform-public-api */

@@ -116,12 +116,12 @@ static int param_fromstring(const string& src,const string& fmt,void* pdst)
         switch (f.typeinfo)
         {
         case NamedVariant::type_int:*(int*)(pdata + wpos) = vars[n].v.i32; wpos += sizeof(int); break;
-        default:printf("param type missing!\n"); //assume as float
+        default:printf("param type missing!\n"); [[fallthrough]];//assume as float
         case NamedVariant::type_float:*(float*)(pdata + wpos) = vars[n].v.f32; wpos += sizeof(float); break;
 #if NAMEDVARIANT_SUPPORT_DOUBLE
         case NamedVariant::type_double:*(double*)(pdata + wpos) = vars[n].v.d64; wpos += sizeof(double); break;
 #else
-        case NamedVariant::type_double:*(uint64_t*)(pdata + wpos) = NAN; wpos += sizeof(double); break;
+        case NamedVariant::type_double:*(double*)(pdata + wpos) = std::nan(""); wpos += sizeof(double); break;
 #endif // NAMEDVARIANT_SUPPORT_DOUBLE
 
         }
@@ -129,7 +129,7 @@ static int param_fromstring(const string& src,const string& fmt,void* pdst)
     return 0;
 }
 
-static string param_tostring(const string fmt, void* pv)
+static string param_tostring(const string& fmt, void* pv)
 {
     bool fmtok = false;
     string result;
@@ -221,11 +221,11 @@ public:
     uint32_t crc;
 }MotorConfStruct;
 
-static MotorConfStruct mconf;
-static string src = "MaxVolt,float=30.0;MaxVoltOutBits,int=3000;VoltPerBit,float=0.01,"\
-    "MaxAmp,float=1.0\nMaxAmpOutBits,int=1000,AmpPerBit,float=0.001,TorquePerAmp,int=0.2";
 inline int MConfGenerate_RM35()
 {
+    MotorConfStruct mconf;
+    string src = "MaxVolt,float=30.0;MaxVoltOutBits,int=3000;VoltPerBit,float=0.01,"\
+    "MaxAmp,float=1.0\nMaxAmpOutBits,int=1000,AmpPerBit,float=0.001,TorquePerAmp,int=0.2";
     //    mconf.VoltageParam =  VoltageParam_t { .MaxVolt = 25.0f, .MaxVoltOutBits = 3000, .VoltPerBit = 1 };
     //    mconf.CurrentParam = CurrentParam_t{ .MaxAmp = 3.0f, .MaxAmpOutBits = 500, .AmpPerBit = 1, .TorquePerAmp = 1 };
 

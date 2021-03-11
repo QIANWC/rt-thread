@@ -20,11 +20,8 @@ using rtthread::Thread;
 
 #include "DigitalInOut.h"
 using mbed::DigitalInOut;
-//#include "basic_utility.h"
+#include "basic_utility.hpp"
 #include "utility_test.hpp"
-#include "BrushedDCM_Ctrl.hpp"
-//#include "QNum.hpp"
-//#include "NamedVariant.hpp"
 
 DigitalInOut green(GET_PIN(B, 0), PIN_MODE_OUTPUT, PIN_LOW);
 DigitalInOut blue(GET_PIN(B, 7), PIN_MODE_OUTPUT, PIN_LOW);
@@ -72,7 +69,7 @@ int ramfs_init(void)
 }
 INIT_ENV_EXPORT(ramfs_init);
 
-volatile timestamp_t stamp = 0;
+volatile uint64_t stamp = 0;
 rt_thread_t thread_main;
 int main(void)
 {
@@ -91,14 +88,13 @@ int main(void)
     thread_main = rt_thread_find("main");
     printf("main thread stack_addr=0x%08X\n", (int)thread_main->stack_addr);
     
-    string ans;
     
     delayms(100);
     int failbehavior = TESTFAIL_BREAKPOINT;
     utility::software_test(failbehavior);
     utility::hardware_test(failbehavior);
-    MConfGenerate_RM35();
-    //    BrushedDCM::Test::test();
+//    MConfGenerate_RM35();
+//    BrushedDCM::Test::test();
     
     while (1)
     {

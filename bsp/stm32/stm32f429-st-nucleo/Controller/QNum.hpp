@@ -28,20 +28,21 @@ public:
     
     QNum()
     {
+        V = 0;
     }
-    QNum(const QNum& q)
+    explicit QNum(const QNum& q)
     {
         *this = q;
     }
     QNum(const float& f)
     {
-        V = f*ScaleFromFp;
+        V = (qtype)std::round(f * ScaleFromFp);
     }
-    QNum(const double& d)
+    explicit QNum(const double d)
     {
-        V = d*ScaleFromFp;
+        V = (qtype)std::round(d * ScaleFromFp);
     }
-    QNum(const int& q)
+    explicit QNum(const int q)
     {
         V = q*ScaleFromInt;
     }
@@ -62,16 +63,17 @@ public:
         return (double)V*ScaleToFp;
     }
     
-    QNum operator=(const QNum& q)
+    QNum& operator=(const QNum& q)
     {
-        return (V = q.V);
+        V = q.V;
+        return *this;
     }
-    QNum operator=(const float& f)
+    QNum& operator=(const float& f)
     {
         V = f*ScaleFromFp;
         return *this;
     }
-    QNum operator=(const int&i)
+    QNum& operator=(const int& i)
     {
         V = i*ScaleFromInt;
         return *this;

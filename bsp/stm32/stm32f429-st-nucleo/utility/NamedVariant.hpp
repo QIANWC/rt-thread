@@ -127,7 +127,7 @@ exit:
             switch (type)
             {
             case NamedVariant::type_int:v->i32 = atoi(s); break;
-            case NamedVariant::type_float:v->f32 = atof(s); break;//atof只支持double，strtof支持float，但是需要stdlib
+            case NamedVariant::type_float:v->f32 = strtof(s, nullptr); break;//atof只支持double，strtof支持float，但是需要stdlib
     #if NAMEDVARIANT_SUPPORT_DOUBLE
             case NamedVariant::type_double:v->d64 = atof(s); break;
     #else

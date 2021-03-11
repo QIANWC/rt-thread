@@ -24,7 +24,7 @@
 
 //hardware
 #include "Microsecond.hpp"
-#include "Encoder.hpp"
+//#include "Encoder.hpp"
 
 namespace utility
 {
@@ -86,10 +86,10 @@ failexit :
     }
 
 
-    static void print_vstr(vector<string> vs)
+    static void print_vstr(const vector<string>& vs)
     {
         string output = "vector<string>:";
-        for (auto s : vs)
+        for (const auto &s : vs)
         {
             output += s + "|";
         }
@@ -101,12 +101,35 @@ failexit :
         LOG_I("String test:");
         int test_cnt = 0, pass_cnt = 0;
 
+        {
+            // 测试：默认构造
+            string s1;
+
+            // 测试：传参构造
+            string s2("hello world");
+
+            // 测试：拷贝构造
+            string s3(s1);
+
+            // 测试：移动构造
+            string s4(std::move(s3));
+
+            // 测试：拷贝赋值
+            string s5;
+            s5 = s4;
+
+            // 测试：移动赋值
+            string s6;
+            s6 = std::move(s5);
+
+            // 测试：自动析构
+        }
+
         string svoid;
         string snull = (char*)nullptr;
         string sa("stringA"), sb = "stringB", sc("stringC", 6, 1), sd(4, 'D');
         string s = "lite string";
         vector<string> vstr(4);
-        string &s1 = vstr[0], &s2 = vstr[1], &s3 = vstr[2], &s4 = vstr[3];
 
         test_assert(svoid.size() == 0&&svoid.capacity() == ASIO::base_size&&svoid.data() != nullptr);
         test_assert(snull.size() == 0&&snull.capacity() == ASIO::base_size&&snull.data() != nullptr);
@@ -270,7 +293,7 @@ failexit :
             int error = dt - 1000'000U;
             if (std::abs(error) >= 3000)
             {
-                LOG_E("us tick offset too large,dt=%d,error=%f%%", dt, error / 1000'000.0f * 100.0f);
+                LOG_E("us tick offset too large,dt=%d,error=%f%%", dt, (float)error / 1000'000.0f * 100.0f);
                 return -1;//时间戳误差过大
             }
         }

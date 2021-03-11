@@ -125,7 +125,7 @@ namespace Microsecond
     timestamp_t us_tick(void)
     {
         //TODO:std::chrono测试验证，API统一
-        return std::chrono::microseconds().count();
+        return (uint32_t)std::chrono::microseconds().count();
     }
 #endif
 

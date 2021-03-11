@@ -17,25 +17,29 @@ constexpr size_t npos = SIZE_MAX;
 
 /*malloc always pad an extra byte for '\0'
  *TODO:何时返回引用？
- *TOO:目前传入litestring参数时调用的还是strxxx函数，未利用strsize已知特性进行优化
+ *TODO:目前传入litestring参数时调用的还是strxxx函数，未利用strsize已知特性进行优化
  *TODO:优化重复构造和内存移动
- *TODO:内存管理还未测试
+ *TODO:内存管理需要更详尽的测试
+ *Notice:没有考虑内存分配失败的处理
  **/
+ 
+#ifdef CSTRING_DEBUG
+#define DEBUG_INFO(...) printf(__VA_ARGS__)
+#else
+#define DEBUG_INFO(...)
+#endif
 class cstring
 {
 public:
-    cstring()
+    explicit cstring(size_t len)
     {
-        _constructor();
-    }
-    cstring(size_t len)
-    {
-        cap = std::max(base_size, len);
-        d = (char*)operator new(cap + 1);
+        cap = std::max(base_size, len);;
+        d = new char[cap + 1];
         *d = '\0';
         sz = 0;
+        DEBUG_INFO("constructor(given size):0x%08X\n", (int)d);
     }
-    cstring(const char* psrc)
+    cstring(const char* psrc = nullptr)
     {
         if (!psrc)
         {
@@ -46,8 +50,10 @@ public:
         size_t extsz = sz + sz / 2;
         
         cap = std::max(base_size, extsz);
-        d = (char*)operator new(cap + 1);
-        memcpy(d, psrc, sz + 1);
+        d = new char[cap + 1];
+        memcpy(d, psrc, sz);
+        d[sz] = '\0';
+        DEBUG_INFO("constructor(argument) at 0x%08X,from 0x%08X\n", (int)d, (int)psrc);
     }
     cstring(const char* psrc, size_t pos, size_t len)
     {
@@ -67,33 +73,54 @@ public:
         
         sz = std::min(_sz - pos, len);
         cap = std::max(base_size, sz + sz / 2);
-        d = (char*)operator new(cap + 1);
+        d = new char[cap + 1];
         memcpy(d, psrc + pos, sz);
         d[sz] = '\0';
+        DEBUG_INFO("constructor(argument) at 0x%08X,from 0x%08X\n", (int)d, (int)psrc);
     }
     cstring(size_t len, const char c)
     {
         sz = len;
         cap = std::max(base_size, sz + sz / 2);
-        d = (char*)operator new(cap + 1);
+        d = new char[cap + 1];
         memset(d, c, sz);
         d[sz] = '\0';
+        DEBUG_INFO("constructor(char dup) at 0x%08X\n", (int)d);
     }
     cstring(const cstring& rhs)
     {
         cap = rhs.cap;
         sz = rhs.sz;
-        d = new char[sz+1];
-        d[sz] = '\0';
+        d = new char[cap + 1];
         memcpy(d, rhs.d, sz);
+        d[sz] = '\0';
+        DEBUG_INFO("constructor(copy) at 0x%08X,from 0x%08X\n", (int)d, (int)rhs.d);
+    }
+    cstring(cstring&& rhs) noexcept
+    {
+        cap = rhs.cap;
+        sz = rhs.sz;
+        d = rhs.d;
+        rhs.cap = 0;
+        rhs.sz = 0;
+        rhs.d = nullptr;
+        DEBUG_INFO("constructor(move) at 0x%08X,from 0x%08X\n", (int)d, (int)rhs.d);
+        return;
     }
 
     ~cstring()
     {
         sz = 0;
         cap = 0;
-        if (!d)
-            operator delete(d);
+        DEBUG_INFO("deconstructor:");
+        if (d) {
+            DEBUG_INFO("delete 0x%08X\n", (int)d);
+            delete[] d;
+        }
+        else{
+			//移动构造函数会将数据指针置为nullptr
+            DEBUG_INFO("try to free nullptr\n");
+		}
     }
 
     //simple functions
@@ -137,9 +164,11 @@ public:
     {
         return d;
     }
+    //capacity keep unchanged
     void clear()
     {
         sz = 0;
+        d[sz] = '\0';
     }
 
     //cstring& assign();
@@ -149,50 +178,40 @@ public:
     {
         if (!psrc)
         {
-            d = (char*)operator new(base_size + 1);
-            *d = '\0';
-            sz = 0;
-            cap = base_size;
+            _constructor();
             return *this;
         }
 
-        sz = _strnlen(psrc, SIZE_MAX);
-        size_t extsz = sz + sz / 2;
-        extsz = std::max(base_size, extsz);
-
-        if (d == nullptr)
-        {
-            cap = extsz;
-            d = (char*)operator new(cap + 1);
-            memcpy(d, psrc, sz + 1);
-        }
-        else if (cap < extsz)
-        {
-            cap = extsz;
-            operator delete(d);
-            d = (char*)operator new(cap + 1);
-            memcpy(d, psrc, sz + 1);
-        }
-        else
-        {
-            //cap is enough,no malloc
-            memcpy(d, psrc, sz + 1);
-        }
+        size_t n = _strnlen(psrc, SIZE_MAX);
+        _copyfrom(psrc, n);
+        DEBUG_INFO("assignment(c string)\n");
         return *this;
     }
     cstring& operator=(const cstring& s)
     {
         if (this == &s)
             return *this;
-        sz = s.sz;
-        cap = s.cap;
-        if (!d)
-        {
-            d = (char*)operator new(s.cap+1);
-        }
-        memcpy(d, s.d, cap + 1);
+        _copyfrom(s.d, s.sz);
+        DEBUG_INFO("assignment(copy)\n");
         return *this;
     }
+    cstring& operator=(cstring&& s) noexcept
+    {
+        if (this != &s)
+        {
+            if(d)
+                delete[] d;
+            d = s.d;
+            sz = s.sz;
+            cap = s.cap;
+            s.cap = 0;
+            s.sz = 0;
+            s.d = nullptr;
+        }
+        DEBUG_INFO("assignment(move)\n");
+        return *this;
+    }
+
     int copyTo(char* dst, size_t pos = 0, size_t len = npos)
     {
         if (pos >= sz)
@@ -335,7 +354,8 @@ public:
     }
     cstring substr(size_t pos, size_t len = npos) const
     {
-        return cstring(c_str(), pos, len);
+        cstring s(c_str(), pos, len);
+        return s;
     }
     
     //单一分隔符
@@ -360,11 +380,11 @@ public:
     vector<cstring> split(const char* fmt) const
     {
         vector<cstring> result;
-        size_t lastpos = 0, fpos = npos;
+        size_t lastpos = 0;
         size_t fmtsz = _strnlen(fmt, SIZE_MAX);
         while (1)
         {
-            fpos = find(fmt[0], lastpos);
+            size_t fpos = find(fmt[0], lastpos);
             if (fpos == npos || fpos + fmtsz > sz)
                 break;
             if (memcmp(d + fpos, fmt, fmtsz) == 0)
@@ -475,7 +495,6 @@ public:
     }
     cstring& erase(size_t pos, size_t len=SIZE_MAX)
     {
-        size_t erase_sz = std::min(sz - pos, len);
         if (pos > sz)
             return *this;
         if (sz - pos < len)
@@ -509,22 +528,26 @@ public:
     }
 
 protected:
-    char* d = nullptr;
-    size_t sz = 0;
-    size_t cap = 0;
+    //TODO：默认赋值移动到构造函数
+    char* d;
+    size_t sz;
+    size_t cap;
 private :
     void _constructor()
     {
-        d = (char*)operator new(base_size + 1);
+        d = new char[base_size + 1];
         *d = '\0';
         sz = 0;
         cap = base_size;
+        DEBUG_INFO("constructor(default):0x%08X\n", (int)d);
     }
 
     size_t _strnlen(const char* psrc, size_t max) const
     {
         size_t n = 0;
-        while (psrc[n] != '\0'&&n < max)
+        if (!psrc)
+            return 0;
+        while (n < max&&psrc[n] != '\0')
             ++n;
 #if LITESTRING_STRLEN_WARNNING
         if (n > 10000)
@@ -539,13 +562,13 @@ private :
     void _reallocate(size_t n)
     {
         char* old = d;
-        d = (char*)operator new(n + 1);
+        d = new char[n + 1];
         if (old&&d)
         {
             memmove(d, old, sz + 1);
         }
-        if (!d)
-            operator delete(d);
+        if (old)
+            delete[] old;
         cap = n;
     }
     //内部函数,假设psrc,len都是合理的
@@ -556,11 +579,28 @@ private :
         {
             _reallocate(sumsz);
         }
-        memcpy(d + sz, psrc, sumsz);
+        memcpy(d + sz, psrc, len);
         sz = sumsz;
         d[sz] = '\0';
         return *this;
     }
+    void _copyfrom(const char* psrc, size_t len)
+    {
+        sz = len;
+        if (cap < len)
+        {
+            cap = std::max(base_size, sz + sz / 2);
+            if (d)
+                delete[] d;
+            d = new char[cap + 1];
+        }
+        else if (!d) {
+            d = new char[cap + 1];
+        }
+        memmove(d, psrc, sz);
+        d[sz] = '\0';
+    }
+
 public:
     //npos安排在最后避免调试时遮挡重要成员显示
 //    static constexpr size_t npos = SIZE_MAX;

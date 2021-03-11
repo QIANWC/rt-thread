@@ -35,10 +35,21 @@ using Microsecond::us_tick;
 #ifdef ARCH_ARM_CORTEX_M
 #define TRIG_BREAKPOINT __BKPT()
 #else
-#define TRIG_BREAKPOINT
+#define TRIG_BREAKPOINT printf("assert failed\n")
 #endif
 
+#ifdef __RTTHREAD__
 #include <rtdbg.h>
+#else
+#define LOG_D(...) printf(__VA_ARGS__);printf("\n")
+#define LOG_I(...) printf(__VA_ARGS__);printf("\n")
+#define LOG_W(...) printf(__VA_ARGS__);printf("\n")
+#define LOG_E(...) printf(__VA_ARGS__);printf("\n")
+//#include <Windows.h>
+//#define delayms(ms) Sleep(ms)
+#define delayms(ms) ms
+#endif
+
 //common actions
 bool testfail_action(bool expr, int failbehavior, int& test_cnt, int& pass_cnt)
 {

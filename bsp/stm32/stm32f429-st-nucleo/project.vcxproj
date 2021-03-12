@@ -117,16 +117,6 @@
     <ClCompile Include="..\..\..\components\finsh\cmd.c" />
     <ClCompile Include="..\..\..\components\finsh\msh.c" />
     <ClCompile Include="..\..\..\components\finsh\msh_file.c" />
-    <ClCompile Include="..\..\..\components\finsh\finsh_compiler.c" />
-    <ClCompile Include="..\..\..\components\finsh\finsh_error.c" />
-    <ClCompile Include="..\..\..\components\finsh\finsh_heap.c" />
-    <ClCompile Include="..\..\..\components\finsh\finsh_init.c" />
-    <ClCompile Include="..\..\..\components\finsh\finsh_node.c" />
-    <ClCompile Include="..\..\..\components\finsh\finsh_ops.c" />
-    <ClCompile Include="..\..\..\components\finsh\finsh_parser.c" />
-    <ClCompile Include="..\..\..\components\finsh\finsh_var.c" />
-    <ClCompile Include="..\..\..\components\finsh\finsh_vm.c" />
-    <ClCompile Include="..\..\..\components\finsh\finsh_token.c" />
     <ClCompile Include="..\..\..\src\clock.c" />
     <ClCompile Include="..\..\..\src\components.c" />
     <ClCompile Include="..\..\..\src\device.c" />

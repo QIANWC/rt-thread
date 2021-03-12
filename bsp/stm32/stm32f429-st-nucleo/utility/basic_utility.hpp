@@ -47,7 +47,7 @@ using Microsecond::us_tick;
 #define LOG_E(...) printf(__VA_ARGS__);printf("\n")
 //#include <Windows.h>
 //#define delayms(ms) Sleep(ms)
-#define delayms(ms) ms
+#define delayms(ms)
 #endif
 
 //common actions

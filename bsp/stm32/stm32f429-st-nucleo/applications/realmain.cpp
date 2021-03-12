@@ -41,12 +41,16 @@ Thread task1(task1_func, 0, 1024, '\025', 20, "task1");
 
 rt_device_t vcp;
 char rxbuf[128];
+//echo data received back to vcp and print in console
 rt_err_t Serial_RxCallback(rt_device_t vcp, rt_size_t len)
 {
     rt_size_t rxsize = rt_device_read(vcp, 0, rxbuf, len);
     rt_size_t txsize = rt_device_write(vcp, 0, rxbuf, len);
-    rt_kprintf("size rx=%d,tx=%d", rxsize, txsize);
-//    return rxsize != txsize;
+    string s(rxbuf, 0, len);
+    printf("received from vcp:%s\n", s.c_str());
+    
+    if (rxsize != txsize)
+        printf("echo failed\n");
     return 0;
 }
 

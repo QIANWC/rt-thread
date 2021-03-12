@@ -94,7 +94,7 @@ failexit :
             output += s + "|";
         }
         output.erase(output.size() - 1);
-        LOG_D("%s\n", output.c_str());
+        LOG_D("%s", output.c_str());
     }
     int cstring_test(int failbehavior = TESTFAIL_BREAKPOINT)
     {
@@ -218,7 +218,7 @@ failexit :
         {
             var.from_line(l);
             string linestr = var.to_line();
-            printf("%s\n", linestr.c_str());
+            LOG_D("%s", linestr.c_str());
         }
 
         //浮点型末尾0可能略有变动

@@ -216,36 +216,6 @@
     <ClCompile Include="..\..\..\components\finsh\msh_file.c">
       <Filter>Source files\finsh</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\components\finsh\finsh_compiler.c">
-      <Filter>Source files\finsh</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\components\finsh\finsh_error.c">
-      <Filter>Source files\finsh</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\components\finsh\finsh_heap.c">
-      <Filter>Source files\finsh</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\components\finsh\finsh_init.c">
-      <Filter>Source files\finsh</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\components\finsh\finsh_node.c">
-      <Filter>Source files\finsh</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\components\finsh\finsh_ops.c">
-      <Filter>Source files\finsh</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\components\finsh\finsh_parser.c">
-      <Filter>Source files\finsh</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\components\finsh\finsh_var.c">
-      <Filter>Source files\finsh</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\components\finsh\finsh_vm.c">
-      <Filter>Source files\finsh</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\components\finsh\finsh_token.c">
-      <Filter>Source files\finsh</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\clock.c">
       <Filter>Source files\Kernel</Filter>
     </ClCompile>

@@ -9,14 +9,22 @@
 <!-- In order to build this project manually (outside VisualGDB), please provide TOOLCHAIN_ROOT, BSP_ROOT, EFP_BASE and TESTFW_BASE variables via Environment or Make command line -->
 	<ItemDefinitionGroup>
 		<ClCompile>
-			<PreprocessorDefinitions>STM32F429xx;_RTE_;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>%(ClCompile.AdditionalIncludeDirectories);$(BSP_ROOT)/Drivers/CMSIS/Device/ST/STM32F4xx/Include;RTE</AdditionalIncludeDirectories>
-			<AdditionalOptions>--target=arm-arm-none-eabi -fshort-wchar -fshort-enums -funsigned-char %(ClCompile.AdditionalOptions)</AdditionalOptions>
+			<PreprocessorDefinitions>STM32F429xx;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
+			<AdditionalIncludeDirectories>%(ClCompile.AdditionalIncludeDirectories);$(BSP_ROOT)/Drivers/CMSIS/Device/ST/STM32F4xx/Include</AdditionalIncludeDirectories>
+			<AdditionalOptions>--target=arm-arm-none-eabi %(ClCompile.AdditionalOptions)</AdditionalOptions>
 		</ClCompile>
 	</ItemDefinitionGroup>
 	<ItemDefinitionGroup>
 		<Link>
 		</Link>
+	</ItemDefinitionGroup>
+
+	<ItemDefinitionGroup>
+		<ClCompile>
+			<KeilWcharSize  Condition="'%(ClCompile.KeilWcharSize)' == ''">Short</KeilWcharSize>
+			<KeilShortEnums  Condition="'%(ClCompile.KeilShortEnums)' == ''">true</KeilShortEnums>
+			<KeilCharSign  Condition="'%(ClCompile.KeilCharSign)' == ''">Unsigned</KeilCharSign>
+		</ClCompile>
 	</ItemDefinitionGroup>
 
 	<ItemDefinitionGroup>

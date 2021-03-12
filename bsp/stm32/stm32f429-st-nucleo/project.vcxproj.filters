@@ -195,9 +195,6 @@
     <ClCompile Include="board\CubeMX_Config\Src\main.c">
       <Filter>Source files\Drivers</Filter>
     </ClCompile>
-    <ClCompile Include="..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f429xx.s">
-      <Filter>Source files\Drivers</Filter>
-    </ClCompile>
     <ClCompile Include="..\libraries\HAL_Drivers\drv_gpio.c">
       <Filter>Source files\Drivers</Filter>
     </ClCompile>
@@ -441,5 +438,8 @@
     <None Include="MCU.xml">
       <Filter>VisualGDB settings</Filter>
     </None>
+    <ClCompile Include="board\CubeMX_Config\MDK-ARM\startup_stm32f429xx.s">
+      <Filter>Source files\Drivers</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

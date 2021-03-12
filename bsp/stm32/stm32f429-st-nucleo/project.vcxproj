@@ -102,9 +102,9 @@
     <ClCompile Include="..\..\..\components\drivers\src\waitqueue.c" />
     <ClCompile Include="..\..\..\components\drivers\src\workqueue.c" />
     <ClCompile Include="board\board.c" />
+    <ClCompile Include="board\CubeMX_Config\MDK-ARM\startup_stm32f429xx.s" />
     <ClCompile Include="board\CubeMX_Config\Src\stm32f4xx_hal_msp.c" />
     <ClCompile Include="board\CubeMX_Config\Src\main.c" />
-    <ClCompile Include="..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f429xx.s" />
     <ClCompile Include="..\libraries\HAL_Drivers\drv_gpio.c" />
     <ClCompile Include="..\libraries\HAL_Drivers\drv_usart.c" />
     <ClCompile Include="..\libraries\HAL_Drivers\drv_hwtimer.c" />

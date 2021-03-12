@@ -63,11 +63,11 @@ int ramfs_init(void)
     int res = dfs_mount(RT_NULL, fsroot_str, "ram", 0, ramfs);
     if (!res)
     {
-        LOG_I("ramfs mount succeed\n");
+        LOG_I("ramfs mount succeed");
     }
     else
     {
-        LOG_I("ramfs mount failed\n");
+        LOG_I("ramfs mount failed");
     }
     return 0;
 }

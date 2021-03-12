@@ -36,13 +36,15 @@ path += [cwd + '/CubeMX_Config/Inc']
 path += [cwd + '/ports']
 
 startup_path_prefix = SDK_LIB
-
+custom_startup_path_prefix = cwd
+custom_startup_path_prefix += '/CubeMX_Config'
+# GCC,IAR path may be wrong,please fix it with your actual path
 if rtconfig.CROSS_TOOL == 'gcc':
-    src += [startup_path_prefix + '/STM32F4xx_HAL/CMSIS/Device/ST/STM32F4xx/Source/Templates/gcc/startup_stm32f429xx.s']
+    src += [custom_startup_path_prefix + '/GCC/startup_stm32f429xx.s']
 elif rtconfig.CROSS_TOOL == 'keil':
-    src += [startup_path_prefix + '/STM32F4xx_HAL/CMSIS/Device/ST/STM32F4xx/Source/Templates/arm/startup_stm32f429xx.s']
+    src += [custom_startup_path_prefix + '/MDK-ARM/startup_stm32f429xx.s']
 elif rtconfig.CROSS_TOOL == 'iar':
-    src += [startup_path_prefix + '/STM32F4xx_HAL/CMSIS/Device/ST/STM32F4xx/Source/Templates/iar/startup_stm32f429xx.s']
+    src += [custom_startup_path_prefix + '/IAR/startup_stm32f429xx.s']
 
 # STM32F405xx) || STM32F415xx) || STM32F407xx) || STM32F417xx)
 # STM32F427xx) || STM32F437xx) || STM32F429xx) || STM32F439xx)

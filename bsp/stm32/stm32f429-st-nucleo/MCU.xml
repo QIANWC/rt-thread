@@ -27,7 +27,7 @@
     <AllDependencies>
       <ProjectDependency>
         <RelativePath>project.uvprojx</RelativePath>
-        <Timestamp>132600057861548742</Timestamp>
+        <Timestamp>132600124205453256</Timestamp>
       </ProjectDependency>
     </AllDependencies>
     <RootDirectory>
@@ -149,7 +149,7 @@
               <RelativePath>board\CubeMX_Config\Src\main.c</RelativePath>
             </VirtualFileSnapshot>
             <VirtualFileSnapshot>
-              <RelativePath>..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f429xx.s</RelativePath>
+              <RelativePath>board\CubeMX_Config\MDK-ARM\startup_stm32f429xx.s</RelativePath>
             </VirtualFileSnapshot>
             <VirtualFileSnapshot>
               <RelativePath>..\libraries\HAL_Drivers\drv_gpio.c</RelativePath>

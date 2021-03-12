@@ -27,7 +27,7 @@
     <AllDependencies>
       <ProjectDependency>
         <RelativePath>project.uvprojx</RelativePath>
-        <Timestamp>132600124205453256</Timestamp>
+        <Timestamp>132600895114367550</Timestamp>
       </ProjectDependency>
     </AllDependencies>
     <RootDirectory>
@@ -37,6 +37,20 @@
           <Files>
             <VirtualFileSnapshot>
               <RelativePath>applications\realmain.cpp</RelativePath>
+            </VirtualFileSnapshot>
+          </Files>
+        </VirtualDirectorySnapshot>
+        <VirtualDirectorySnapshot>
+          <Name>cm_backtrace</Name>
+          <Files>
+            <VirtualFileSnapshot>
+              <RelativePath>packages\CmBacktrace-v1.4.0\cm_backtrace.c</RelativePath>
+            </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
+              <RelativePath>packages\CmBacktrace-v1.4.0\cmb_flash_log.c</RelativePath>
+            </VirtualFileSnapshot>
+            <VirtualFileSnapshot>
+              <RelativePath>packages\CmBacktrace-v1.4.0\cmb_port.c</RelativePath>
             </VirtualFileSnapshot>
           </Files>
         </VirtualDirectorySnapshot>
@@ -430,6 +444,7 @@
         <Settings>
           <IncludeDirectories>
             <string>applications</string>
+            <string>packages\CmBacktrace-v1.4.0</string>
             <string>Controller</string>
             <string>..\..\..\components\cplusplus</string>
             <string>..\..\..\libcpu\arm\common</string>
@@ -469,7 +484,7 @@
             <string>STM32F429xx</string>
           </PreprocessorMacros>
           <GeneratePreprocessorOutput>false</GeneratePreprocessorOutput>
-          <LinkerScript>C:\Users\QIAN\Documents\GitHub\rt-thread\bsp\stm32\stm32f429-st-nucleo\stm32_rom.sct</LinkerScript>
+          <LinkerScript>stm32_rom.sct</LinkerScript>
           <IsDebugConfiguration>false</IsDebugConfiguration>
         </Settings>
       </ImportedConfiguration>

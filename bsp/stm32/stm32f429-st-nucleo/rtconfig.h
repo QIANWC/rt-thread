@@ -116,7 +116,7 @@
 #define RT_VCOM_SERNO "32021919830108"
 #define RT_VCOM_SER_LEN 14
 #define RT_VCOM_TX_TIMEOUT 1000
-#define RT_USB_MSTORAGE_DISK_NAME "ram"
+#define RT_USB_MSTORAGE_DISK_NAME "onchip_flash"
 
 /* POSIX layer and C standard library */
 
@@ -144,6 +144,7 @@
 #define RT_USING_ULOG
 #define ULOG_OUTPUT_LVL_DEBUG
 #define ULOG_OUTPUT_LVL 7
+#define ULOG_USING_ISR_LOG
 #define ULOG_ASSERT_ENABLE
 #define ULOG_LINE_BUF_SIZE 128
 #define ULOG_USING_ASYNC_OUTPUT
@@ -194,6 +195,12 @@
 
 /* tools packages */
 
+#define PKG_USING_CMBACKTRACE
+#define PKG_CMBACKTRACE_PLATFORM_M4
+#define PKG_CMBACKTRACE_DUMP_STACK
+#define PKG_CMBACKTRACE_PRINT_ENGLISH
+#define PKG_USING_CMBACKTRACE_V10400
+#define PKG_CMBACKTRACE_VER_NUM 0x10400
 
 /* system packages */
 

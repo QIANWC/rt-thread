@@ -15,6 +15,7 @@
 #include <dfs.h>
 #include <dfs_ramfs.h>
 #include <dfs_fs.h>
+#include <cm_backtrace.h>
 #include <Thread.h>
 using rtthread::Thread;
 
@@ -77,6 +78,8 @@ volatile uint64_t stamp = 0;
 rt_thread_t thread_main;
 int main(void)
 {
+    cm_backtrace_init("rtthread", "0.1", "0.1");
+
     task1.start();
     
     //find name by "list_device" in msh
